@@ -3,7 +3,7 @@ using System.Windows.Input;
 
 namespace UniversityTool.Infastructure.Commands.Base
 {
-    internal abstract class BaseCommand
+    internal abstract class BaseCommand : ICommand
     {
         public event EventHandler? CanExecuteChanged
         {
