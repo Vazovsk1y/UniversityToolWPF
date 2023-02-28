@@ -21,8 +21,9 @@ namespace UniversityTool
         {
             var services = new ServiceCollection();
             services.AddSingleton<MainWindowViewModel>();
-            services.AddSingleton<MainWindowService>();               // for startUp method
-            services.AddSingleton<IUserDialog, MainWindowService>();
+            services.AddScoped<DepartamentAddViewModel>();
+            services.AddSingleton<MainWindowService>();               // for startup method
+            services.AddSingleton<IDepartamentAddService, DepartamentAddService>();
             services.AddSingleton<IMessageBus, MessageBusService>();
 
             services.AddTransient(
@@ -30,6 +31,17 @@ namespace UniversityTool
                 {
                     var model = s.GetRequiredService<MainWindowViewModel>();
                     var window = new MainWindow { DataContext = model };
+                    return window;
+                });
+
+            services.AddTransient(
+                s =>
+                {
+                    var scope = s.CreateScope();
+                    var model = scope.ServiceProvider.GetRequiredService<DepartamentAddViewModel>();
+                    var window = new DepartamentAddWindow { DataContext = model };
+                    window.Closed += (_, _) => scope.Dispose();
+
                     return window;
                 });
 

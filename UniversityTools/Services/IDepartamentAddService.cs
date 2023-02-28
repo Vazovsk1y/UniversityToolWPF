@@ -1,6 +1,6 @@
 ﻿namespace UniversityTool.Services
 {
-    public interface IUserDialog
+    public interface IDepartamentAddService
     {
         void OpenWindow();
         void CloseWindow();
