@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace UniversityTool.Services.Implementaions
 {
-    internal class MessageBusService
+    internal class MessageBusService : IMessageBus
     {
         private readonly Dictionary<Type, IEnumerable<WeakReference>> _subscriptions = new();
         private readonly ReaderWriterLockSlim _locker = new();
