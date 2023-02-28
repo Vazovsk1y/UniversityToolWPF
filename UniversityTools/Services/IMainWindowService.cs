@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using UniversityTool.Services.Base;
 
 namespace UniversityTool.Services
 {
-    public interface IMainWindowService
+    public interface IMainWindowService : IBaseWindowService
     {
-        void OpenWindow();
-        void CloseWindow();
     }
 }

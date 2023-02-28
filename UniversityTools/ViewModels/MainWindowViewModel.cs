@@ -1,14 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using UniversityTool.Infastructure.Commands;
 using UniversityTool.Models;
 using UniversityTool.Models.Messages;
 using UniversityTool.Services;
-using UniversityTool.Services.Implementaions;
 using UniversityTool.ViewModels.Base;
 using UniversityTool.ViewModels.ControlsViewModels;
 

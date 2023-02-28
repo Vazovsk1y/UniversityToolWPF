@@ -1,8 +1,9 @@
-﻿namespace UniversityTool.Services
+﻿using UniversityTool.Services.Base;
+
+namespace UniversityTool.Services
 {
-    public interface IDepartamentAddService
+    public interface IDepartamentAddService : IBaseWindowService
     {
-        void OpenWindow();
-        void CloseWindow();
+       
     }
 }
