@@ -20,7 +20,6 @@ namespace UniversityTool.ViewModels.ControlsViewModels
         #endregion
 
         #region --Properties--
-        public ICommand TreeViewItemSelectionChangedCommand { get; private set; }
 
         public ObservableCollection<Student> Students
         {
@@ -45,7 +44,6 @@ namespace UniversityTool.ViewModels.ControlsViewModels
             get => _selectedGroup;
             set => Set(ref _selectedGroup, value); 
         }
-
 
         public Student SelectedStudent
         {
@@ -72,11 +70,13 @@ namespace UniversityTool.ViewModels.ControlsViewModels
 
         #region --Commands--
 
+        public ICommand TreeViewItemSelectionChangedCommand { get; private set; }
+
         private bool OnCanSelectTreeViewItem(object arg) => true;
 
         private void OnTreeViewItemSelectionChanged(object selectedItem)
         {
-            // 
+            // depends on selected item type
             if (selectedItem is Student student)
             {
                 SelectedStudent = student;

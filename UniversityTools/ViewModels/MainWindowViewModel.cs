@@ -9,7 +9,7 @@ using UniversityTool.ViewModels.ControlsViewModels;
 
 namespace UniversityTool.ViewModels
 {
-    // IDisposable if i want to take messages from out
+    // IDisposable if i want to take messages(data) from other windows
     internal class MainWindowViewModel : BaseViewModel, IDisposable
     {
         #region --Fields--
@@ -20,9 +20,8 @@ namespace UniversityTool.ViewModels
 
         #endregion
 
-        #region --Properties--
+        #region --Properties--                 
 
-        public ICommand AddDepartamentCommand { get; }
         public TreeViewViewModel TreeViewViewModel { get; }
 
         #endregion
@@ -44,14 +43,17 @@ namespace UniversityTool.ViewModels
 
         #endregion
 
-        #region --Methods--
+        #region --Commands--
+
+        public ICommand AddDepartamentCommand { get; }                          // initialize in class constructor
 
         private bool OnCanAdd(object arg) => true;
 
-        private void OnAdding(object obj)
-        {
-            _departamentAdd.OpenWindow();
-        }
+        private void OnAdding(object obj) => _departamentAdd.OpenWindow();
+        
+        #endregion
+
+        #region --Methods--
 
         public void Dispose() => _subscription?.Dispose();
 

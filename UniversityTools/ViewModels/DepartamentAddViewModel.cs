@@ -19,7 +19,6 @@ namespace UniversityTool.ViewModels
 
         #region --Properties--
 
-        public ICommand AcceptCommand { get; private set; }
         
         public string DepartamentName
         {
@@ -44,7 +43,9 @@ namespace UniversityTool.ViewModels
 
         #endregion
 
-        #region --Methods--
+        #region --Commands--
+
+        public ICommand AcceptCommand { get; private set; }
 
         private bool OnCanAccept(object p) => true;
 
@@ -53,6 +54,11 @@ namespace UniversityTool.ViewModels
             _messageBus.Send(new DepartamentAddMessage(new Departament { Title = DepartamentName }));
             _departamentAddService.CloseWindow();
         }
+
+        #endregion
+
+        #region --Methods--
+
 
         #endregion
     }
