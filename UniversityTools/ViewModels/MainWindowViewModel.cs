@@ -62,7 +62,9 @@ namespace UniversityTool.ViewModels
             if (message is null || message.Departament.Title == null) return;
 
             if (message.Departament.Title.Length != 0)
+            {
                 TreeViewViewModel.Departaments.Add(new Departament { Title = message.Departament.Title });
+            }
         }
 
         #endregion
