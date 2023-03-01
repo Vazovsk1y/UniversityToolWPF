@@ -38,7 +38,7 @@ namespace UniversityTool.ViewModels
         {
             _departamentAdd = service;
             _messageBus = messageBus;
-            _subscription = _messageBus.RegisterHandler<DepartamentAddMessage>(OnReceiveMessage);
+            _subscription = _messageBus.RegisterHandler<DepartamentMessage>(OnReceiveMessage);
         }
 
         #endregion
@@ -57,7 +57,7 @@ namespace UniversityTool.ViewModels
 
         public void Dispose() => _subscription?.Dispose();
 
-        private void OnReceiveMessage(DepartamentAddMessage message)
+        private void OnReceiveMessage(DepartamentMessage message)
         {
             if (message is null || message.Departament.Title == null) return;
 

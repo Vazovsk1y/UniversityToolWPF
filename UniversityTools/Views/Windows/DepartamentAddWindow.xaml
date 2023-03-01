@@ -25,7 +25,7 @@
             <DockPanel>
                 <UniformGrid DockPanel.Dock="Bottom" Rows="1" >
                     <Button Margin ="20" Content="Ок" Command="{Binding AcceptCommand}"/>
-                    <Button Margin ="20" Content="Отмена"/>
+                    <Button Margin ="20" Content="Отмена" Command="{Binding CancelCommand}"/>
                 </UniformGrid>
             </DockPanel>
         </GroupBox>

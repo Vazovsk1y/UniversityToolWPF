@@ -33,6 +33,7 @@ namespace UniversityTool.ViewModels
         public DepartamentAddViewModel()
         {
             AcceptCommand = new RelayCommand(OnAccepting, OnCanAccept);
+            CancelCommand = new RelayCommand(OnCanceling, OnCanCancel);
         }
 
         public DepartamentAddViewModel(IDepartamentAddService userDialog, IMessageBus messageBus) : this()
@@ -44,14 +45,21 @@ namespace UniversityTool.ViewModels
         #endregion
 
         #region --Commands--
-
+        public ICommand CancelCommand { get; private set; }
         public ICommand AcceptCommand { get; private set; }
+
+        private bool OnCanCancel(object p) => true;
+
+        private void OnCanceling(object p)
+        {
+            _departamentAddService.CloseWindow();
+        }
 
         private bool OnCanAccept(object p) => true;
 
         private void OnAccepting(object a)
         {
-            _messageBus.Send(new DepartamentAddMessage(new Departament { Title = DepartamentName }));
+            _messageBus.Send(new DepartamentMessage(new Departament { Title = DepartamentName }));
             _departamentAddService.CloseWindow();
         }
 
