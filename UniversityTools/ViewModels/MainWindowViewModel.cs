@@ -38,7 +38,7 @@ namespace UniversityTool.ViewModels
         {
             _departamentAdd = service;
             _messageBus = messageBus;
-            _subscription = _messageBus.RegisterHandler<DepartamentMessage>(OnReceiveMessage);
+            _subscription = _messageBus.RegisterHandler<DepartamentTitleMessage>(OnReceiveMessage);
         }
 
         #endregion
@@ -57,13 +57,13 @@ namespace UniversityTool.ViewModels
 
         public void Dispose() => _subscription?.Dispose();
 
-        private void OnReceiveMessage(DepartamentMessage message)
+        private void OnReceiveMessage(DepartamentTitleMessage message)
         {
-            if (message is null || message.Departament.Title == null) return;
+            if (message is null || message.DepartamentTitle is null) return;
 
-            if (message.Departament.Title.Length != 0)
+            if (message.DepartamentTitle.Length != 0)
             {
-                TreeViewViewModel.Departaments.Add(new Departament { Title = message.Departament.Title });
+                TreeViewViewModel.Departaments.Add(new Departament { Title = message.DepartamentTitle });
             }
         }
 

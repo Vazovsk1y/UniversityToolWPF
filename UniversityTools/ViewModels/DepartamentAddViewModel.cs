@@ -59,7 +59,7 @@ namespace UniversityTool.ViewModels
 
         private void OnAccepting(object a)
         {
-            _messageBus.Send(new DepartamentMessage(new Departament { Title = DepartamentName }));
+            _messageBus.Send(new DepartamentTitleMessage(DepartamentName));
             _departamentAddService.CloseWindow();
         }
 
