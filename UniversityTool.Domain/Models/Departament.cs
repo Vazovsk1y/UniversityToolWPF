@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace UniversityTool.Models
+namespace UniversityTool.Domain.Models
 {
     public class Departament
     {

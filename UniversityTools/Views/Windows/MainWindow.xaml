@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-        xmlns:m="clr-namespace:UniversityTool.Models"
+        xmlns:m="clr-namespace:UniversityTool.Domain.Models"
         xmlns:vm ="clr-namespace:UniversityTool.ViewModels"
         mc:Ignorable="d"
         Title="MainWindow" Height="650" Width="950">

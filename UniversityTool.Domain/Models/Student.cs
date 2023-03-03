@@ -1,4 +1,4 @@
-﻿namespace UniversityTool.Models
+﻿namespace UniversityTool.Domain.Models
 {
     public class Student
     {

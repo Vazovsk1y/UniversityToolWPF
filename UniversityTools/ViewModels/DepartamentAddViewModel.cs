@@ -1,7 +1,6 @@
 ﻿using System.Windows.Input;
 using UniversityTool.Infastructure.Commands;
-using UniversityTool.Models;
-using UniversityTool.Models.Messages;
+using UniversityTool.Domain.Models.Messages;
 using UniversityTool.Services;
 using UniversityTool.ViewModels.Base;
 

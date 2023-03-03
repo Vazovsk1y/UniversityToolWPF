@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
 using UniversityTool.Infastructure.Commands;
-using UniversityTool.Models;
+using UniversityTool.Domain.Models;
 using UniversityTool.ViewModels.Base;
 
 namespace UniversityTool.ViewModels.ControlsViewModels
