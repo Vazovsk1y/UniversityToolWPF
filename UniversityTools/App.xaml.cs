@@ -18,7 +18,7 @@ namespace UniversityTool
         public static IServiceProvider Services => _services ??= InitializeServices().BuildServiceProvider();
 
         // all app services must be register in this method
-        private static ServiceCollection InitializeServices()
+        private static IServiceCollection InitializeServices()
         {
             var services = new ServiceCollection();
             services.AddSingleton<MainWindowViewModel>();
