@@ -1,10 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using UniversityTool.Domain.Models.Base;
 
 namespace UniversityTool.Domain.Models
 {
-    public class Departament
+    public class Departament : BaseModel
     {
-        public int Id { get; set; }
         public string? Title { get; set; }
         public ICollection<Group>? Groups { get; set; }
     }

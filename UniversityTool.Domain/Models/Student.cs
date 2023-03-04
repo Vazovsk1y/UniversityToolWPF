@@ -1,8 +1,9 @@
-﻿namespace UniversityTool.Domain.Models
+﻿using UniversityTool.Domain.Models.Base;
+
+namespace UniversityTool.Domain.Models
 {
-    public class Student
+    public class Student : BaseModel
     {
-        public int Id { get; set; }
         public Group Group { get; set; }
         public string Name { get; set; }
         public string SecondName { get; set; }

@@ -6,7 +6,7 @@ namespace UniversityTool.DataBase.Factory
 {
     public class UniversityToolDbContextFactory : IDesignTimeDbContextFactory<UniversityToolDBContext>
     {
-        public UniversityToolDBContext CreateDbContext(string[] args)
+        public UniversityToolDBContext CreateDbContext(string[] args = null)
         {
             var options = new DbContextOptionsBuilder<UniversityToolDBContext>();
             options.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=UniversityToolDB;Trusted_Connection=True;");
