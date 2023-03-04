@@ -9,6 +9,8 @@ namespace UniversityTool.DataBase.Context
         public DbSet<Group> Groups { get; set; }
         public DbSet<Student> Students { get; set; }
 
+        public UniversityToolDBContext(DbContextOptions options) : base(options) { }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Departament>()
@@ -29,12 +31,6 @@ namespace UniversityTool.DataBase.Context
                 .HasMany(g => g.Students)
                 .WithOne(s => s.Group)
                 .HasForeignKey(s => s.Id);
-        }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder options)
-        {
-            base.OnConfiguring(options);
-            options.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=UniversityToolDB;Trusted_Connection=True;");
         }
     }
 }

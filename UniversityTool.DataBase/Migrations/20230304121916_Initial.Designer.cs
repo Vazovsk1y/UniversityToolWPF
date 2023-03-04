@@ -11,7 +11,7 @@ using UniversityTool.DataBase.Context;
 namespace UniversityTool.DataBase.Migrations
 {
     [DbContext(typeof(UniversityToolDBContext))]
-    [Migration("20230303183257_initial")]
+    [Migration("20230304121916_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
