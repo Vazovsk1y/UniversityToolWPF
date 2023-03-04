@@ -3,7 +3,7 @@ using System.Windows.Input;
 using UniversityTool.Infastructure.Commands;
 using UniversityTool.Domain.Models;
 using UniversityTool.Domain.Models.Messages;
-using UniversityTool.Services;
+using UniversityTool.Domain.Services;
 using UniversityTool.ViewModels.Base;
 using UniversityTool.ViewModels.ControlsViewModels;
 

@@ -1,7 +1,7 @@
 ﻿using System.Windows.Input;
 using UniversityTool.Infastructure.Commands;
 using UniversityTool.Domain.Models.Messages;
-using UniversityTool.Services;
+using UniversityTool.Domain.Services;
 using UniversityTool.ViewModels.Base;
 
 namespace UniversityTool.ViewModels

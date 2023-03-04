@@ -2,7 +2,7 @@
 using System;
 using System.Windows;
 using UniversityTool.Services.Implementaions;
-using UniversityTool.Services;
+using UniversityTool.Domain.Services;
 using UniversityTool.ViewModels;
 using UniversityTool.Views.Windows;
 

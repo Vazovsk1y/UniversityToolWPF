@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 using UniversityTool.DataBase.Context;
 using UniversityTool.DataBase.Factory;
 using UniversityTool.Domain.Models.Base;
-using UniversityTool.Domain.Services;
+using UniversityTool.Domain.Services.DataServices;
 
 namespace UniversityTool.DataBase.Services
 {

@@ -1,6 +1,6 @@
-﻿using UniversityTool.Services.Base;
+﻿using UniversityTool.Domain.Services.Base;
 
-namespace UniversityTool.Services
+namespace UniversityTool.Domain.Services
 {
     public interface IDepartamentAddService : IBaseWindowService
     {

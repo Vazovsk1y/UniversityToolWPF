@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace UniversityTool.Services
+﻿namespace UniversityTool.Domain.Services
 {
     public interface IMessageBus
     {

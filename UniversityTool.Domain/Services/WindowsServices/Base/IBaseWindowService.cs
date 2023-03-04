@@ -1,4 +1,4 @@
-﻿namespace UniversityTool.Services.Base
+﻿namespace UniversityTool.Domain.Services.Base
 {
     public interface IBaseWindowService
     {

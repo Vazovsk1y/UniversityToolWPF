@@ -1,4 +1,4 @@
-﻿namespace UniversityTool.Domain.Services
+﻿namespace UniversityTool.Domain.Services.DataServices
 {
     public interface IDataProviderService<T> where T : class
     {
