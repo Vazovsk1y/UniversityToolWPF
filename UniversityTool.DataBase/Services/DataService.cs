@@ -16,7 +16,7 @@ namespace UniversityTool.DataBase.Services
             _contextFactory = contextFactory;
         }
 
-        public async Task<T> Create(T entity)
+        public async Task<T> Add(T entity)
         {
             using(UniversityToolDBContext context = _contextFactory.CreateDbContext()) 
             {

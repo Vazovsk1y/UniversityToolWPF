@@ -1,10 +1,11 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Windows;
-using UniversityTool.Services.Implementaions;
 using UniversityTool.Domain.Services;
 using UniversityTool.ViewModels;
 using UniversityTool.Views.Windows;
+using UniversityTool.Services.WindowsServices.Implementaions;
+using UniversityTool.Services.DataServices.Impementations;
 
 namespace UniversityTool
 {

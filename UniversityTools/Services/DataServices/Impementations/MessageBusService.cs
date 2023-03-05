@@ -4,7 +4,7 @@ using System;
 using System.Linq;
 using UniversityTool.Domain.Services;
 
-namespace UniversityTool.Services.Implementaions
+namespace UniversityTool.Services.DataServices.Impementations
 {
     internal class MessageBusService : IMessageBus
     {
@@ -69,7 +69,7 @@ namespace UniversityTool.Services.Implementaions
                 var weakRef = new WeakReference(subscription);
                 var messageType = typeof(T);
 
-                _subscriptions[messageType] = _subscriptions.TryGetValue(messageType, out var subscriptions) 
+                _subscriptions[messageType] = _subscriptions.TryGetValue(messageType, out var subscriptions)
                     ? subscriptions.Append(weakRef) : new[] { weakRef };
             }
             finally

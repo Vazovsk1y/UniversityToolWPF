@@ -6,7 +6,7 @@
 
         Task<T> Get(int id);
 
-        Task<T> Create(T entity);
+        Task<T> Add(T entity);
 
         Task<T> Update(int id, T entity);
 
