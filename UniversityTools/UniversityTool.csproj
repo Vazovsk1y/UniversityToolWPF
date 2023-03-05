@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\UniversityTool.DataBase\UniversityTool.DataBase.csproj" />
     <ProjectReference Include="..\UniversityTool.Domain\UniversityTool.Domain.csproj" />
   </ItemGroup>
 

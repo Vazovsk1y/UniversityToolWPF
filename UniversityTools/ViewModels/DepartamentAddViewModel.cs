@@ -3,6 +3,9 @@ using UniversityTool.Infastructure.Commands;
 using UniversityTool.Domain.Models.Messages;
 using UniversityTool.Domain.Services;
 using UniversityTool.ViewModels.Base;
+using System;
+using UniversityTool.Domain.Services.DataServices;
+using UniversityTool.Domain.Models;
 
 namespace UniversityTool.ViewModels
 {
@@ -13,6 +16,7 @@ namespace UniversityTool.ViewModels
         private string _departamentName;
         private readonly IMessageBus _messageBus;
         private readonly IDepartamentAddService _departamentAddService;
+        private readonly IDataProviderService<Departament> _dataProviderService;
 
         #endregion
 
@@ -35,8 +39,10 @@ namespace UniversityTool.ViewModels
             CancelCommand = new RelayCommand(OnCanceling, OnCanCancel);
         }
 
-        public DepartamentAddViewModel(IDepartamentAddService userDialog, IMessageBus messageBus) : this()
+        public DepartamentAddViewModel(IDepartamentAddService userDialog, IMessageBus messageBus
+            ,IDataProviderService<Departament> dataProviderService) : this()
         {
+            _dataProviderService = dataProviderService;
             _departamentAddService = userDialog;
             _messageBus = messageBus;
         }
@@ -59,6 +65,7 @@ namespace UniversityTool.ViewModels
         private void OnAccepting(object a)
         {
             _messageBus.Send(new DepartamentTitleMessage(DepartamentName));
+            _dataProviderService.Add(new Departament { Title = DepartamentName });
             _departamentAddService.CloseWindow();
         }
 

@@ -6,6 +6,10 @@ using UniversityTool.ViewModels;
 using UniversityTool.Views.Windows;
 using UniversityTool.Services.WindowsServices.Implementaions;
 using UniversityTool.Services.DataServices.Impementations;
+using UniversityTool.DataBase.Factory;
+using UniversityTool.Domain.Services.DataServices;
+using UniversityTool.Domain.Models;
+using UniversityTool.DataBase.Services;
 
 namespace UniversityTool
 {
@@ -27,6 +31,8 @@ namespace UniversityTool
             services.AddSingleton<MainWindowService>();                               // only for startup method
             services.AddSingleton<IDepartamentAddService, DepartamentAddService>();
             services.AddSingleton<IMessageBus, MessageBusService>();
+            services.AddScoped<UniversityToolDbContextFactory>();
+            services.AddScoped(typeof(IDataProviderService<>), typeof(DataService<>));
 
             services.AddTransient(
                 s =>
