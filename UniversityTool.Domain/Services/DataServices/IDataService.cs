@@ -1,6 +1,6 @@
 ﻿namespace UniversityTool.Domain.Services.DataServices
 {
-    public interface IDataProviderService<T> where T : class
+    public interface IDataService<T> where T : class
     {
         Task<IEnumerable<T>> GetAll();
 

@@ -3,6 +3,7 @@ using System.Windows.Input;
 using UniversityTool.Infastructure.Commands;
 using UniversityTool.Domain.Models;
 using UniversityTool.ViewModels.Base;
+using System.Linq;
 
 namespace UniversityTool.ViewModels.ControlsViewModels
 {
@@ -23,8 +24,8 @@ namespace UniversityTool.ViewModels.ControlsViewModels
 
         public ObservableCollection<Student> Students
         {
-            get => _students; 
-            set => _students = value; 
+            get => _students;
+            set => _students = value;
         }
 
         public ObservableCollection<Group> Groups
@@ -63,7 +64,20 @@ namespace UniversityTool.ViewModels.ControlsViewModels
 
         public TreeViewViewModel()
         {
-            TreeViewItemSelectionChangedCommand = new RelayCommand(OnTreeViewItemSelectionChanged, OnCanSelectTreeViewItem); 
+            TreeViewItemSelectionChangedCommand = new RelayCommand(OnTreeViewItemSelectionChanged, OnCanSelectTreeViewItem);
+
+            var departaments = Enumerable.Range(0, 10).Select(d => new Departament
+            {
+                Title = $"Depart {d}",
+                Groups = Enumerable.Range(0, 5).Select(g => new Group
+                {
+                    Title = $"Sraka {g}",
+                    Students = Enumerable.Range(0, 3).Select(s => new Student
+                    { Name = $"St {s}" }).ToList()
+                }).ToList()
+            }).ToList();
+
+            Departaments = new ObservableCollection<Departament>(departaments);
         }
 
         #endregion

@@ -14,7 +14,7 @@ namespace UniversityTool.ViewModels
     {
         #region --Fields--
 
-        private readonly IDepartamentAddService _departamentAdd;
+        private readonly IDepartamentAddWindowService _departamentAdd;
         private readonly IMessageBus _messageBus;
         private readonly IDisposable _subscription;
 
@@ -34,7 +34,7 @@ namespace UniversityTool.ViewModels
             AddDepartamentCommand = new RelayCommand(OnAdding, OnCanAdd);
         }
 
-        public MainWindowViewModel(IDepartamentAddService service, IMessageBus messageBus) : this()
+        public MainWindowViewModel(IDepartamentAddWindowService service, IMessageBus messageBus) : this()
         {
             _departamentAdd = service;
             _messageBus = messageBus;

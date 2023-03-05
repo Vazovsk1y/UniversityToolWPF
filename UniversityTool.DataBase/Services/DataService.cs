@@ -7,7 +7,7 @@ using UniversityTool.Domain.Services.DataServices;
 
 namespace UniversityTool.DataBase.Services
 {
-    public class DataService<T> : IDataProviderService<T> where T : BaseModel
+    public class DataService<T> : IDataService<T> where T : BaseModel
     {
         private readonly UniversityToolDbContextFactory _contextFactory;
 

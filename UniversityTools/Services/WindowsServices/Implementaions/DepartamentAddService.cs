@@ -5,7 +5,7 @@ using UniversityTool.Views.Windows;
 
 namespace UniversityTool.Services.WindowsServices.Implementaions
 {
-    internal class DepartamentAddService : BaseWindowService<DepartamentAddWindow>, IDepartamentAddService
+    internal class DepartamentAddService : BaseWindowService<DepartamentAddWindow>, IDepartamentAddWindowService
     {
         public DepartamentAddService(IServiceProvider serviceProvider) : base(serviceProvider) { }
 
