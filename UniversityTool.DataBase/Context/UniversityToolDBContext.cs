@@ -13,24 +13,40 @@ namespace UniversityTool.DataBase.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Departament>()
-                .HasKey(f => f.Id);
+            modelBuilder.Entity<Departament>(d =>
+            {
+                d.HasKey(x => x.Id);
+                d.Property(x => x.Title).IsRequired();
 
-            modelBuilder.Entity<Group>()
-                .HasKey(g => g.Id);
+                d.HasMany(x => x.Groups)
+                    .WithOne(x => x.Departament)
+                    .HasForeignKey(x => x.DepartamentId)
+                    .OnDelete(DeleteBehavior.Restrict);
+            });
 
-            modelBuilder.Entity<Student>()
-                .HasKey(s => s.Id);
+            modelBuilder.Entity<Group>(g =>
+            {
+                g.HasKey(x => x.Id);
+                g.Property(x => x.Title).IsRequired();
 
-            modelBuilder.Entity<Departament>()
-                .HasMany(f => f.Groups)
-                .WithOne(g => g.Departament)
-                .HasForeignKey(g => g.Id);
+                g.HasMany(x => x.Students)
+                    .WithOne(x => x.Group)
+                    .HasForeignKey(x => x.GroupId)
+                    .OnDelete(DeleteBehavior.Restrict);
+            });
 
-            modelBuilder.Entity<Group>()
-                .HasMany(g => g.Students)
-                .WithOne(s => s.Group)
-                .HasForeignKey(s => s.Id);
+            modelBuilder.Entity<Student>(s =>
+            {
+                s.HasKey(x => x.Id);
+                s.Property(x => x.Name).IsRequired();
+                s.Property(x => x.SecondName).IsRequired();
+                s.Property(x => x.ThirdName).IsRequired();
+
+                s.HasOne(x => x.Group)
+                    .WithMany(x => x.Students)
+                    .HasForeignKey(x => x.GroupId)
+                    .OnDelete(DeleteBehavior.Restrict);
+            });
         }
     }
 }
