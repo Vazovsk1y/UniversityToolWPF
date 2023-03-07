@@ -6,6 +6,7 @@ using UniversityTool.Domain.Models.Messages;
 using UniversityTool.Domain.Services;
 using UniversityTool.ViewModels.Base;
 using UniversityTool.ViewModels.ControlsViewModels;
+using UniversityTool.Domain.Services.WindowsServices;
 
 namespace UniversityTool.ViewModels
 {
@@ -14,8 +15,9 @@ namespace UniversityTool.ViewModels
     {
         #region --Fields--
 
-        private readonly IDepartamentAddWindowService _departamentAdd;
-        private readonly IMessageBus _messageBus;
+        private readonly IDepartamentAddWindowService _departamentAddWindow;
+        private readonly IGroupAddWindowService _groupAddWindow;
+        private readonly IMessageBusService _messageBus;
         private readonly IDisposable _subscription;
 
         #endregion
@@ -31,12 +33,15 @@ namespace UniversityTool.ViewModels
         public MainWindowViewModel() 
         {
             TreeViewViewModel = new TreeViewViewModel();
-            AddDepartamentCommand = new RelayCommand(OnAdding, OnCanAdd);
+            AddDepartamentCommand = new RelayCommand(OnAddingDepartament, OnCanAddDepartament);
+            AddGroupCommand = new RelayCommand(OnAddingGroup, OnCanAddGroup);
         }
 
-        public MainWindowViewModel(IDepartamentAddWindowService service, IMessageBus messageBus) : this()
+        public MainWindowViewModel(IDepartamentAddWindowService service, IMessageBusService messageBus, 
+            IGroupAddWindowService groupAddWindowService) : this()
         {
-            _departamentAdd = service;
+            _groupAddWindow = groupAddWindowService;
+            _departamentAddWindow = service;
             _messageBus = messageBus;
             _subscription = _messageBus.RegisterHandler<DepartamentTitleMessage>(OnReceiveMessage);
         }
@@ -47,10 +52,16 @@ namespace UniversityTool.ViewModels
 
         public ICommand AddDepartamentCommand { get; }                          // initialize in class constructor
 
-        private bool OnCanAdd(object arg) => true;
+        private bool OnCanAddDepartament(object arg) => true;
 
-        private void OnAdding(object obj) => _departamentAdd.OpenWindow();
-        
+        private void OnAddingDepartament(object obj) => _departamentAddWindow.OpenWindow();
+
+        public ICommand AddGroupCommand { get; }                          // initialize in class constructor
+
+        private bool OnCanAddGroup(object arg) => true;
+
+        private void OnAddingGroup(object obj) => _groupAddWindow.OpenWindow();
+
         #endregion
 
         #region --Methods--

@@ -13,7 +13,7 @@ namespace UniversityTool.ViewModels
         #region --Fields--
 
         private string _departamentName;
-        private readonly IMessageBus _messageBus;
+        private readonly IMessageBusService _messageBus;
         private readonly IDepartamentAddWindowService _departamentAddService;
         private readonly IDataService<Departament> _dataProviderService;
 
@@ -38,7 +38,7 @@ namespace UniversityTool.ViewModels
             CancelCommand = new RelayCommand(OnCanceling, OnCanCancel);
         }
 
-        public DepartamentAddViewModel(IDepartamentAddWindowService userDialog, IMessageBus messageBus
+        public DepartamentAddViewModel(IDepartamentAddWindowService userDialog, IMessageBusService messageBus
             ,IDataService<Departament> dataProviderService) : this()
         {
             _dataProviderService = dataProviderService;

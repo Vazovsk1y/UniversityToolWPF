@@ -51,7 +51,9 @@
                 <MenuItem Header="File" Style="{StaticResource menuItem}" >
                     <MenuItem Header="Add Department" Style="{StaticResource menuItem}" Command="{Binding AddDepartamentCommand}"/>
                 </MenuItem>
-                <MenuItem Header="Structure" Style="{StaticResource menuItem}"/>
+                <MenuItem Header="Structure" Style="{StaticResource menuItem}">
+                    <MenuItem Header="AddGroup" Style="{StaticResource menuItem}" Command="{Binding AddGroupCommand}"/>
+                </MenuItem>
                 <MenuItem Header="View" Style="{StaticResource menuItem}"/>
                 <MenuItem Header="Help" Style="{StaticResource menuItem}"/>
             </Menu>

@@ -6,7 +6,7 @@ using UniversityTool.Domain.Services;
 
 namespace UniversityTool.Services.DataServices.Impementations
 {
-    internal class MessageBusService : IMessageBus
+    internal class MessageBusService : IMessageBusService
     {
         private readonly Dictionary<Type, IEnumerable<WeakReference>> _subscriptions = new();
         private readonly ReaderWriterLockSlim _locker = new();
