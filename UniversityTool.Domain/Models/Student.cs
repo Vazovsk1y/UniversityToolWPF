@@ -2,6 +2,9 @@
 
 namespace UniversityTool.Domain.Models
 {
+    /// <summary>
+    /// Student have a parent - group, also by his parent he could take info about his departament.
+    /// </summary>
     public class Student : BaseModel
     {
         public int GroupId { get; set; }

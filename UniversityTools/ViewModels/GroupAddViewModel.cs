@@ -1,12 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using UniversityTool.Domain.Models;
-using UniversityTool.Domain.Models.Messages;
-using UniversityTool.Domain.Services;
 using UniversityTool.Domain.Services.DataServices;
 using UniversityTool.Domain.Services.WindowsServices;
 using UniversityTool.Infastructure.Commands;
@@ -29,10 +26,10 @@ namespace UniversityTool.ViewModels
         public ObservableCollection<Departament> Departaments
         {
             get => _departaments;
-            set => Set(ref _departaments, value);
-        }
-
-        #endregion
+            set => Set(ref _departaments, value);                         
+        }                                                                 
+                                                                          
+        #endregion                                                        
 
         #region --Constructors--
 
@@ -74,17 +71,26 @@ namespace UniversityTool.ViewModels
 
         #region --Methods--
 
-        private void InitializeDepartamentsAsync()
+        private async void InitializeDepartamentsAsync()
         {
-            Task.Run(async () =>
+            IEnumerable<Departament> departaments = await Task.Run(_dataService.GetAll).ConfigureAwait(false);
+            await Application.Current.Dispatcher.InvokeAsync(() =>
             {
-                IEnumerable<Departament> departaments = await _dataService.GetAll();
-                Application.Current.Dispatcher.Invoke(() =>
-                {
-                    Departaments = new ObservableCollection<Departament>(departaments);
-                });
+                Departaments = new ObservableCollection<Departament>(departaments);
             });
         }
+
+        //private void InitializeDepartamentsAsync()
+        //{
+        //    Task.Run(async () =>
+        //    {
+        //        IEnumerable<Departament> departaments = await _dataService.GetAll().ConfigureAwait(false);
+        //        await Application.Current.Dispatcher.InvokeAsync(() =>
+        //        {
+        //            Departaments = new ObservableCollection<Departament>(departaments);
+        //        });
+        //    });
+        //}
 
         #endregion
     }

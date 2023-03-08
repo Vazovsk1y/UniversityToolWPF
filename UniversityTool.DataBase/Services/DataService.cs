@@ -20,7 +20,7 @@ namespace UniversityTool.DataBase.Services
         {
             using(UniversityToolDBContext context = _contextFactory.CreateDbContext()) 
             {
-                EntityEntry<T> result = await context.Set<T>().AddAsync(entity);
+                EntityEntry<T> result = await context.Set<T>().AddAsync(entity).ConfigureAwait(false);
                 await context.SaveChangesAsync();
                 return result.Entity;
             }
@@ -30,7 +30,7 @@ namespace UniversityTool.DataBase.Services
         {
             using (UniversityToolDBContext context = _contextFactory.CreateDbContext())
             {
-                T entity = await context.Set<T>().FirstOrDefaultAsync(e => e.Id == id);
+                T entity = await context.Set<T>().FirstOrDefaultAsync(e => e.Id == id).ConfigureAwait(false);
                 context.Set<T>().Remove(entity);
                 await context.SaveChangesAsync();
 
@@ -42,7 +42,7 @@ namespace UniversityTool.DataBase.Services
         {
             using (UniversityToolDBContext context = _contextFactory.CreateDbContext())
             {
-                T entity = await context.Set<T>().FirstOrDefaultAsync(e => e.Id == id);
+                T entity = await context.Set<T>().FirstOrDefaultAsync(e => e.Id == id).ConfigureAwait(false);
                 return entity;
             }
         }
@@ -51,7 +51,7 @@ namespace UniversityTool.DataBase.Services
         {
             using (UniversityToolDBContext context = _contextFactory.CreateDbContext())
             {
-                IEnumerable<T> entities = await context.Set<T>().ToListAsync();
+                IEnumerable<T> entities = await context.Set<T>().ToListAsync().ConfigureAwait(false);
                 return entities;
             }
         }
