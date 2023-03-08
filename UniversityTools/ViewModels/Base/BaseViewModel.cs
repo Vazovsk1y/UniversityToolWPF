@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 namespace UniversityTool.ViewModels.Base
 {
     internal abstract class BaseViewModel : INotifyPropertyChanged
-    {
+    {  
         public event PropertyChangedEventHandler? PropertyChanged;
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)

@@ -3,7 +3,6 @@ using System.Windows.Input;
 using UniversityTool.Infastructure.Commands;
 using UniversityTool.Domain.Models;
 using UniversityTool.ViewModels.Base;
-using System.Linq;
 using UniversityTool.Domain.Services.DataServices;
 using System.Collections.Generic;
 using System.Threading.Tasks;

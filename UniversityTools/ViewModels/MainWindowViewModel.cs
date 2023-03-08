@@ -8,6 +8,7 @@ using UniversityTool.ViewModels.Base;
 using UniversityTool.ViewModels.ControlsViewModels;
 using UniversityTool.Domain.Services.WindowsServices;
 using UniversityTool.Domain.Services.DataServices;
+using System.Windows;
 
 namespace UniversityTool.ViewModels
 {
@@ -43,7 +44,7 @@ namespace UniversityTool.ViewModels
             _groupAddWindow = groupAddWindowService;
             _departamentAddWindow = service;
             _messageBus = messageBus;
-            _subscription = _messageBus.RegisterHandler<DepartamentTitleMessage>(OnReceiveMessage);
+            _subscription = _messageBus.RegisterHandler<DepartamentMessage>(OnReceiveMessage);
             TreeView = new TreeViewViewModel(dataRepository);
         }
 
@@ -69,13 +70,15 @@ namespace UniversityTool.ViewModels
 
         public void Dispose() => _subscription?.Dispose();
 
-        private void OnReceiveMessage(DepartamentTitleMessage message)
+        private void OnReceiveMessage(DepartamentMessage message)
         {
-            if (message is null || message.DepartamentTitle is null) return;
+            if (message is null || message.Departament.Title is null) return;
 
-            if (message.DepartamentTitle.Length != 0)
+            if (message.Departament.Title.Length != 0)
             {
-                TreeView.Departaments.Add(new Departament { Title = message.DepartamentTitle });
+                Application.Current.Dispatcher.Invoke(() => {
+                    TreeView.Departaments.Add(message.Departament);
+                });
             }
         }
 

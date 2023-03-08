@@ -15,12 +15,12 @@ namespace UniversityTool.DataBase.Services
         {
             using (UniversityToolDBContext context = _contextFactory.CreateDbContext())
             {
-                IEnumerable<Departament> departaments = 
+                IEnumerable<Departament> departaments =
                     await context.Departaments
                     .Include(d => d.Groups)
                     .ThenInclude(g => g.Students)
                     .ToListAsync().ConfigureAwait(false);
-                 
+
                 return departaments;
             }
         }

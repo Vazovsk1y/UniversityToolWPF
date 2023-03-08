@@ -5,6 +5,8 @@ using UniversityTool.Domain.Services;
 using UniversityTool.ViewModels.Base;
 using UniversityTool.Domain.Models;
 using UniversityTool.Domain.Services.DataServices.Base;
+using System.Windows;
+using System.Threading.Tasks;
 
 namespace UniversityTool.ViewModels
 {
@@ -21,11 +23,10 @@ namespace UniversityTool.ViewModels
 
         #region --Properties--
 
-        
         public string DepartamentName
         {
-            get { return _departamentName; }
-            set { Set(ref _departamentName, value); }
+            get => _departamentName; 
+            set => Set(ref _departamentName, value);
         }
 
         #endregion
@@ -55,24 +56,35 @@ namespace UniversityTool.ViewModels
 
         private bool OnCanCancel(object p) => true;
 
-        private void OnCanceling(object p)
-        {
-            _departamentAddService.CloseWindow();
-        }
+        private void OnCanceling(object p) => _departamentAddService.CloseWindow();
 
         private bool OnCanAccept(object p) => true;
 
-        private void OnAccepting(object a)
+        private async void OnAccepting(object action)
         {
-            _messageBus.Send(new DepartamentTitleMessage(DepartamentName));
-            _dataProviderService.Add(new Departament { Title = DepartamentName });
-            _departamentAddService.CloseWindow();
+            var entity = await _dataProviderService.Add(new Departament { Title = DepartamentName }).ConfigureAwait(false);
+            await SendMessageAndCloseWindowAsync(entity);
+
+            //await Application.Current.Dispatcher.InvokeAsync(() =>
+            //{
+            //    _messageBus.Send(new DepartamentMessage(entity));
+            //    _departamentAddService.CloseWindow();
+            //});
         }
 
         #endregion
 
         #region --Methods--
 
+        private async Task SendMessageAndCloseWindowAsync(Departament entity)
+        {
+            await Task.Run(() =>
+            {
+                _messageBus.Send(new DepartamentMessage(entity));
+            }).ConfigureAwait(false);
+
+            await Application.Current.Dispatcher.InvokeAsync(_departamentAddService.CloseWindow);
+        }
 
         #endregion
     }

@@ -16,7 +16,7 @@ namespace UniversityTool.ViewModels
         #region --Fields--
 
         private ObservableCollection<Departament> _departaments;
-        private readonly IBaseDataRepositoryService<Departament> _dataService;
+        private readonly IBaseDataRepositoryService<Departament> _dataDepartamentService;
         private readonly IGroupAddWindowService _groupAddWindowService;
 
         #endregion
@@ -41,7 +41,7 @@ namespace UniversityTool.ViewModels
 
         public GroupAddViewModel(IBaseDataRepositoryService<Departament> dataService, IGroupAddWindowService groupAddWindowService) : this()
         {
-            _dataService = dataService;
+            _dataDepartamentService = dataService;
             _groupAddWindowService = groupAddWindowService;
             InitializeDepartamentsAsync();
         }
@@ -73,7 +73,7 @@ namespace UniversityTool.ViewModels
 
         private async void InitializeDepartamentsAsync()
         {
-            IEnumerable<Departament> departaments = await Task.Run(_dataService.GetAll).ConfigureAwait(false);
+            IEnumerable<Departament> departaments = await Task.Run(_dataDepartamentService.GetAll).ConfigureAwait(false);
             await Application.Current.Dispatcher.InvokeAsync(() =>
             {
                 Departaments = new ObservableCollection<Departament>(departaments);
