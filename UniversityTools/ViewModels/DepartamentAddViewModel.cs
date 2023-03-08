@@ -3,8 +3,8 @@ using UniversityTool.Infastructure.Commands;
 using UniversityTool.Domain.Models.Messages;
 using UniversityTool.Domain.Services;
 using UniversityTool.ViewModels.Base;
-using UniversityTool.Domain.Services.DataServices;
 using UniversityTool.Domain.Models;
+using UniversityTool.Domain.Services.DataServices.Base;
 
 namespace UniversityTool.ViewModels
 {
@@ -15,7 +15,7 @@ namespace UniversityTool.ViewModels
         private string _departamentName;
         private readonly IMessageBusService _messageBus;
         private readonly IDepartamentAddWindowService _departamentAddService;
-        private readonly IDataRepositoryService<Departament> _dataProviderService;
+        private readonly IBaseDataRepositoryService<Departament> _dataProviderService;
 
         #endregion
 
@@ -39,7 +39,7 @@ namespace UniversityTool.ViewModels
         }
 
         public DepartamentAddViewModel(IDepartamentAddWindowService userDialog, IMessageBusService messageBus
-            ,IDataRepositoryService<Departament> dataProviderService) : this()
+            ,IBaseDataRepositoryService<Departament> dataProviderService) : this()
         {
             _dataProviderService = dataProviderService;
             _departamentAddService = userDialog;

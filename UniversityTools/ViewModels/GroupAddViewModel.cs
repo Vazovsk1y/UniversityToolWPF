@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using UniversityTool.Domain.Models;
-using UniversityTool.Domain.Services.DataServices;
+using UniversityTool.Domain.Services.DataServices.Base;
 using UniversityTool.Domain.Services.WindowsServices;
 using UniversityTool.Infastructure.Commands;
 using UniversityTool.ViewModels.Base;
@@ -16,7 +16,7 @@ namespace UniversityTool.ViewModels
         #region --Fields--
 
         private ObservableCollection<Departament> _departaments;
-        private readonly IDataRepositoryService<Departament> _dataService;
+        private readonly IBaseDataRepositoryService<Departament> _dataService;
         private readonly IGroupAddWindowService _groupAddWindowService;
 
         #endregion
@@ -39,7 +39,7 @@ namespace UniversityTool.ViewModels
             AcceptCommand = new RelayCommand(OnAccepting, OnCanAccept);
         }
 
-        public GroupAddViewModel(IDataRepositoryService<Departament> dataService, IGroupAddWindowService groupAddWindowService) : this()
+        public GroupAddViewModel(IBaseDataRepositoryService<Departament> dataService, IGroupAddWindowService groupAddWindowService) : this()
         {
             _dataService = dataService;
             _groupAddWindowService = groupAddWindowService;

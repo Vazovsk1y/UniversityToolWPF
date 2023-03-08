@@ -3,22 +3,22 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 using UniversityTool.DataBase.Context;
 using UniversityTool.DataBase.Factory;
 using UniversityTool.Domain.Models.Base;
-using UniversityTool.Domain.Services.DataServices;
+using UniversityTool.Domain.Services.DataServices.Base;
 
-namespace UniversityTool.DataBase.Services
+namespace UniversityTool.DataBase.Services.Base
 {
-    internal class DataRepositoryService<T> : IDataRepositoryService<T> where T : BaseModel
+    internal class BaseDataRepositoryService<T> : IBaseDataRepositoryService<T> where T : BaseModel
     {
-        private readonly UniversityToolDbContextFactory _contextFactory;
+        protected readonly UniversityToolDbContextFactory _contextFactory;
 
-        public DataRepositoryService(UniversityToolDbContextFactory contextFactory)
+        public BaseDataRepositoryService(UniversityToolDbContextFactory contextFactory)
         {
             _contextFactory = contextFactory;
         }
 
         public async Task<T> Add(T entity)
         {
-            using(UniversityToolDBContext context = _contextFactory.CreateDbContext()) 
+            using (UniversityToolDBContext context = _contextFactory.CreateDbContext())
             {
                 EntityEntry<T> result = await context.Set<T>().AddAsync(entity).ConfigureAwait(false);
                 await context.SaveChangesAsync();

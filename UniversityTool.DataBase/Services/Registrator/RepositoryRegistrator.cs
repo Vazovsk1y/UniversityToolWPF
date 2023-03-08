@@ -1,12 +1,15 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using UniversityTool.DataBase.Services.Base;
 using UniversityTool.Domain.Services.DataServices;
+using UniversityTool.Domain.Services.DataServices.Base;
 
 namespace UniversityTool.DataBase.Services.Registrator
 {
     public static class RepositoryRegistrator
     {
         public static IServiceCollection AddDbRepositories(this IServiceCollection services) => services
-            .AddTransient(typeof(IDataRepositoryService<>), typeof(DataRepositoryService<>))
+            .AddTransient(typeof(IBaseDataRepositoryService<>), typeof(BaseDataRepositoryService<>))
+            .AddTransient<ITreeDataRepositoryService, TreeDataRepositoryService>()
             ;
     }
 }

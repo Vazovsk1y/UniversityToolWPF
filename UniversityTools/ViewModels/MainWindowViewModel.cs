@@ -38,7 +38,7 @@ namespace UniversityTool.ViewModels
         }
 
         public MainWindowViewModel(IDepartamentAddWindowService service, IMessageBusService messageBus, 
-            IGroupAddWindowService groupAddWindowService, IDataRepositoryService<Departament> dataRepository) : this()
+            IGroupAddWindowService groupAddWindowService, ITreeDataRepositoryService dataRepository) : this()
         {
             _groupAddWindow = groupAddWindowService;
             _departamentAddWindow = service;

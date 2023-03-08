@@ -21,7 +21,7 @@ namespace UniversityTool.ViewModels.ControlsViewModels
         private ObservableCollection<Student> _students = new();
         private ObservableCollection<Group> _groups = new();
         private ObservableCollection<Departament> _departaments = new();
-        private readonly IDataRepositoryService<Departament> _dataService;
+        private readonly ITreeDataRepositoryService _dataService;
 
         #endregion
 
@@ -67,7 +67,7 @@ namespace UniversityTool.ViewModels.ControlsViewModels
 
         #region --Constructors--
 
-        public TreeViewViewModel(IDataRepositoryService<Departament> dataService)
+        public TreeViewViewModel(ITreeDataRepositoryService dataService)
         {
             TreeViewItemSelectionChangedCommand = new RelayCommand(OnTreeViewItemSelectionChanged, OnCanSelectTreeViewItem);
             _dataService = dataService;
@@ -105,7 +105,7 @@ namespace UniversityTool.ViewModels.ControlsViewModels
 
         private async void InitializeDepartamentsAsync()
         {
-            IEnumerable<Departament> departaments = await Task.Run(_dataService.GetAll).ConfigureAwait(false);
+            IEnumerable<Departament> departaments = await Task.Run(_dataService.GetFullTree).ConfigureAwait(false);
             await Application.Current.Dispatcher.InvokeAsync(() =>
             {
                 Departaments = new ObservableCollection<Departament>(departaments);
