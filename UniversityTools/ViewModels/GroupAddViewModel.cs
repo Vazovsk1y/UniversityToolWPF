@@ -16,7 +16,7 @@ namespace UniversityTool.ViewModels
         #region --Fields--
 
         private ObservableCollection<Departament> _departaments;
-        private readonly IDataService<Departament> _dataService;
+        private readonly IDataRepositoryService<Departament> _dataService;
         private readonly IGroupAddWindowService _groupAddWindowService;
 
         #endregion
@@ -39,7 +39,7 @@ namespace UniversityTool.ViewModels
             AcceptCommand = new RelayCommand(OnAccepting, OnCanAccept);
         }
 
-        public GroupAddViewModel(IDataService<Departament> dataService, IGroupAddWindowService groupAddWindowService) : this()
+        public GroupAddViewModel(IDataRepositoryService<Departament> dataService, IGroupAddWindowService groupAddWindowService) : this()
         {
             _dataService = dataService;
             _groupAddWindowService = groupAddWindowService;

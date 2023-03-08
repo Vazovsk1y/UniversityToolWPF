@@ -15,7 +15,7 @@ namespace UniversityTool.ViewModels
         private string _departamentName;
         private readonly IMessageBusService _messageBus;
         private readonly IDepartamentAddWindowService _departamentAddService;
-        private readonly IDataService<Departament> _dataProviderService;
+        private readonly IDataRepositoryService<Departament> _dataProviderService;
 
         #endregion
 
@@ -39,7 +39,7 @@ namespace UniversityTool.ViewModels
         }
 
         public DepartamentAddViewModel(IDepartamentAddWindowService userDialog, IMessageBusService messageBus
-            ,IDataService<Departament> dataProviderService) : this()
+            ,IDataRepositoryService<Departament> dataProviderService) : this()
         {
             _dataProviderService = dataProviderService;
             _departamentAddService = userDialog;
