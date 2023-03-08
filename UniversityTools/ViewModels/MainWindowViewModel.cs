@@ -7,6 +7,7 @@ using UniversityTool.Domain.Services;
 using UniversityTool.ViewModels.Base;
 using UniversityTool.ViewModels.ControlsViewModels;
 using UniversityTool.Domain.Services.WindowsServices;
+using UniversityTool.Domain.Services.DataServices;
 
 namespace UniversityTool.ViewModels
 {
@@ -24,7 +25,7 @@ namespace UniversityTool.ViewModels
 
         #region --Properties--                 
 
-        public TreeViewViewModel TreeViewViewModel { get; }
+        public TreeViewViewModel TreeView { get; }
 
         #endregion
 
@@ -32,18 +33,18 @@ namespace UniversityTool.ViewModels
 
         public MainWindowViewModel() 
         {
-            TreeViewViewModel = new TreeViewViewModel();
             AddDepartamentCommand = new RelayCommand(OnAddingDepartament, OnCanAddDepartament);
             AddGroupCommand = new RelayCommand(OnAddingGroup, OnCanAddGroup);
         }
 
         public MainWindowViewModel(IDepartamentAddWindowService service, IMessageBusService messageBus, 
-            IGroupAddWindowService groupAddWindowService) : this()
+            IGroupAddWindowService groupAddWindowService, IDataRepositoryService<Departament> dataRepository) : this()
         {
             _groupAddWindow = groupAddWindowService;
             _departamentAddWindow = service;
             _messageBus = messageBus;
             _subscription = _messageBus.RegisterHandler<DepartamentTitleMessage>(OnReceiveMessage);
+            TreeView = new TreeViewViewModel(dataRepository);
         }
 
         #endregion
@@ -74,7 +75,7 @@ namespace UniversityTool.ViewModels
 
             if (message.DepartamentTitle.Length != 0)
             {
-                TreeViewViewModel.Departaments.Add(new Departament { Title = message.DepartamentTitle });
+                TreeView.Departaments.Add(new Departament { Title = message.DepartamentTitle });
             }
         }
 

@@ -73,7 +73,7 @@
 
             <Grid Grid.Column="0">
                 <TreeView x:Name="mainTree"
-                   ItemsSource="{Binding TreeViewViewModel.Departaments}"
+                   ItemsSource="{Binding TreeView.Departaments}"
                    VirtualizingStackPanel.IsVirtualizing="True"
                    VirtualizingStackPanel.VirtualizationMode="Recycling">
                     <TreeView.ItemTemplate>
@@ -102,7 +102,7 @@
 
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName = "SelectedItemChanged" >
-                            <i:InvokeCommandAction Command = "{Binding TreeViewViewModel.TreeViewItemSelectionChangedCommand}"
+                            <i:InvokeCommandAction Command = "{Binding TreeView.TreeViewItemSelectionChangedCommand}"
                                         CommandParameter="{Binding ElementName=mainTree, Path=SelectedItem}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
@@ -112,8 +112,8 @@
             <Grid Grid.Column="1">
                 <TabControl>
                     <TabItem Header="Студенты">
-                        <GroupBox Header="{Binding TreeViewViewModel.SelectedGroup.Title}">
-                            <DataGrid ItemsSource="{Binding TreeViewViewModel.SelectedGroup.Students}" AutoGenerateColumns="False" IsReadOnly="True">
+                        <GroupBox Header="{Binding TreeView.SelectedGroup.Title}">
+                            <DataGrid ItemsSource="{Binding TreeView.SelectedGroup.Students}" AutoGenerateColumns="False" IsReadOnly="True">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="Имя" Binding="{Binding Name}"/>
                                     <DataGridTextColumn Header="Фамилия" Binding="{Binding SecondName}"/>

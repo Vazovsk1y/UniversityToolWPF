@@ -4,6 +4,10 @@ using UniversityTool.Infastructure.Commands;
 using UniversityTool.Domain.Models;
 using UniversityTool.ViewModels.Base;
 using System.Linq;
+using UniversityTool.Domain.Services.DataServices;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using System.Windows;
 
 namespace UniversityTool.ViewModels.ControlsViewModels
 {
@@ -17,6 +21,7 @@ namespace UniversityTool.ViewModels.ControlsViewModels
         private ObservableCollection<Student> _students = new();
         private ObservableCollection<Group> _groups = new();
         private ObservableCollection<Departament> _departaments = new();
+        private readonly IDataRepositoryService<Departament> _dataService;
 
         #endregion
 
@@ -37,7 +42,7 @@ namespace UniversityTool.ViewModels.ControlsViewModels
         public ObservableCollection<Departament> Departaments
         {
             get => _departaments;
-            set => _departaments = value;
+            set => Set(ref _departaments, value);
         }
 
         public Group SelectedGroup
@@ -62,22 +67,11 @@ namespace UniversityTool.ViewModels.ControlsViewModels
 
         #region --Constructors--
 
-        public TreeViewViewModel()
+        public TreeViewViewModel(IDataRepositoryService<Departament> dataService)
         {
             TreeViewItemSelectionChangedCommand = new RelayCommand(OnTreeViewItemSelectionChanged, OnCanSelectTreeViewItem);
-
-            var departaments = Enumerable.Range(0, 10).Select(d => new Departament
-            {
-                Title = $"Depart {d}",
-                Groups = Enumerable.Range(0, 5).Select(g => new Group
-                {
-                    Title = $"Sraka {g}",
-                    Students = Enumerable.Range(0, 3).Select(s => new Student
-                    { Name = $"St {s}" }).ToList()
-                }).ToList()
-            }).ToList();
-
-            Departaments = new ObservableCollection<Departament>(departaments);
+            _dataService = dataService;
+            InitializeDepartamentsAsync();
         }
 
         #endregion
@@ -103,6 +97,19 @@ namespace UniversityTool.ViewModels.ControlsViewModels
             {
                 SelectedDepartament = departament;
             }
+        }
+
+        #endregion
+
+        #region --Methods--
+
+        private async void InitializeDepartamentsAsync()
+        {
+            IEnumerable<Departament> departaments = await Task.Run(_dataService.GetAll).ConfigureAwait(false);
+            await Application.Current.Dispatcher.InvokeAsync(() =>
+            {
+                Departaments = new ObservableCollection<Departament>(departaments);
+            });
         }
 
         #endregion
