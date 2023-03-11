@@ -33,7 +33,7 @@ namespace UniversityTool
             bool isNewInstance = false;
             try
             {
-                EventWaitHandle eventWaitHandle = EventWaitHandle.OpenExisting(UniqueEventName); // here will be exception if app is not starting
+                EventWaitHandle eventWaitHandle = EventWaitHandle.OpenExisting(UniqueEventName); // here will be exception if app is not even starting
                 eventWaitHandle.Set();
                 Shutdown();
                 return;
