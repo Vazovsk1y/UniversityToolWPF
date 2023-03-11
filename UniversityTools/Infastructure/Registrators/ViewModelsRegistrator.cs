@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using System;
 using UniversityTool.ViewModels;
+using UniversityTool.ViewModels.ControlsViewModels;
 
 namespace UniversityTool.Infastructure.Registrators
 {
@@ -10,6 +10,7 @@ namespace UniversityTool.Infastructure.Registrators
             .AddTransient<MainWindowViewModel>()
             .AddTransient<DepartamentAddViewModel>()
             .AddTransient<GroupAddViewModel>()
+            .AddTransient<TreeViewViewModel>()
             ;
     }
 }

@@ -1,9 +1,8 @@
 ﻿using UniversityTool.Domain.Models;
-using UniversityTool.Domain.Services.DataServices.Base;
 
 namespace UniversityTool.Domain.Services.DataServices
 {
-    public interface ITreeDataRepositoryService : IBaseDataRepositoryService<Departament>
+    public interface ITreeDataRepositoryService
     {
         Task<IEnumerable<Departament>> GetFullTree();
     }

@@ -66,9 +66,13 @@ namespace UniversityTool.ViewModels.ControlsViewModels
 
         #region --Constructors--
 
-        public TreeViewViewModel(ITreeDataRepositoryService dataService)
+        public TreeViewViewModel()
         {
             TreeViewItemSelectionChangedCommand = new RelayCommand(OnTreeViewItemSelectionChanged, OnCanSelectTreeViewItem);
+        }
+
+        public TreeViewViewModel(ITreeDataRepositoryService dataService) : this()
+        {
             _dataService = dataService;
             InitializeFullTreeAsync();
         }

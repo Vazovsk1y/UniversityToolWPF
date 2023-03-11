@@ -11,6 +11,7 @@ using UniversityTool.Domain.Services.DataServices;
 using System.Windows;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace UniversityTool.ViewModels
 {
@@ -41,27 +42,27 @@ namespace UniversityTool.ViewModels
         }
 
         public MainWindowViewModel(IDepartamentAddWindowService service, IMessageBusService messageBus, 
-            IGroupAddWindowService groupAddWindowService, ITreeDataRepositoryService treeDataRepository) : this()
+            IGroupAddWindowService groupAddWindowService, TreeViewViewModel treeView) : this()
         {
             _groupAddWindow = groupAddWindowService;
             _departamentAddWindow = service;
             _messageBus = messageBus;
-            _subscriptions.Add(_messageBus.RegisterHandler<DepartamentMessage>(OnReceiveMessage));
-            _subscriptions.Add(_messageBus.RegisterHandler<GroupMessage>(OnReceiveMessage));
-            TreeView = new TreeViewViewModel(treeDataRepository);
+            TreeView = treeView;
+            _subscriptions.Add(messageBus.RegisterHandler<DepartamentMessage>(OnReceiveMessage));
+            _subscriptions.Add(messageBus.RegisterHandler<GroupMessage>(OnReceiveMessage));
         }
 
         #endregion
 
         #region --Commands--
 
-        public ICommand AddDepartamentCommand { get; }                          // initialize in class constructor
+        public ICommand AddDepartamentCommand { get; }                          
 
         private bool OnCanAddDepartament(object arg) => true;
 
         private void OnAddingDepartament(object obj) => _departamentAddWindow.OpenWindow();
 
-        public ICommand AddGroupCommand { get; }                          // initialize in class constructor
+        public ICommand AddGroupCommand { get; }                          
 
         private bool OnCanAddGroup(object arg) => true;
 

@@ -1,7 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using UniversityTool.DataBase.Services;
 using UniversityTool.Domain.Services;
-using UniversityTool.Domain.Services.DataServices;
 using UniversityTool.Domain.Services.WindowsServices;
 using UniversityTool.Services.DataServices.Impementations;
 using UniversityTool.Services.WindowsServices.Implementaions;

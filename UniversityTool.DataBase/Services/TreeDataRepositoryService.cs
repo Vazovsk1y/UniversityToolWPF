@@ -1,15 +1,19 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using UniversityTool.DataBase.Context;
 using UniversityTool.DataBase.Factory;
-using UniversityTool.DataBase.Services.Base;
 using UniversityTool.Domain.Models;
 using UniversityTool.Domain.Services.DataServices;
 
 namespace UniversityTool.DataBase.Services
 {
-    internal class TreeDataRepositoryService : BaseDataRepositoryService<Departament>, ITreeDataRepositoryService
+    internal class TreeDataRepositoryService : ITreeDataRepositoryService
     {
-        public TreeDataRepositoryService(UniversityToolDbContextFactory contextFactory) : base(contextFactory) { }
+        private readonly UniversityToolDbContextFactory _contextFactory;
+
+        public TreeDataRepositoryService(UniversityToolDbContextFactory contextFactory)
+        {
+            _contextFactory = contextFactory;
+        }
 
         public async Task<IEnumerable<Departament>> GetFullTree()
         {
