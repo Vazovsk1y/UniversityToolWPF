@@ -73,25 +73,24 @@
 
             <Grid Grid.Column="0">
                 <TreeView x:Name="mainTree"
-                   ItemsSource="{Binding TreeView.Departaments}"
-                   VirtualizingStackPanel.IsVirtualizing="True"
-                   VirtualizingStackPanel.VirtualizationMode="Recycling">
+                   ItemsSource="{Binding TreeView.Departaments, UpdateSourceTrigger=PropertyChanged}"
+                   >
                     <TreeView.ItemTemplate>
                         <HierarchicalDataTemplate 
                             DataType="m:Departament"
-                            ItemsSource="{Binding Groups}">
-                            <TextBlock Text="{Binding Title}"
+                            ItemsSource="{Binding Groups, UpdateSourceTrigger=PropertyChanged}">
+                            <TextBlock Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}"
                                        Style="{StaticResource text}"/>
                             <HierarchicalDataTemplate.ItemTemplate>
                                 <HierarchicalDataTemplate 
                                     DataType="m:Group"
-                                    ItemsSource="{Binding Students}">
-                                    <TextBlock Text="{Binding Title}"
+                                    ItemsSource="{Binding Students, UpdateSourceTrigger=PropertyChanged}">
+                                    <TextBlock Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}"
                                                Style="{StaticResource text}"/>
                                     <HierarchicalDataTemplate.ItemTemplate>
                                         <DataTemplate 
                                             DataType="m:Student">
-                                            <TextBlock Text="{Binding Name}"
+                                            <TextBlock Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"
                                                        Style="{StaticResource text}"/>
                                         </DataTemplate>
                                     </HierarchicalDataTemplate.ItemTemplate>

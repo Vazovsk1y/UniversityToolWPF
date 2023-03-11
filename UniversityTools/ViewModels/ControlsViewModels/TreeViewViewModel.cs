@@ -70,7 +70,7 @@ namespace UniversityTool.ViewModels.ControlsViewModels
         {
             TreeViewItemSelectionChangedCommand = new RelayCommand(OnTreeViewItemSelectionChanged, OnCanSelectTreeViewItem);
             _dataService = dataService;
-            InitializeDepartamentsAsync();
+            InitializeFullTreeAsync();
         }
 
         #endregion
@@ -102,7 +102,7 @@ namespace UniversityTool.ViewModels.ControlsViewModels
 
         #region --Methods--
 
-        private async void InitializeDepartamentsAsync()
+        private async void InitializeFullTreeAsync()
         {
             IEnumerable<Departament> departaments = await Task.Run(_dataService.GetFullTree).ConfigureAwait(false);
             await Application.Current.Dispatcher.InvokeAsync(() =>

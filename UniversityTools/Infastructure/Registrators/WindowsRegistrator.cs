@@ -7,16 +7,16 @@ namespace UniversityTool.Infastructure.Registrators
     internal static class WindowsRegistrator
     {
         public static IServiceCollection AddWindows(this IServiceCollection services) => services
-            .AddTransient(
+            .AddScoped(
                 s =>
                 {
-                    //var scope = s.CreateScope();
-                    //var model = scope.ServiceProvider.GetRequiredService<MainWindowViewModel>();
-                    //window.Closed += (_, _) => scope.Dispose();
-                    //var window = new MainWindow { DataContext = model };
-
-                    var model = s.GetRequiredService<MainWindowViewModel>();
+                    var scope = s.CreateScope();
+                    var model = scope.ServiceProvider.GetRequiredService<MainWindowViewModel>();
                     var window = new MainWindow { DataContext = model };
+                    window.Closed += (_, _) => scope.Dispose();
+
+                    //var model = s.GetRequiredService<MainWindowViewModel>();
+                    //var window = new MainWindow { DataContext = model };
 
                     return window;
                 })

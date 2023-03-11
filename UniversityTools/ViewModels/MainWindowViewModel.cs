@@ -9,6 +9,8 @@ using UniversityTool.ViewModels.ControlsViewModels;
 using UniversityTool.Domain.Services.WindowsServices;
 using UniversityTool.Domain.Services.DataServices;
 using System.Windows;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace UniversityTool.ViewModels
 {
@@ -20,7 +22,7 @@ namespace UniversityTool.ViewModels
         private readonly IDepartamentAddWindowService _departamentAddWindow;
         private readonly IGroupAddWindowService _groupAddWindow;
         private readonly IMessageBusService _messageBus;
-        private readonly IDisposable _subscription;
+        private readonly ICollection<IDisposable> _subscriptions = new List<IDisposable>();
 
         #endregion
 
@@ -39,13 +41,14 @@ namespace UniversityTool.ViewModels
         }
 
         public MainWindowViewModel(IDepartamentAddWindowService service, IMessageBusService messageBus, 
-            IGroupAddWindowService groupAddWindowService, ITreeDataRepositoryService dataRepository) : this()
+            IGroupAddWindowService groupAddWindowService, ITreeDataRepositoryService treeDataRepository) : this()
         {
             _groupAddWindow = groupAddWindowService;
             _departamentAddWindow = service;
             _messageBus = messageBus;
-            _subscription = _messageBus.RegisterHandler<DepartamentMessage>(OnReceiveMessage);
-            TreeView = new TreeViewViewModel(dataRepository);
+            _subscriptions.Add(_messageBus.RegisterHandler<DepartamentMessage>(OnReceiveMessage));
+            _subscriptions.Add(_messageBus.RegisterHandler<GroupMessage>(OnReceiveMessage));
+            TreeView = new TreeViewViewModel(treeDataRepository);
         }
 
         #endregion
@@ -68,18 +71,37 @@ namespace UniversityTool.ViewModels
 
         #region --Methods--
 
-        public void Dispose() => _subscription?.Dispose();
+        public void Dispose()
+        {
+            foreach(var subscription in _subscriptions)
+                subscription.Dispose();
+        }
 
-        private void OnReceiveMessage(DepartamentMessage message)
+        private async void OnReceiveMessage(DepartamentMessage message)
         {
             if (message is null || message.Departament.Title is null) return;
 
             if (message.Departament.Title.Length != 0)
             {
-                Application.Current.Dispatcher.Invoke(() => {
+                await Application.Current.Dispatcher.InvokeAsync(() => 
+                {
                     TreeView.Departaments.Add(message.Departament);
                 });
             }
+        }
+
+        private async void OnReceiveMessage(GroupMessage message)
+        {
+            message.Deconstruct(out Group group);
+
+            if (group is null || group.Title is null)
+                return;
+
+            await Application.Current.Dispatcher.InvokeAsync(() =>
+            {
+                var departament = TreeView.Departaments.FirstOrDefault(d => d.Id == group.DepartamentId);
+                departament?.Groups.Add(group);
+            });
         }
 
         #endregion

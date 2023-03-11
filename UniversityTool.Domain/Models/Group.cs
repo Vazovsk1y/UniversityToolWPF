@@ -1,9 +1,10 @@
-﻿using UniversityTool.Domain.Models.Base;
+﻿using System.Collections.ObjectModel;
+using UniversityTool.Domain.Models.Base;
 
 namespace UniversityTool.Domain.Models
 {
     /// <summary>
-    /// Group have a parent - departament and list of sons - students.
+    /// Group have a parent - departament and collection of sons - students.
     /// </summary>
     public class Group : BaseModel
     {
@@ -11,6 +12,6 @@ namespace UniversityTool.Domain.Models
         public Departament Departament { get; set; }
 
         public string Title { get; set; }
-        public ICollection<Student> Students { get; set; }
+        public ICollection<Student> Students { get; set; } = new ObservableCollection<Student>();
     }
 }

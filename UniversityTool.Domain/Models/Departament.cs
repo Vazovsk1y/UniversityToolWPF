@@ -1,4 +1,5 @@
-﻿using UniversityTool.Domain.Models.Base;
+﻿using System.Collections.ObjectModel;
+using UniversityTool.Domain.Models.Base;
 
 namespace UniversityTool.Domain.Models
 {
@@ -7,7 +8,7 @@ namespace UniversityTool.Domain.Models
     /// </summary>
     public class Departament : BaseModel
     {
-        public string? Title { get; set; }
-        public ICollection<Group> Groups { get; set; }
+        public string Title { get; set; }
+        public ICollection<Group> Groups { get; set; } = new ObservableCollection<Group>();
     }
 }

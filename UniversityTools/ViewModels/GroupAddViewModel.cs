@@ -4,6 +4,8 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using UniversityTool.Domain.Models;
+using UniversityTool.Domain.Models.Messages;
+using UniversityTool.Domain.Services;
 using UniversityTool.Domain.Services.DataServices.Base;
 using UniversityTool.Domain.Services.WindowsServices;
 using UniversityTool.Infastructure.Commands;
@@ -15,9 +17,18 @@ namespace UniversityTool.ViewModels
     {
         #region --Fields--
 
+        private string _groupName;
+        private Departament _selectedDepartament;
         private ObservableCollection<Departament> _departaments;
+
+        #region --Services--
+
+        private readonly IBaseDataRepositoryService<Group> _dataGroupService;
         private readonly IBaseDataRepositoryService<Departament> _dataDepartamentService;
         private readonly IGroupAddWindowService _groupAddWindowService;
+        private readonly IMessageBusService _messageBus;
+
+        #endregion
 
         #endregion
 
@@ -27,9 +38,21 @@ namespace UniversityTool.ViewModels
         {
             get => _departaments;
             set => Set(ref _departaments, value);                         
-        }                                                                 
-                                                                          
-        #endregion                                                        
+        }
+
+        public string GroupTitle 
+        {
+            get => _groupName; 
+            set => Set(ref _groupName, value); 
+        }
+
+        public Departament SelectedDepartament 
+        { 
+            get => _selectedDepartament; 
+            set => Set(ref _selectedDepartament, value); 
+        }
+
+        #endregion
 
         #region --Constructors--
 
@@ -39,8 +62,11 @@ namespace UniversityTool.ViewModels
             AcceptCommand = new RelayCommand(OnAccepting, OnCanAccept);
         }
 
-        public GroupAddViewModel(IBaseDataRepositoryService<Departament> dataService, IGroupAddWindowService groupAddWindowService) : this()
+        public GroupAddViewModel(IBaseDataRepositoryService<Departament> dataService, IGroupAddWindowService groupAddWindowService,
+            IMessageBusService messageBusService, IBaseDataRepositoryService<Group> dataGroupService) : this()
         {
+            _dataGroupService = dataGroupService;
+            _messageBus = messageBusService;
             _dataDepartamentService = dataService;
             _groupAddWindowService = groupAddWindowService;
             InitializeDepartamentsAsync();
@@ -55,16 +81,21 @@ namespace UniversityTool.ViewModels
 
         private bool OnCanCancel(object p) => true;
 
-        private void OnCanceling(object p)
-        {
-            _groupAddWindowService.CloseWindow();
-        }
+        private void OnCanceling(object p) => _groupAddWindowService.CloseWindow();
 
         private bool OnCanAccept(object p) => true;
 
-        private void OnAccepting(object a)
+        private async void OnAccepting(object a)
         {
-            _groupAddWindowService.CloseWindow();
+            var groupEntity = await _dataGroupService
+                .Add(new Group 
+                { 
+                    DepartamentId = SelectedDepartament.Id, 
+                    Title = GroupTitle 
+                })
+                .ConfigureAwait(false);
+
+            await SendMessageAndCloseWindowAsync(groupEntity);
         }
 
         #endregion
@@ -91,6 +122,16 @@ namespace UniversityTool.ViewModels
         //        });
         //    });
         //}
+
+        private async Task SendMessageAndCloseWindowAsync(Group group)
+        {
+            await Task.Run(() =>
+            {
+                _messageBus.Send(new GroupMessage(group));
+            }).ConfigureAwait(false);
+
+            await Application.Current.Dispatcher.InvokeAsync(_groupAddWindowService.CloseWindow);
+        }
 
         #endregion
     }

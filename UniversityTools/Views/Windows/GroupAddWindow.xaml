@@ -35,11 +35,13 @@
             <TextBox FontFamily="Century Gothic"
                      FontSize="20"
                      TextAlignment="Center"
-                     Text=""
+                     Text="{Binding GroupTitle}"
                      />
         </StackPanel>
 
-        <ComboBox ItemsSource="{Binding Departaments}" DisplayMemberPath="Title"/>
+        <ComboBox ItemsSource="{Binding Departaments}" 
+                  DisplayMemberPath="Title"
+                  SelectedItem="{Binding SelectedDepartament}"/>
 
     </Grid>
 </Window>
