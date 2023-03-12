@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm ="clr-namespace:UniversityTool.ViewModels"
         mc:Ignorable="d"
-        Title="DepartamentAddWindow" Height="400" Width="400">
+        Title="{Binding Title}" Height="400" Width="400">
     <Window.DataContext>
         <vm:DepartamentAddViewModel/>
     </Window.DataContext>

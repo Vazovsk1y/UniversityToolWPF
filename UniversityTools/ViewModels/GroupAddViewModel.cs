@@ -13,13 +13,13 @@ using UniversityTool.ViewModels.Base;
 
 namespace UniversityTool.ViewModels
 {
-    internal class GroupAddViewModel : BaseViewModel
+    internal class GroupAddViewModel : TitledViewModel
     {
         #region --Fields--
 
         private string _groupName;
         private Departament _selectedDepartament;
-        private ObservableCollection<Departament> _departaments;
+        private IEnumerable<Departament> _departaments;
 
         #region --Services--
 
@@ -34,7 +34,7 @@ namespace UniversityTool.ViewModels
 
         #region --Properties--
 
-        public ObservableCollection<Departament> Departaments
+        public IEnumerable<Departament> Departaments
         {
             get => _departaments;
             set => Set(ref _departaments, value);                         
@@ -58,6 +58,7 @@ namespace UniversityTool.ViewModels
 
         public GroupAddViewModel()
         {
+            Title = "Group Window";
             CancelCommand = new RelayCommand(OnCanceling, OnCanCancel);
             AcceptCommand = new RelayCommand(OnAccepting, OnCanAccept);
         }

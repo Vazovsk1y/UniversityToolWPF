@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace UniversityTool.ViewModels
 {
-    internal class DepartamentAddViewModel : BaseViewModel
+    internal class DepartamentAddViewModel : TitledViewModel
     {
         #region --Fields--
 
@@ -35,6 +35,7 @@ namespace UniversityTool.ViewModels
 
         public DepartamentAddViewModel()
         {
+            Title = "Departament Window";
             AcceptCommand = new RelayCommand(OnAccepting, OnCanAccept);
             CancelCommand = new RelayCommand(OnCanceling, OnCanCancel);
         }

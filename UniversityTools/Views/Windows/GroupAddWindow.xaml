@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:UniversityTool.Views.Windows"
         xmlns:vm ="clr-namespace:UniversityTool.ViewModels"
         mc:Ignorable="d"
-        Title="GroupAddWindow" Height="400" Width="400">
+        Title="{Binding Title}" Height="400" Width="400">
     <Window.DataContext>
         <vm:GroupAddViewModel/>
     </Window.DataContext>

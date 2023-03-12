@@ -16,7 +16,7 @@ using System.Runtime.CompilerServices;
 namespace UniversityTool.ViewModels
 {
     // IDisposable if i want to take messages(data) from other windows
-    internal class MainWindowViewModel : BaseViewModel, IDisposable
+    internal class MainWindowViewModel : TitledViewModel, IDisposable
     {
         #region --Fields--
 
@@ -37,6 +37,7 @@ namespace UniversityTool.ViewModels
 
         public MainWindowViewModel() 
         {
+            Title = "UniversityTool";
             AddDepartamentCommand = new RelayCommand(OnAddingDepartament, OnCanAddDepartament);
             AddGroupCommand = new RelayCommand(OnAddingGroup, OnCanAddGroup);
         }
