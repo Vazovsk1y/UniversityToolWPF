@@ -6,11 +6,11 @@ using UniversityTool.Domain.Services.DataServices;
 
 namespace UniversityTool.DataBase.Services
 {
-    internal class TreeDataRepositoryService : ITreeDataRepositoryService
+    internal class TreeRepository : ITreeRepository
     {
         private readonly UniversityToolDbContextFactory _contextFactory;
 
-        public TreeDataRepositoryService(UniversityToolDbContextFactory contextFactory)
+        public TreeRepository(UniversityToolDbContextFactory contextFactory)
         {
             _contextFactory = contextFactory;
         }

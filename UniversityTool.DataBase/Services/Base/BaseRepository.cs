@@ -7,11 +7,11 @@ using UniversityTool.Domain.Services.DataServices.Base;
 
 namespace UniversityTool.DataBase.Services.Base
 {
-    internal class BaseDataRepositoryService<T> : IBaseDataRepositoryService<T> where T : BaseModel
+    internal class BaseRepository<T> : IBaseRepository<T> where T : BaseModel
     {
         protected readonly UniversityToolDbContextFactory _contextFactory;
 
-        public BaseDataRepositoryService(UniversityToolDbContextFactory contextFactory)
+        public BaseRepository(UniversityToolDbContextFactory contextFactory)
         {
             _contextFactory = contextFactory;
         }
@@ -42,8 +42,7 @@ namespace UniversityTool.DataBase.Services.Base
         {
             using (UniversityToolDBContext context = _contextFactory.CreateDbContext())
             {
-                T entity = await context.Set<T>().FirstOrDefaultAsync(e => e.Id == id).ConfigureAwait(false);
-                return entity;
+                return await context.Set<T>().FirstOrDefaultAsync(e => e.Id == id).ConfigureAwait(false);
             }
         }
 
@@ -51,8 +50,7 @@ namespace UniversityTool.DataBase.Services.Base
         {
             using (UniversityToolDBContext context = _contextFactory.CreateDbContext())
             {
-                IEnumerable<T> entities = await context.Set<T>().ToListAsync().ConfigureAwait(false);
-                return entities;
+                return await context.Set<T>().ToListAsync().ConfigureAwait(false);
             }
         }
 

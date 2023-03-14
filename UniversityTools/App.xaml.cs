@@ -12,19 +12,28 @@ namespace UniversityTool
     /// </summary>
     public partial class App : Application
     {
+        #region --Fields--
+
         private static readonly string UniqueEventName = "UniversityTool";
 
         private static IServiceProvider? _services;
 
         public static IServiceProvider Services => _services ??= InitializeServices().BuildServiceProvider();
 
-        // all app services must be register in this method
         private static IServiceCollection InitializeServices() => new ServiceCollection()
             .AddViewModels()
             .AddWindows()
             .AddDataContext()
             .AddServices()
             ;
+
+        #endregion
+
+        #region --Properties--
+
+        public static bool IsDesignMode { get; set; } = true;
+
+        #endregion
 
         #region --#2 Way App Start--
 
@@ -50,6 +59,7 @@ namespace UniversityTool
             }
 
             base.OnStartup(e);
+            IsDesignMode = false;
             Services.GetRequiredService<IMainWindowService>().OpenWindow();
         }
 

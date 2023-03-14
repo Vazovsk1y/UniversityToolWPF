@@ -7,73 +7,82 @@ using UniversityTool.Domain.Services.DataServices;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Linq;
+using UniversityTool.Domain.Services;
+using System;
+using UniversityTool.Domain.Models.Messages;
 
 namespace UniversityTool.ViewModels.ControlsViewModels
 {
-    internal class TreeViewViewModel : BaseViewModel
+    internal class TreeViewViewModel : BaseViewModel, IDisposable
     {
         #region --Fields--
 
         private Student _selectedStudent;
         private Group _selectedGroup;
         private Departament _selectedDepartament;
-        private ObservableCollection<Student> _students = new();
-        private ObservableCollection<Group> _groups = new();
         private ObservableCollection<Departament> _departaments = new();
-        private readonly ITreeDataRepositoryService _dataService;
+        private readonly ITreeRepository _dataTreeService;
+        private readonly IMessageBusService _messageBus;
+        private readonly List<IDisposable> _subscriptions = new();
 
         #endregion
 
         #region --Properties--
 
-        public ObservableCollection<Student> Students
-        {
-            get => _students;
-            set => _students = value;
-        }
-
-        public ObservableCollection<Group> Groups
-        {
-            get => _groups;
-            set => _groups = value;
-        }
-
         public ObservableCollection<Departament> Departaments
         {
             get => _departaments;
-            set => Set(ref _departaments, value);
+            private set => Set(ref _departaments, value);
         }
 
         public Group SelectedGroup
         {
             get => _selectedGroup;
-            set => Set(ref _selectedGroup, value); 
+            private set => Set(ref _selectedGroup, value);
         }
 
         public Student SelectedStudent
         {
             get => _selectedStudent;
-            set => Set(ref _selectedStudent, value);
+            private set => Set(ref _selectedStudent, value);
         }
 
         public Departament SelectedDepartament
         {
             get => _selectedDepartament;
-            set => Set(ref _selectedDepartament, value);
+            private set => Set(ref _selectedDepartament, value);
         }
 
         #endregion
 
         #region --Constructors--
-
+        /// <summary>
+        /// Constructor for designer, Debuging instrument.
+        /// </summary>
         public TreeViewViewModel()
         {
-            TreeViewItemSelectionChangedCommand = new RelayCommand(OnTreeViewItemSelectionChanged, OnCanSelectTreeViewItem);
+            if (App.IsDesignMode)
+            {
+                var students = Enumerable.Range(1, 6).Select(s => new Student { Name = $"Kui {s}" });
+                var groups = Enumerable.Range(1, 5).Select(g => new Group { Title = $"Giu {g}", Students = students.ToList() });
+                var departaments = Enumerable.Range(1, 10).Select(d => new Departament { Title = $"Siu {d}", Groups = groups.ToList() });
+                Departaments = new ObservableCollection<Departament>(departaments);
+            }
+            else
+            {
+                throw new InvalidOperationException("This constructor is only for design time");
+
+            }
         }
 
-        public TreeViewViewModel(ITreeDataRepositoryService dataService) : this()
+        public TreeViewViewModel(ITreeRepository dataService, IMessageBusService messageBusService)
         {
-            _dataService = dataService;
+            _messageBus = messageBusService;
+            _dataTreeService = dataService;
+            _subscriptions.Add(_messageBus.RegisterHandler<DepartamentMessage>(OnReceiveMessage));
+            _subscriptions.Add(_messageBus.RegisterHandler<GroupMessage>(OnReceiveMessage));
+            TreeViewItemSelectionChangedCommand = new RelayCommand(OnTreeViewItemSelectionChanged, OnCanSelectTreeViewItem);
             InitializeFullTreeAsync();
         }
 
@@ -88,17 +97,17 @@ namespace UniversityTool.ViewModels.ControlsViewModels
         private void OnTreeViewItemSelectionChanged(object selectedItem)
         {
             // depends on selected item type
-            if (selectedItem is Student student)
+            switch (selectedItem)
             {
-                SelectedStudent = student;
-            }
-            else if (selectedItem is Group group)
-            {
-                SelectedGroup = group;
-            }
-            else if(selectedItem is Departament departament)
-            {
-                SelectedDepartament = departament;
+                case Student student:
+                    SelectedStudent = student;
+                    break;
+                case Group group:
+                    SelectedGroup = group;
+                    break;
+                case Departament departament:
+                    SelectedDepartament = departament;
+                    break;
             }
         }
 
@@ -106,12 +115,41 @@ namespace UniversityTool.ViewModels.ControlsViewModels
 
         #region --Methods--
 
+        public void Dispose() => _subscriptions.ForEach(subscription => subscription.Dispose());
+
         private async void InitializeFullTreeAsync()
         {
-            IEnumerable<Departament> departaments = await Task.Run(_dataService.GetFullTree).ConfigureAwait(false);
+            IEnumerable<Departament> departaments = await Task.Run(_dataTreeService.GetFullTree).ConfigureAwait(false);
             await Application.Current.Dispatcher.InvokeAsync(() =>
             {
                 Departaments = new ObservableCollection<Departament>(departaments);
+            });
+        }
+
+        private async void OnReceiveMessage(DepartamentMessage message)
+        {
+            if (message is null || message.Departament.Title is null) return;
+
+            if (message.Departament.Title.Length != 0)
+            {
+                await Application.Current.Dispatcher.InvokeAsync(() =>
+                {
+                    Departaments.Add(message.Departament);
+                });
+            }
+        }
+
+        private async void OnReceiveMessage(GroupMessage message)
+        {
+            message.Deconstruct(out Group group);
+
+            if (group is null || group.Title is null)
+                return;
+
+            await Application.Current.Dispatcher.InvokeAsync(() =>
+            {
+                var departament = Departaments.FirstOrDefault(d => d.Id == group.DepartamentId);
+                departament?.Groups.Add(group);
             });
         }
 

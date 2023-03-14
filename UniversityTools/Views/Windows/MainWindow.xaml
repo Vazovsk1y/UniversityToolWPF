@@ -3,9 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-        xmlns:m="clr-namespace:UniversityTool.Domain.Models;assembly=UniversityTool.Domain"
         xmlns:vm ="clr-namespace:UniversityTool.ViewModels"
+        xmlns:vmcontrols="clr-namespace:UniversityTool.ViewModels.ControlsViewModels"
+        xmlns:c="clr-namespace:UniversityTool.Views.Controls"
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance vm:MainWindowViewModel, d:IsDesignTimeCreatable=True}"
         Title="{Binding Title}" Height="650" Width="950">
@@ -27,13 +27,6 @@
             <Setter Property="FontFamily" Value="Century Gothic"/>
             <Setter Property="FontSize" Value="20"/>
             <Setter Property="Foreground" Value="Black"/>
-        </Style>
-
-        <Style TargetType="TextBlock" x:Key="text">
-            <Setter Property="FontFamily" Value="Century Gothic"/>
-            <Setter Property="FontSize" Value="20"/>
-            <Setter Property="Foreground" Value="Black"/>
-            <Setter Property="FontWeight" Value="Bold"/>
         </Style>
     </Window.Resources>
 
@@ -70,40 +63,8 @@
             </Grid.ColumnDefinitions>
 
             <Grid Grid.Column="0">
-                <TreeView x:Name="mainTree"
-                   ItemsSource="{Binding TreeView.Departaments, UpdateSourceTrigger=PropertyChanged}"
-                   >
-                    <TreeView.ItemTemplate>
-                        <HierarchicalDataTemplate 
-                            DataType="m:Departament"
-                            ItemsSource="{Binding Groups, UpdateSourceTrigger=PropertyChanged}">
-                            <TextBlock Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}"
-                                       Style="{StaticResource text}"/>
-                            <HierarchicalDataTemplate.ItemTemplate>
-                                <HierarchicalDataTemplate 
-                                    DataType="m:Group"
-                                    ItemsSource="{Binding Students, UpdateSourceTrigger=PropertyChanged}">
-                                    <TextBlock Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}"
-                                               Style="{StaticResource text}"/>
-                                    <HierarchicalDataTemplate.ItemTemplate>
-                                        <DataTemplate 
-                                            DataType="m:Student">
-                                            <TextBlock Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"
-                                                       Style="{StaticResource text}"/>
-                                        </DataTemplate>
-                                    </HierarchicalDataTemplate.ItemTemplate>
-                                </HierarchicalDataTemplate>
-                            </HierarchicalDataTemplate.ItemTemplate>
-                        </HierarchicalDataTemplate>
-                    </TreeView.ItemTemplate>
-
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName = "SelectedItemChanged" >
-                            <i:InvokeCommandAction Command = "{Binding TreeView.TreeViewItemSelectionChangedCommand}"
-                                        CommandParameter="{Binding ElementName=mainTree, Path=SelectedItem}"/>
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-                </TreeView>
+                <c:TreeControl DataContext="{Binding TreeView}"
+                               d:DataContext="{d:DesignInstance vmcontrols:TreeViewViewModel,d:IsDesignTimeCreatable=True}"/>
             </Grid>
 
             <Grid Grid.Column="1">

@@ -23,8 +23,8 @@ namespace UniversityTool.ViewModels
 
         #region --Services--
 
-        private readonly IBaseDataRepositoryService<Group> _dataGroupService;
-        private readonly IBaseDataRepositoryService<Departament> _dataDepartamentService;
+        private readonly IBaseRepository<Group> _dataGroupService;
+        private readonly IBaseRepository<Departament> _dataDepartamentService;
         private readonly IGroupAddWindowService _groupAddWindowService;
         private readonly IMessageBusService _messageBus;
 
@@ -63,8 +63,8 @@ namespace UniversityTool.ViewModels
             AcceptCommand = new RelayCommand(OnAccepting, OnCanAccept);
         }
 
-        public GroupAddViewModel(IBaseDataRepositoryService<Departament> dataService, IGroupAddWindowService groupAddWindowService,
-            IMessageBusService messageBusService, IBaseDataRepositoryService<Group> dataGroupService) : this()
+        public GroupAddViewModel(IBaseRepository<Departament> dataService, IGroupAddWindowService groupAddWindowService,
+            IMessageBusService messageBusService, IBaseRepository<Group> dataGroupService) : this()
         {
             _dataGroupService = dataGroupService;
             _messageBus = messageBusService;

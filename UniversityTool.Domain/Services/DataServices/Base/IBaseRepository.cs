@@ -1,6 +1,6 @@
 ﻿namespace UniversityTool.Domain.Services.DataServices.Base
 {
-    public interface IBaseDataRepositoryService<T> where T : class
+    public interface IBaseRepository<T> where T : class
     {
         Task<IEnumerable<T>> GetAll();
 

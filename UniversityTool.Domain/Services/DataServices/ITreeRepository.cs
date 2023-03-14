@@ -2,7 +2,7 @@
 
 namespace UniversityTool.Domain.Services.DataServices
 {
-    public interface ITreeDataRepositoryService
+    public interface ITreeRepository
     {
         Task<IEnumerable<Departament>> GetFullTree();
     }

@@ -11,28 +11,25 @@ namespace UniversityTool.Infastructure.Registrators
                 s =>
                 {
                     var scope = s.CreateScope();
-                    var model = scope.ServiceProvider.GetRequiredService<MainWindowViewModel>();
-                    var window = new MainWindow { DataContext = model };
+                    var viewModel = scope.ServiceProvider.GetRequiredService<MainWindowViewModel>();
+                    var window = new MainWindow { DataContext = viewModel };
                     window.Closed += (_, _) => scope.Dispose();
 
-                    //var model = s.GetRequiredService<MainWindowViewModel>();
-                    //var window = new MainWindow { DataContext = model };
+                    return window;
+                })
+            .AddTransient(
+                s =>
+                {
+                    var viewModel = s.GetRequiredService<DepartamentAddViewModel>();
+                    var window = new DepartamentAddWindow { DataContext = viewModel };
 
                     return window;
                 })
             .AddTransient(
                 s =>
                 {
-                    var model = s.GetRequiredService<DepartamentAddViewModel>();
-                    var window = new DepartamentAddWindow { DataContext = model };
-
-                    return window;
-                })
-            .AddTransient(
-                s =>
-                {
-                    var model = s.GetRequiredService<GroupAddViewModel>();
-                    var window = new GroupAddWindow { DataContext = model };
+                    var viewModel = s.GetRequiredService<GroupAddViewModel>();
+                    var window = new GroupAddWindow { DataContext = viewModel };
 
                     return window;
                 })
