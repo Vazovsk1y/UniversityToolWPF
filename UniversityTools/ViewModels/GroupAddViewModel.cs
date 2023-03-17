@@ -4,9 +4,9 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using UniversityTool.Domain.Models;
-using UniversityTool.Domain.Models.Messages;
+using UniversityTool.Domain.Messages;
+using UniversityTool.Domain.Repositories.Base;
 using UniversityTool.Domain.Services;
-using UniversityTool.Domain.Services.DataServices.Base;
 using UniversityTool.Domain.Services.WindowsServices;
 using UniversityTool.Infastructure.Commands;
 using UniversityTool.ViewModels.Base;
@@ -111,18 +111,6 @@ namespace UniversityTool.ViewModels
                 Departaments = new ObservableCollection<Departament>(departaments);
             });
         }
-
-        //private void InitializeDepartamentsAsync()
-        //{
-        //    Task.Run(async () =>
-        //    {
-        //        IEnumerable<Departament> departaments = await _dataService.GetAll().ConfigureAwait(false);
-        //        await Application.Current.Dispatcher.InvokeAsync(() =>
-        //        {
-        //            Departaments = new ObservableCollection<Departament>(departaments);
-        //        });
-        //    });
-        //}
 
         private async Task SendMessageAndCloseWindowAsync(Group group)
         {

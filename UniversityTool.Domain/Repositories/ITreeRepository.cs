@@ -1,6 +1,6 @@
 ﻿using UniversityTool.Domain.Models;
 
-namespace UniversityTool.Domain.Services.DataServices
+namespace UniversityTool.Domain.Repositories
 {
     public interface ITreeRepository
     {

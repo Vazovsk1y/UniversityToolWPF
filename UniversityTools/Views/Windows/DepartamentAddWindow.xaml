@@ -35,7 +35,7 @@
             <TextBox FontFamily="Century Gothic"
                      FontSize="20"
                      TextAlignment="Center"
-                     Text="{Binding DepartamentName}"
+                     Text="{Binding DepartamentTitle}"
                      />
         </StackPanel>
 

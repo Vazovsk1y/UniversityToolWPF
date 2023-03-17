@@ -1,12 +1,13 @@
 ﻿using System.Windows.Input;
 using UniversityTool.Infastructure.Commands;
-using UniversityTool.Domain.Models.Messages;
+using UniversityTool.Domain.Messages;
 using UniversityTool.Domain.Services;
 using UniversityTool.ViewModels.Base;
 using UniversityTool.Domain.Models;
-using UniversityTool.Domain.Services.DataServices.Base;
 using System.Windows;
 using System.Threading.Tasks;
+using UniversityTool.Domain.Services.DataServices;
+using UniversityTool.Domain.Codes;
 
 namespace UniversityTool.ViewModels
 {
@@ -14,19 +15,19 @@ namespace UniversityTool.ViewModels
     {
         #region --Fields--
 
-        private string _departamentName;
+        private string _departamentTitle;
         private readonly IMessageBusService _messageBus;
-        private readonly IDepartamentAddWindowService _departamentAddService;
-        private readonly IBaseRepository<Departament> _dataProviderService;
+        private readonly IDepartamentAddWindowService _departamentAddWindowService;
+        private readonly IDepartamentService _departamentService;
 
         #endregion
 
         #region --Properties--
 
-        public string DepartamentName
+        public string DepartamentTitle
         {
-            get => _departamentName; 
-            set => Set(ref _departamentName, value);
+            get => _departamentTitle; 
+            set => Set(ref _departamentTitle, value);
         }
 
         #endregion
@@ -41,10 +42,10 @@ namespace UniversityTool.ViewModels
         }
 
         public DepartamentAddViewModel(IDepartamentAddWindowService userDialog, IMessageBusService messageBus
-            ,IBaseRepository<Departament> dataProviderService) : this()
+            ,IDepartamentService departamentService) : this()
         {
-            _dataProviderService = dataProviderService;
-            _departamentAddService = userDialog;
+            _departamentService = departamentService;
+            _departamentAddWindowService = userDialog;
             _messageBus = messageBus;
         }
 
@@ -57,20 +58,26 @@ namespace UniversityTool.ViewModels
 
         private bool OnCanCancel(object p) => true;
 
-        private void OnCanceling(object p) => _departamentAddService.CloseWindow();
+        private void OnCanceling(object p) => _departamentAddWindowService.CloseWindow();
 
         private bool OnCanAccept(object p) => true;
 
         private async void OnAccepting(object action)
         {
-            var entity = await _dataProviderService.Add(new Departament { Title = DepartamentName }).ConfigureAwait(false);
-            await SendMessageAndCloseWindowAsync(entity);
-
-            //await Application.Current.Dispatcher.InvokeAsync(() =>
-            //{
-            //    _messageBus.Send(new DepartamentMessage(entity));
-            //    _departamentAddService.CloseWindow();
-            //});
+            var response = await _departamentService.AddDepartament(DepartamentTitle).ConfigureAwait(false);
+            if (response.StatusCode == StatusCode.Success)
+            {
+                await SendMessageAndCloseWindowAsync(response.Data);
+                MessageBox.Show(response.Description);
+            }
+            else
+            {
+                await Application.Current.Dispatcher.InvokeAsync(() =>
+                {
+                    MessageBox.Show(response.Description);
+                    _departamentAddWindowService.CloseWindow();
+                });
+            }
         }
 
         #endregion
@@ -84,7 +91,7 @@ namespace UniversityTool.ViewModels
                 _messageBus.Send(new DepartamentMessage(entity));
             }).ConfigureAwait(false);
 
-            await Application.Current.Dispatcher.InvokeAsync(_departamentAddService.CloseWindow);
+            await Application.Current.Dispatcher.InvokeAsync(_departamentAddWindowService.CloseWindow);
         }
 
         #endregion

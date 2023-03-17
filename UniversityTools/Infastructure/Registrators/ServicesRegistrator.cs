@@ -8,7 +8,7 @@ namespace UniversityTool.Infastructure.Registrators
 {
     internal static class ServicesRegistrator
     {
-        public static IServiceCollection AddServices(this IServiceCollection services) => services
+        public static IServiceCollection AddAppServices(this IServiceCollection services) => services
             .AddSingleton<IMessageBusService, MessageBusService>()
             .AddSingleton<IMainWindowService, MainWindowService>()
             .AddSingleton<IDepartamentAddWindowService, DepartamentAddWindowService>()

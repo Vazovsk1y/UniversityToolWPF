@@ -3,14 +3,14 @@ using System.Windows.Input;
 using UniversityTool.Infastructure.Commands;
 using UniversityTool.Domain.Models;
 using UniversityTool.ViewModels.Base;
-using UniversityTool.Domain.Services.DataServices;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Linq;
 using UniversityTool.Domain.Services;
 using System;
-using UniversityTool.Domain.Models.Messages;
+using UniversityTool.Domain.Repositories;
+using UniversityTool.Domain.Messages;
 
 namespace UniversityTool.ViewModels.ControlsViewModels
 {

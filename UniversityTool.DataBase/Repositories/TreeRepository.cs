@@ -2,9 +2,9 @@
 using UniversityTool.DataBase.Context;
 using UniversityTool.DataBase.Factory;
 using UniversityTool.Domain.Models;
-using UniversityTool.Domain.Services.DataServices;
+using UniversityTool.Domain.Repositories;
 
-namespace UniversityTool.DataBase.Services
+namespace UniversityTool.DataBase.Repositories
 {
     internal class TreeRepository : ITreeRepository
     {

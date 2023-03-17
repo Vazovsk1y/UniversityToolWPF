@@ -1,4 +1,4 @@
-﻿namespace UniversityTool.Domain.Services.DataServices.Base
+﻿namespace UniversityTool.Domain.Repositories.Base
 {
     public interface IBaseRepository<T> where T : class
     {

@@ -23,8 +23,8 @@ namespace UniversityTool
         private static IServiceCollection InitializeServices() => new ServiceCollection()
             .AddViewModels()
             .AddWindows()
-            .AddDataContext()
-            .AddServices()
+            .AddDataBaseTools()
+            .AddAppServices()
             ;
 
         #endregion

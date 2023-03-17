@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 using UniversityTool.DataBase.Context;
 using UniversityTool.DataBase.Factory;
 using UniversityTool.Domain.Models.Base;
-using UniversityTool.Domain.Services.DataServices.Base;
+using UniversityTool.Domain.Repositories.Base;
 
-namespace UniversityTool.DataBase.Services.Base
+namespace UniversityTool.DataBase.Repositories.Base
 {
     internal class BaseRepository<T> : IBaseRepository<T> where T : BaseModel
     {
