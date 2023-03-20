@@ -1,5 +1,8 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
+using System.Windows;
 
 namespace UniversityTool.ViewModels.Base
 {
@@ -7,10 +10,8 @@ namespace UniversityTool.ViewModels.Base
     {
         public event PropertyChangedEventHandler? PropertyChanged;
 
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null) => 
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
 
         protected virtual bool Set<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
         {
@@ -19,5 +20,8 @@ namespace UniversityTool.ViewModels.Base
             OnPropertyChanged(propertyName);
             return true;
         }
+
+        protected virtual async Task ProcessInMainThreadAsync(Action actions) =>
+           await Application.Current.Dispatcher.InvokeAsync(actions ?? throw new ArgumentNullException(nameof(actions)));
     }
 }

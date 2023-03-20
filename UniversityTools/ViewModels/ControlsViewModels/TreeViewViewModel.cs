@@ -5,12 +5,11 @@ using UniversityTool.Domain.Models;
 using UniversityTool.ViewModels.Base;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Linq;
-using UniversityTool.Domain.Services;
 using System;
 using UniversityTool.Domain.Repositories;
 using UniversityTool.Domain.Messages;
+using UniversityTool.Domain.Services.DataServices.Base;
 
 namespace UniversityTool.ViewModels.ControlsViewModels
 {
@@ -21,7 +20,7 @@ namespace UniversityTool.ViewModels.ControlsViewModels
         private Student _selectedStudent;
         private Group _selectedGroup;
         private Departament _selectedDepartament;
-        private ObservableCollection<Departament> _departaments = new();
+        private ObservableCollection<Departament> _fullTree = new();
         private readonly ITreeRepository _dataTreeService;
         private readonly IMessageBusService _messageBus;
         private readonly List<IDisposable> _subscriptions = new();
@@ -30,10 +29,10 @@ namespace UniversityTool.ViewModels.ControlsViewModels
 
         #region --Properties--
 
-        public ObservableCollection<Departament> Departaments
+        public ObservableCollection<Departament> FullTree
         {
-            get => _departaments;
-            private set => Set(ref _departaments, value);
+            get => _fullTree;
+            private set => Set(ref _fullTree, value);
         }
 
         public Group SelectedGroup
@@ -67,7 +66,7 @@ namespace UniversityTool.ViewModels.ControlsViewModels
                 var students = Enumerable.Range(1, 6).Select(s => new Student { Name = $"Kui {s}" });
                 var groups = Enumerable.Range(1, 5).Select(g => new Group { Title = $"Giu {g}", Students = students.ToList() });
                 var departaments = Enumerable.Range(1, 10).Select(d => new Departament { Title = $"Siu {d}", Groups = groups.ToList() });
-                Departaments = new ObservableCollection<Departament>(departaments);
+                FullTree = new ObservableCollection<Departament>(departaments);
             }
             else
             {
@@ -80,10 +79,10 @@ namespace UniversityTool.ViewModels.ControlsViewModels
         {
             _messageBus = messageBusService;
             _dataTreeService = dataService;
-            _subscriptions.Add(_messageBus.RegisterHandler<DepartamentMessage>(OnReceiveMessage));
+            _subscriptions.Add(_messageBus.RegisterHandler<DepartamentMessage>(OnReceiveMessageAsync));
             _subscriptions.Add(_messageBus.RegisterHandler<GroupMessage>(OnReceiveMessage));
             TreeViewItemSelectionChangedCommand = new RelayCommand(OnTreeViewItemSelectionChanged, OnCanSelectTreeViewItem);
-            InitializeFullTreeAsync();
+            _ = InitializeFullTreeAsync();
         }
 
         #endregion
@@ -117,41 +116,20 @@ namespace UniversityTool.ViewModels.ControlsViewModels
 
         public void Dispose() => _subscriptions.ForEach(subscription => subscription.Dispose());
 
-        private async void InitializeFullTreeAsync()
+        private async Task InitializeFullTreeAsync()
         {
             IEnumerable<Departament> departaments = await Task.Run(_dataTreeService.GetFullTree).ConfigureAwait(false);
-            await Application.Current.Dispatcher.InvokeAsync(() =>
-            {
-                Departaments = new ObservableCollection<Departament>(departaments);
-            });
+            _ = ProcessInMainThreadAsync(() => FullTree = new ObservableCollection<Departament>(departaments));
         }
 
-        private async void OnReceiveMessage(DepartamentMessage message)
+        private async void OnReceiveMessageAsync(DepartamentMessage message) => 
+            _ = ProcessInMainThreadAsync(() => FullTree.Add(message.Departament));
+
+        private async void OnReceiveMessage(GroupMessage message) => _ = ProcessInMainThreadAsync(() =>
         {
-            if (message is null || message.Departament.Title is null) return;
-
-            if (message.Departament.Title.Length != 0)
-            {
-                await Application.Current.Dispatcher.InvokeAsync(() =>
-                {
-                    Departaments.Add(message.Departament);
-                });
-            }
-        }
-
-        private async void OnReceiveMessage(GroupMessage message)
-        {
-            message.Deconstruct(out Group group);
-
-            if (group is null || group.Title is null)
-                return;
-
-            await Application.Current.Dispatcher.InvokeAsync(() =>
-            {
-                var departament = Departaments.FirstOrDefault(d => d.Id == group.DepartamentId);
-                departament?.Groups.Add(group);
-            });
-        }
+            var departament = FullTree.FirstOrDefault(d => d.Id == message.Group.DepartamentId);
+            departament?.Groups.Add(message.Group);
+        });
 
         #endregion
     }

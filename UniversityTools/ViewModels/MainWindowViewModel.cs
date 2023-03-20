@@ -26,7 +26,7 @@ namespace UniversityTool.ViewModels
 
         public MainWindowViewModel() 
         {
-            Title = "UniversityTool";
+            WindowTitle = "UniversityTool";
             AddDepartamentCommand = new RelayCommand(OnAddingDepartament, OnCanAddDepartament);
             AddGroupCommand = new RelayCommand(OnAddingGroup, OnCanAddGroup);
         }

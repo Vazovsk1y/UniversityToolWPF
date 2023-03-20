@@ -5,12 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm ="clr-namespace:UniversityTool.ViewModels"
         mc:Ignorable="d"
-        Title="{Binding Title}" Height="400" Width="400">
-    <Window.DataContext>
-        <vm:DepartamentAddViewModel/>
-    </Window.DataContext>
-    
-    
+        Title="{Binding WindowTitle}" Height="400" Width="400"
+     d:DataContext="{d:DesignInstance vm:DepartamentAddViewModel, d:IsDesignTimeCreatable=True}"
+        >
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>

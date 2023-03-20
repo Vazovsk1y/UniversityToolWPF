@@ -2,7 +2,7 @@
 using System.Threading;
 using System;
 using System.Linq;
-using UniversityTool.Domain.Services;
+using UniversityTool.Domain.Services.DataServices.Base;
 
 namespace UniversityTool.Services.DataServices.Impementations
 {

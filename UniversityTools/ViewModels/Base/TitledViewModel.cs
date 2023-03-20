@@ -2,12 +2,12 @@
 {
     internal abstract class TitledViewModel : BaseViewModel
     {
-        private string? _title;
+        private string? _windowTitle;
 
-        public string Title
+        public string WindowTitle
         {
-            get => _title;
-            set => Set(ref _title, value);
+            get => _windowTitle;
+            set => Set(ref _windowTitle, value);
         }
     }
 }

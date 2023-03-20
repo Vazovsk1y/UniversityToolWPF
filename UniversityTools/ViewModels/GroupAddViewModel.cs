@@ -1,15 +1,15 @@
 ﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using UniversityTool.Domain.Models;
 using UniversityTool.Domain.Messages;
-using UniversityTool.Domain.Repositories.Base;
-using UniversityTool.Domain.Services;
 using UniversityTool.Domain.Services.WindowsServices;
 using UniversityTool.Infastructure.Commands;
 using UniversityTool.ViewModels.Base;
+using UniversityTool.Domain.Services.DataServices.Base;
+using UniversityTool.Domain.Services.DataServices;
+using UniversityTool.Domain.Codes;
 
 namespace UniversityTool.ViewModels
 {
@@ -23,8 +23,8 @@ namespace UniversityTool.ViewModels
 
         #region --Services--
 
-        private readonly IBaseRepository<Group> _dataGroupService;
-        private readonly IBaseRepository<Departament> _dataDepartamentService;
+        private readonly IDepartamentService _departamentService;
+        private readonly IGroupService _groupService;
         private readonly IGroupAddWindowService _groupAddWindowService;
         private readonly IMessageBusService _messageBus;
 
@@ -48,7 +48,7 @@ namespace UniversityTool.ViewModels
 
         public Departament SelectedDepartament 
         { 
-            get => _selectedDepartament; 
+            get => _selectedDepartament ?? new(); 
             set => Set(ref _selectedDepartament, value); 
         }
 
@@ -58,19 +58,21 @@ namespace UniversityTool.ViewModels
 
         public GroupAddViewModel()
         {
-            Title = "Group Window";
+            WindowTitle = "Group Window";
             CancelCommand = new RelayCommand(OnCanceling, OnCanCancel);
-            AcceptCommand = new RelayCommand(OnAccepting, OnCanAccept);
+            AcceptCommand = new RelayCommand(OnAcceptingAsync, OnCanAccept);
         }
 
-        public GroupAddViewModel(IBaseRepository<Departament> dataService, IGroupAddWindowService groupAddWindowService,
-            IMessageBusService messageBusService, IBaseRepository<Group> dataGroupService) : this()
+        public GroupAddViewModel(IDepartamentService departamentService, 
+            IGroupService groupService, 
+            IGroupAddWindowService groupAddWindowService, 
+            IMessageBusService messageBus) : this()
         {
-            _dataGroupService = dataGroupService;
-            _messageBus = messageBusService;
-            _dataDepartamentService = dataService;
+            _departamentService = departamentService;
+            _groupService = groupService;
             _groupAddWindowService = groupAddWindowService;
-            InitializeDepartamentsAsync();
+            _messageBus = messageBus;
+            _ = InitializeDepartamentsAsync();
         }
 
         #endregion
@@ -86,9 +88,9 @@ namespace UniversityTool.ViewModels
 
         private bool OnCanAccept(object p) => true;
 
-        private async void OnAccepting(object a)
+        private async void OnAcceptingAsync(object a)
         {
-            var groupEntity = await _dataGroupService
+            var response = await _groupService
                 .Add(new Group 
                 { 
                     DepartamentId = SelectedDepartament.Id, 
@@ -96,31 +98,48 @@ namespace UniversityTool.ViewModels
                 })
                 .ConfigureAwait(false);
 
-            await SendMessageAndCloseWindowAsync(groupEntity);
+            switch (response.StatusCode)
+            {
+                case StatusCode.Success:
+                    {
+                        await SendMessageAsync(response.Data);
+                        await Application.Current.Dispatcher.InvokeAsync(() =>
+                        {
+                            _groupAddWindowService.CloseWindow();
+                            MessageBox.Show(response.Description, response.StatusCode.ToString(), MessageBoxButton.OK, MessageBoxImage.Information);
+                        });
+                        break;
+                    }
+                case StatusCode.Fail:
+                    {
+                        await Application.Current.Dispatcher.InvokeAsync(() =>
+                        {
+                            _groupAddWindowService.CloseWindow();
+                            MessageBox.Show(response.Description, response.StatusCode.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
+                        });
+                        break;
+                    }
+            }
         }
 
         #endregion
 
         #region --Methods--
 
-        private async void InitializeDepartamentsAsync()
+        private async Task InitializeDepartamentsAsync()
         {
-            IEnumerable<Departament> departaments = await Task.Run(_dataDepartamentService.GetAll).ConfigureAwait(false);
-            await Application.Current.Dispatcher.InvokeAsync(() =>
+            var response = await Task.Run(_departamentService.GetAll).ConfigureAwait(false);
+
+            if (response.StatusCode == StatusCode.Success)
             {
-                Departaments = new ObservableCollection<Departament>(departaments);
-            });
+                _ = ProcessInMainThreadAsync(() => Departaments = response.Data);
+            }
         }
 
-        private async Task SendMessageAndCloseWindowAsync(Group group)
-        {
-            await Task.Run(() =>
-            {
-                _messageBus.Send(new GroupMessage(group));
-            }).ConfigureAwait(false);
-
-            await Application.Current.Dispatcher.InvokeAsync(_groupAddWindowService.CloseWindow);
-        }
+        private async Task SendMessageAsync(Group entity) => await Task
+            .Run(() => _messageBus
+            .Send(new GroupMessage(entity)))
+            .ConfigureAwait(false);
 
         #endregion
     }

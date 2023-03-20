@@ -8,6 +8,7 @@ using System.Windows;
 using System.Threading.Tasks;
 using UniversityTool.Domain.Services.DataServices;
 using UniversityTool.Domain.Codes;
+using UniversityTool.Domain.Services.DataServices.Base;
 
 namespace UniversityTool.ViewModels
 {
@@ -26,7 +27,7 @@ namespace UniversityTool.ViewModels
 
         public string DepartamentTitle
         {
-            get => _departamentTitle; 
+            get => _departamentTitle;
             set => Set(ref _departamentTitle, value);
         }
 
@@ -36,13 +37,13 @@ namespace UniversityTool.ViewModels
 
         public DepartamentAddViewModel()
         {
-            Title = "Departament Window";
+            WindowTitle = "Departament Window";
             AcceptCommand = new RelayCommand(OnAccepting, OnCanAccept);
             CancelCommand = new RelayCommand(OnCanceling, OnCanCancel);
         }
 
         public DepartamentAddViewModel(IDepartamentAddWindowService userDialog, IMessageBusService messageBus
-            ,IDepartamentService departamentService) : this()
+            , IDepartamentService departamentService) : this()
         {
             _departamentService = departamentService;
             _departamentAddWindowService = userDialog;
@@ -64,19 +65,28 @@ namespace UniversityTool.ViewModels
 
         private async void OnAccepting(object action)
         {
-            var response = await _departamentService.AddDepartament(DepartamentTitle).ConfigureAwait(false);
-            if (response.StatusCode == StatusCode.Success)
+            var response = await _departamentService.Add(new Departament { Title = DepartamentTitle }).ConfigureAwait(false);
+            switch (response.StatusCode)
             {
-                await SendMessageAndCloseWindowAsync(response.Data);
-                MessageBox.Show(response.Description);
-            }
-            else
-            {
-                await Application.Current.Dispatcher.InvokeAsync(() =>
-                {
-                    MessageBox.Show(response.Description);
-                    _departamentAddWindowService.CloseWindow();
-                });
+                case StatusCode.Success:
+                    {
+                        _ = SendMessageAsync(response.Data);
+                        _ = ProcessInMainThreadAsync(() =>
+                        {
+                            _departamentAddWindowService.CloseWindow();
+                            ShowMessageBox(response.Description, response.StatusCode.ToString(), MessageBoxButton.OK, MessageBoxImage.Information);
+                        });
+                        break;
+                    }
+                case StatusCode.Fail:
+                    {
+                        _ = ProcessInMainThreadAsync(() =>
+                        {
+                            _departamentAddWindowService.CloseWindow();
+                            ShowMessageBox(response.Description, response.StatusCode.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
+                        });
+                        break;
+                    }
             }
         }
 
@@ -84,15 +94,13 @@ namespace UniversityTool.ViewModels
 
         #region --Methods--
 
-        private async Task SendMessageAndCloseWindowAsync(Departament entity)
-        {
-            await Task.Run(() =>
-            {
-                _messageBus.Send(new DepartamentMessage(entity));
-            }).ConfigureAwait(false);
+        private async Task SendMessageAsync(Departament entity) => await Task
+            .Run(() => _messageBus
+            .Send(new DepartamentMessage(entity)))
+            .ConfigureAwait(false);
 
-            await Application.Current.Dispatcher.InvokeAsync(_departamentAddWindowService.CloseWindow);
-        }
+        private void ShowMessageBox(string message, string caption, MessageBoxButton button, MessageBoxImage image) =>
+            MessageBox.Show(message, caption, button, image);
 
         #endregion
     }

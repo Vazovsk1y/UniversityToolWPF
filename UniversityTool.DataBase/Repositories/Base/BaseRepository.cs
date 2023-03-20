@@ -18,50 +18,84 @@ namespace UniversityTool.DataBase.Repositories.Base
 
         public async Task<T> Add(T entity)
         {
-            using (UniversityToolDBContext context = _contextFactory.CreateDbContext())
+            try
             {
-                EntityEntry<T> result = await context.Set<T>().AddAsync(entity).ConfigureAwait(false);
-                await context.SaveChangesAsync();
-                return result.Entity;
+                using (UniversityToolDBContext context = _contextFactory.CreateDbContext())
+                {
+                    EntityEntry<T> result = await context.Set<T>().AddAsync(entity).ConfigureAwait(false);
+                    await context.SaveChangesAsync();
+                    return result.Entity;
+                }
+            }
+            catch 
+            {
+                throw;
             }
         }
 
         public async Task<bool> Delete(int id)
         {
-            using (UniversityToolDBContext context = _contextFactory.CreateDbContext())
+            try
             {
-                T entity = await context.Set<T>().FirstOrDefaultAsync(e => e.Id == id).ConfigureAwait(false);
-                context.Set<T>().Remove(entity);
-                await context.SaveChangesAsync();
-
-                return true;
+                using (UniversityToolDBContext context = _contextFactory.CreateDbContext())
+                {
+                    T entity = await context.Set<T>().FirstOrDefaultAsync(e => e.Id == id).ConfigureAwait(false);
+                    context.Set<T>().Remove(entity);
+                    await context.SaveChangesAsync();
+                    return true;
+                }
+            }
+            catch
+            {
+                throw;
             }
         }
 
         public async Task<T> Get(int id)
         {
-            using (UniversityToolDBContext context = _contextFactory.CreateDbContext())
+            try
             {
-                return await context.Set<T>().FirstOrDefaultAsync(e => e.Id == id).ConfigureAwait(false);
+                using (UniversityToolDBContext context = _contextFactory.CreateDbContext())
+                {
+                    return await context.Set<T>().FirstOrDefaultAsync(e => e.Id == id).ConfigureAwait(false);
+                }
+            }
+            catch
+            {
+                throw;
             }
         }
 
         public async Task<IEnumerable<T>> GetAll()
         {
-            using (UniversityToolDBContext context = _contextFactory.CreateDbContext())
+            try
             {
-                return await context.Set<T>().ToListAsync().ConfigureAwait(false);
+                using (UniversityToolDBContext context = _contextFactory.CreateDbContext())
+                {
+                    return await context.Set<T>().ToListAsync().ConfigureAwait(false);
+                }
+            }
+            catch
+            {
+                throw;
             }
         }
 
         public async Task<T> Update(int id, T entity)
         {
-            using (UniversityToolDBContext context = _contextFactory.CreateDbContext())
+            try
             {
-                entity.Id = id;
-                context.Set<T>().Update(entity);
-                await context.SaveChangesAsync();
-                return entity;
+                using (UniversityToolDBContext context = _contextFactory.CreateDbContext())
+                {
+                    entity.Id = id;
+                    context.Set<T>().Update(entity);
+                    await context.SaveChangesAsync();
+                    return entity;
+                }
+            }
+            catch
+            {
+                throw;
             }
         }
     }

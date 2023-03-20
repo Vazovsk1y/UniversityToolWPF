@@ -11,7 +11,7 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <TreeView x:Name="mainTree"
-                   ItemsSource="{Binding Departaments, UpdateSourceTrigger=PropertyChanged}">
+                   ItemsSource="{Binding FullTree, UpdateSourceTrigger=PropertyChanged}">
             <TreeView.ItemTemplate>
                 <HierarchicalDataTemplate 
                             DataType="m:Departament"

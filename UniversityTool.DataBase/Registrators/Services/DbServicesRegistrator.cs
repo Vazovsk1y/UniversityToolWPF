@@ -8,6 +8,7 @@ namespace UniversityTool.DataBase.Registrators.Services
     {
         public static IServiceCollection AddDbServices(this IServiceCollection services) => services
             .AddTransient<IDepartamentService, DepartamentService>()
+            .AddTransient<IGroupService, GroupService>()
             ;
     }
 }
