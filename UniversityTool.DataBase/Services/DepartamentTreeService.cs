@@ -4,7 +4,7 @@ using UniversityTool.DataBase.Services.Base;
 using UniversityTool.Domain.Codes;
 using UniversityTool.Domain.Models;
 using UniversityTool.Domain.Repositories;
-using UniversityTool.Domain.Response;
+using UniversityTool.Domain.Responses;
 using UniversityTool.Domain.Services.DataServices;
 
 namespace UniversityTool.DataBase.Services
@@ -26,16 +26,16 @@ namespace UniversityTool.DataBase.Services
 
                 if (Items is null)
                 {
-                    return _responseFactory.CreateResponce(Resources.AddingErrorMessage, StatusCode.Fail, Items);
+                    return _responseFactory.CreateResponce(Resources.AddingErrorMessage, OperationStatusCode.Fail, Items);
                 }
             }
             catch (Exception ex)
             {
                 Debug.WriteLine(ex);
-                return _responseFactory.CreateResponce(Resources.AddingErrorMessage, StatusCode.Fail, Items);
+                return _responseFactory.CreateResponce(Resources.AddingErrorMessage, OperationStatusCode.Fail, Items);
             }
 
-            return _responseFactory.CreateResponce(Resources.SuccessMessage, StatusCode.Success, Items);
+            return _responseFactory.CreateResponce(Resources.SuccessMessage, OperationStatusCode.Success, Items);
         }
     }
 }

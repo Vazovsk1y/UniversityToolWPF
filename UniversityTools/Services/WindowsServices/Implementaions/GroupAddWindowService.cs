@@ -8,7 +8,5 @@ namespace UniversityTool.Services.WindowsServices.Implementaions
     internal class GroupAddWindowService : BaseWindowService<GroupAddWindow>, IGroupAddWindowService
     {
         public GroupAddWindowService(IServiceProvider serviceProvider) : base(serviceProvider) { }
-        
-        protected override GroupAddWindow? Window { get; set; }
     }
 }

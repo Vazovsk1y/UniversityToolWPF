@@ -2,7 +2,7 @@
 using UniversityTool.Domain.Repositories.Base;
 using UniversityTool.Domain.Services.DataServices;
 using UniversityTool.DataBase.Services.Base;
-using UniversityTool.Domain.Response;
+using UniversityTool.Domain.Responses;
 
 namespace UniversityTool.DataBase.Services
 {

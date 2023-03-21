@@ -3,13 +3,13 @@ using UniversityTool.Domain.Models;
 
 namespace UniversityTool.DataBase.Context
 {
-    public class UniversityToolDBContext : DbContext
+    public class UniversityToolDbContext : DbContext
     {
         public DbSet<Departament> Departaments { get; set; }
         public DbSet<Group> Groups { get; set; }
         public DbSet<Student> Students { get; set; }
 
-        public UniversityToolDBContext(DbContextOptions options) : base(options) { }
+        public UniversityToolDbContext(DbContextOptions options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

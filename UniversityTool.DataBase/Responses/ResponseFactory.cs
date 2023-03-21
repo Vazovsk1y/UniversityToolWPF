@@ -1,12 +1,12 @@
 ﻿using UniversityTool.Domain.Codes;
 using UniversityTool.Domain.Models.Base;
-using UniversityTool.Domain.Response;
+using UniversityTool.Domain.Responses;
 
-namespace UniversityTool.DataBase.Response
+namespace UniversityTool.DataBase.Responses
 {
     internal class ResponseFactory<T> : IResponseFactory<T> where T : BaseModel
     {
-        public ICollectionDataResponse<T> CreateResponce(string description, StatusCode statusCode, IEnumerable<T>? Data) =>
+        public ICollectionDataResponse<T> CreateResponce(string description, OperationStatusCode statusCode, IEnumerable<T>? Data) =>
             new CollectionDataResponse<T>
             {
                 Description = description,
@@ -14,7 +14,7 @@ namespace UniversityTool.DataBase.Response
                 Data = Data
             };
 
-        public ISingleDataResponse<T> CreateResponce(string description, StatusCode statusCode, T? Data) =>
+        public ISingleDataResponse<T> CreateResponce(string description, OperationStatusCode statusCode, T? Data) =>
             new SingleDataResponse<T>
             {
                 Description = description,

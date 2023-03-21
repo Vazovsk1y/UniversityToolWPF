@@ -129,20 +129,49 @@ namespace UniversityTool.ViewModels.ControlsViewModels
         private async Task InitializeFullTreeAsync() => await Task.Run(async () =>
             {
                 var response = await _treeService.GetFullDepartamentsTree().ConfigureAwait(false);
-                if (response.StatusCode == StatusCode.Success)
+                if (response.StatusCode == OperationStatusCode.Success)
                 {
                     _ = ProcessInMainThreadAsync(() => FullTree = new ObservableCollection<Departament>(response.Data));
                 }
             });
 
-        private async void OnReceiveMessageAsync(DepartamentMessage message) => 
-            _ = ProcessInMainThreadAsync(() => FullTree.Add(message.Departament));
-
-        private async void OnReceiveMessage(GroupMessage message) => _ = ProcessInMainThreadAsync(() =>
+        private async void OnReceiveMessageAsync(DepartamentMessage message)
         {
-            var departament = FullTree.FirstOrDefault(d => d.Id == message.Group.DepartamentId);
-            departament?.Groups.Add(message.Group);
-        });
+            switch (message.OperationType)
+            {
+                case OperationTypeCode.Add:
+                    {
+                        _ = ProcessInMainThreadAsync(() => FullTree.Add(message.Departament));
+                        break;
+                    }
+                case OperationTypeCode.Remove:
+                    break;
+                case OperationTypeCode.Update:
+                    break;
+            }
+        }
+        
+        private async void OnReceiveMessage(GroupMessage message)
+        {
+            switch (message.OperationType)
+            {
+                case OperationTypeCode.Add:
+                    {
+                        _ = ProcessInMainThreadAsync(() =>
+                        {
+                            var departament = FullTree.FirstOrDefault(d => d.Id == message.Group.DepartamentId);
+                            departament?.Groups.Add(message.Group);
+                        });
+                        break;
+                    }
+                case OperationTypeCode.Remove:
+                    break;
+                case OperationTypeCode.Update:
+                    break;
+            }
+
+            
+        }
 
         #endregion
     }

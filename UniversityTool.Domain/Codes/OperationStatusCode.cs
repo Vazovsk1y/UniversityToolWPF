@@ -1,6 +1,6 @@
 ﻿namespace UniversityTool.Domain.Codes
 {
-    public enum StatusCode
+    public enum OperationStatusCode
     {
         Success,
         Fail

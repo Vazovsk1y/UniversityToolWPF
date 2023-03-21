@@ -10,7 +10,7 @@ using UniversityTool.DataBase.Context;
 
 namespace UniversityTool.DataBase.Migrations
 {
-    [DbContext(typeof(UniversityToolDBContext))]
+    [DbContext(typeof(UniversityToolDbContext))]
     [Migration("20230304160456_Initial")]
     partial class Initial
     {

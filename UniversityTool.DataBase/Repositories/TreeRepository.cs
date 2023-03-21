@@ -17,7 +17,7 @@ namespace UniversityTool.DataBase.Repositories
 
         public async Task<IEnumerable<Departament>> GetDepartamentsRelations()
         {
-            using (UniversityToolDBContext context = _contextFactory.CreateDbContext())
+            using (UniversityToolDbContext context = _contextFactory.CreateDbContext())
             {
                 IEnumerable<Departament> departaments =
                     await context.Departaments

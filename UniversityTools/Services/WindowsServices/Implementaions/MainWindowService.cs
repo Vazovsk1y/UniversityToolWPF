@@ -8,8 +8,6 @@ namespace UniversityTool.Services.WindowsServices.Implementaions
 {
     internal class MainWindowService : BaseWindowService<MainWindow>, IMainWindowService
     {
-        protected override MainWindow? Window { get; set; }
-
         public MainWindowService(IServiceProvider serviceProvider) : base(serviceProvider) { }
 
         public override void CloseWindow()

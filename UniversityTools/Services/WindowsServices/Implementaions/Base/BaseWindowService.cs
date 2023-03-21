@@ -14,7 +14,7 @@ namespace UniversityTool.Services.WindowsServices.Implementaions.Base
             private set => _serviceProvider = value; 
         }
 
-        protected abstract T? Window { get; set; }
+        protected T? Window { get; set; }
 
         protected BaseWindowService(IServiceProvider serviceProvider)
         {

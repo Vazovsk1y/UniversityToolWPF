@@ -4,14 +4,14 @@ using UniversityTool.DataBase.Context;
 
 namespace UniversityTool.DataBase.Factory
 {
-    public class UniversityToolDbContextFactory : IDesignTimeDbContextFactory<UniversityToolDBContext>
+    public class UniversityToolDbContextFactory : IDesignTimeDbContextFactory<UniversityToolDbContext>
     {
-        public UniversityToolDBContext CreateDbContext(string[] args = null)
+        public UniversityToolDbContext CreateDbContext(string[] args = null)
         {
-            var options = new DbContextOptionsBuilder<UniversityToolDBContext>();
+            var options = new DbContextOptionsBuilder<UniversityToolDbContext>();
             options.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=UniversityToolDB;Trusted_Connection=True;");
 
-            return new UniversityToolDBContext(options.Options);
+            return new UniversityToolDbContext(options.Options);
         }
     }
 }

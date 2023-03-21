@@ -5,7 +5,7 @@ using UniversityTool.Domain.Models.Base;
 using UniversityTool.Domain.Repositories.Base;
 using UniversityTool.Domain.Services.DataServices.Base;
 using UniversityTool.DataBase.Properties;
-using UniversityTool.Domain.Response;
+using UniversityTool.Domain.Responses;
 
 namespace UniversityTool.DataBase.Services.Base
 {
@@ -35,21 +35,21 @@ namespace UniversityTool.DataBase.Services.Base
 
                 if (Item is null)
                 {
-                    return _responseFactory.CreateResponce(Resources.AddingErrorMessage, StatusCode.Fail, Item);
+                    return _responseFactory.CreateResponce(Resources.AddingErrorMessage, OperationStatusCode.Fail, Item);
                 }
             }
             catch(DbUpdateException ex)
             {
                 Debug.WriteLine(ex);
-                return _responseFactory.CreateResponce(Resources.NullParametrErrorMessage, StatusCode.Fail, Item);
+                return _responseFactory.CreateResponce(Resources.NullParametrErrorMessage, OperationStatusCode.Fail, Item);
             }
             catch (Exception ex)
             {
                 Debug.WriteLine(ex);
-                return _responseFactory.CreateResponce(Resources.AddingErrorMessage, StatusCode.Fail, Item);
+                return _responseFactory.CreateResponce(Resources.AddingErrorMessage, OperationStatusCode.Fail, Item);
             }
 
-            return _responseFactory.CreateResponce(Resources.SuccessMessage, StatusCode.Success, Item);
+            return _responseFactory.CreateResponce(Resources.SuccessMessage, OperationStatusCode.Success, Item);
         }
 
         public async virtual Task<ICollectionDataResponse<T>> GetAll()
@@ -60,21 +60,21 @@ namespace UniversityTool.DataBase.Services.Base
 
                 if (Items is null)
                 {
-                    return _responseFactory.CreateResponce(Resources.AddingErrorMessage, StatusCode.Fail, Items);
+                    return _responseFactory.CreateResponce(Resources.AddingErrorMessage, OperationStatusCode.Fail, Items);
                 }
             }
             catch (DbUpdateException ex)
             {
                 Debug.WriteLine(ex);
-                return _responseFactory.CreateResponce(Resources.NullParametrErrorMessage, StatusCode.Fail, Items);
+                return _responseFactory.CreateResponce(Resources.NullParametrErrorMessage, OperationStatusCode.Fail, Items);
             }
             catch (Exception ex)
             {
                 Debug.WriteLine(ex);
-                return _responseFactory.CreateResponce(Resources.AddingErrorMessage, StatusCode.Fail, Items);
+                return _responseFactory.CreateResponce(Resources.AddingErrorMessage, OperationStatusCode.Fail, Items);
             }
 
-            return _responseFactory.CreateResponce(Resources.SuccessMessage, StatusCode.Success, Items);
+            return _responseFactory.CreateResponce(Resources.SuccessMessage, OperationStatusCode.Success, Items);
         }
     }
 }

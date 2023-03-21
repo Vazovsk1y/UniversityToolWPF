@@ -100,7 +100,7 @@ namespace UniversityTool.ViewModels
 
             switch (response.StatusCode)
             {
-                case StatusCode.Success:
+                case OperationStatusCode.Success:
                     {
                         await SendMessageAsync(response.Data);
                         await Application.Current.Dispatcher.InvokeAsync(() =>
@@ -110,7 +110,7 @@ namespace UniversityTool.ViewModels
                         });
                         break;
                     }
-                case StatusCode.Fail:
+                case OperationStatusCode.Fail:
                     {
                         await Application.Current.Dispatcher.InvokeAsync(() =>
                         {
@@ -130,7 +130,7 @@ namespace UniversityTool.ViewModels
         {
             var response = await Task.Run(_departamentService.GetAll).ConfigureAwait(false);
 
-            if (response.StatusCode == StatusCode.Success)
+            if (response.StatusCode == OperationStatusCode.Success)
             {
                 _ = ProcessInMainThreadAsync(() => Departaments = response.Data);
             }
@@ -138,7 +138,7 @@ namespace UniversityTool.ViewModels
 
         private async Task SendMessageAsync(Group entity) => await Task
             .Run(() => _messageBus
-            .Send(new GroupMessage(entity)))
+            .Send(new GroupMessage(entity, OperationTypeCode.Add)))
             .ConfigureAwait(false);
 
         #endregion

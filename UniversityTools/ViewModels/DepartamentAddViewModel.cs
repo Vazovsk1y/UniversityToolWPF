@@ -68,7 +68,7 @@ namespace UniversityTool.ViewModels
             var response = await _departamentService.Add(new Departament { Title = DepartamentTitle }).ConfigureAwait(false);
             switch (response.StatusCode)
             {
-                case StatusCode.Success:
+                case OperationStatusCode.Success:
                     {
                         _ = SendMessageAsync(response.Data);
                         _ = ProcessInMainThreadAsync(() =>
@@ -78,7 +78,7 @@ namespace UniversityTool.ViewModels
                         });
                         break;
                     }
-                case StatusCode.Fail:
+                case OperationStatusCode.Fail:
                     {
                         _ = ProcessInMainThreadAsync(() =>
                         {
@@ -96,7 +96,7 @@ namespace UniversityTool.ViewModels
 
         private async Task SendMessageAsync(Departament entity) => await Task
             .Run(() => _messageBus
-            .Send(new DepartamentMessage(entity)))
+            .Send(new DepartamentMessage(entity, OperationTypeCode.Add)))
             .ConfigureAwait(false);
 
         private void ShowMessageBox(string message, string caption, MessageBoxButton button, MessageBoxImage image) =>

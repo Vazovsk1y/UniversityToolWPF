@@ -1,11 +1,11 @@
 ﻿using UniversityTool.Domain.Codes;
-using UniversityTool.Domain.Response.Base;
+using UniversityTool.Domain.Responses.Base;
 
-namespace UniversityTool.DataBase.Response.Base
+namespace UniversityTool.DataBase.Responses.Base
 {
     internal abstract class BaseResponse<T> : IBaseResponse<T>
     {
         public string Description { get; set; }
-        public StatusCode StatusCode { get; set; }
+        public OperationStatusCode StatusCode { get; set; }
     }
 }

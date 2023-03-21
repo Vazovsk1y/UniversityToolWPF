@@ -9,7 +9,7 @@ using UniversityTool.DataBase.Context;
 
 namespace UniversityTool.DataBase.Migrations
 {
-    [DbContext(typeof(UniversityToolDBContext))]
+    [DbContext(typeof(UniversityToolDbContext))]
     partial class UniversityToolDBContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

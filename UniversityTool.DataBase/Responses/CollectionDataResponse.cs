@@ -1,7 +1,7 @@
-﻿using UniversityTool.DataBase.Response.Base;
-using UniversityTool.Domain.Response;
+﻿using UniversityTool.DataBase.Responses.Base;
+using UniversityTool.Domain.Responses;
 
-namespace UniversityTool.DataBase.Response
+namespace UniversityTool.DataBase.Responses
 {
     internal class CollectionDataResponse<T> : BaseResponse<T>, ICollectionDataResponse<T>
     {

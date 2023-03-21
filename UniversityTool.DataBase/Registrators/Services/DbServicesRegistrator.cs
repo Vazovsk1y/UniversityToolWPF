@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using UniversityTool.DataBase.Response;
+using UniversityTool.DataBase.Responses;
 using UniversityTool.DataBase.Services;
-using UniversityTool.Domain.Response;
+using UniversityTool.Domain.Responses;
 using UniversityTool.Domain.Services.DataServices;
 
 namespace UniversityTool.DataBase.Registrators.Services

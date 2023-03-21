@@ -8,7 +8,5 @@ namespace UniversityTool.Services.WindowsServices.Implementaions
     internal class DepartamentAddWindowService : BaseWindowService<DepartamentAddWindow>, IDepartamentAddWindowService
     {
         public DepartamentAddWindowService(IServiceProvider serviceProvider) : base(serviceProvider) { }
-
-        protected override DepartamentAddWindow? Window { get; set; }
     }
 }

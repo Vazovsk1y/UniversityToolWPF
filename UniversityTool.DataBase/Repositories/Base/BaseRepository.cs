@@ -20,7 +20,7 @@ namespace UniversityTool.DataBase.Repositories.Base
         {
             try
             {
-                using (UniversityToolDBContext context = _contextFactory.CreateDbContext())
+                using (UniversityToolDbContext context = _contextFactory.CreateDbContext())
                 {
                     EntityEntry<T> result = await context.Set<T>().AddAsync(entity).ConfigureAwait(false);
                     await context.SaveChangesAsync();
@@ -37,7 +37,7 @@ namespace UniversityTool.DataBase.Repositories.Base
         {
             try
             {
-                using (UniversityToolDBContext context = _contextFactory.CreateDbContext())
+                using (UniversityToolDbContext context = _contextFactory.CreateDbContext())
                 {
                     T entity = await context.Set<T>().FirstOrDefaultAsync(e => e.Id == id).ConfigureAwait(false);
                     context.Set<T>().Remove(entity);
@@ -55,7 +55,7 @@ namespace UniversityTool.DataBase.Repositories.Base
         {
             try
             {
-                using (UniversityToolDBContext context = _contextFactory.CreateDbContext())
+                using (UniversityToolDbContext context = _contextFactory.CreateDbContext())
                 {
                     return await context.Set<T>().FirstOrDefaultAsync(e => e.Id == id).ConfigureAwait(false);
                 }
@@ -70,7 +70,7 @@ namespace UniversityTool.DataBase.Repositories.Base
         {
             try
             {
-                using (UniversityToolDBContext context = _contextFactory.CreateDbContext())
+                using (UniversityToolDbContext context = _contextFactory.CreateDbContext())
                 {
                     return await context.Set<T>().ToListAsync().ConfigureAwait(false);
                 }
@@ -85,7 +85,7 @@ namespace UniversityTool.DataBase.Repositories.Base
         {
             try
             {
-                using (UniversityToolDBContext context = _contextFactory.CreateDbContext())
+                using (UniversityToolDbContext context = _contextFactory.CreateDbContext())
                 {
                     entity.Id = id;
                     context.Set<T>().Update(entity);

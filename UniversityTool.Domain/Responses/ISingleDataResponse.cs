@@ -1,6 +1,6 @@
-﻿using UniversityTool.Domain.Response.Base;
+﻿using UniversityTool.Domain.Responses.Base;
 
-namespace UniversityTool.Domain.Response
+namespace UniversityTool.Domain.Responses
 {
     public interface ISingleDataResponse<T> : IBaseResponse<T>
     {
