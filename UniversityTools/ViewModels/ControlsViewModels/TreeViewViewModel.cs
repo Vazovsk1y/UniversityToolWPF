@@ -7,9 +7,10 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
 using System;
-using UniversityTool.Domain.Repositories;
 using UniversityTool.Domain.Messages;
 using UniversityTool.Domain.Services.DataServices.Base;
+using UniversityTool.Domain.Services.DataServices;
+using UniversityTool.Domain.Codes;
 
 namespace UniversityTool.ViewModels.ControlsViewModels
 {
@@ -20,8 +21,8 @@ namespace UniversityTool.ViewModels.ControlsViewModels
         private Student _selectedStudent;
         private Group _selectedGroup;
         private Departament _selectedDepartament;
-        private ObservableCollection<Departament> _fullTree = new();
-        private readonly ITreeRepository _dataTreeService;
+        private ObservableCollection<Departament> _fullTree;
+        private readonly IDepartamentTreeService _treeService;
         private readonly IMessageBusService _messageBus;
         private readonly List<IDisposable> _subscriptions = new();
 
@@ -75,10 +76,10 @@ namespace UniversityTool.ViewModels.ControlsViewModels
             }
         }
 
-        public TreeViewViewModel(ITreeRepository dataService, IMessageBusService messageBusService)
+        public TreeViewViewModel(IDepartamentTreeService dataService, IMessageBusService messageBusService)
         {
             _messageBus = messageBusService;
-            _dataTreeService = dataService;
+            _treeService = dataService;
             _subscriptions.Add(_messageBus.RegisterHandler<DepartamentMessage>(OnReceiveMessageAsync));
             _subscriptions.Add(_messageBus.RegisterHandler<GroupMessage>(OnReceiveMessage));
             TreeViewItemSelectionChangedCommand = new RelayCommand(OnTreeViewItemSelectionChanged, OnCanSelectTreeViewItem);
@@ -116,11 +117,23 @@ namespace UniversityTool.ViewModels.ControlsViewModels
 
         public void Dispose() => _subscriptions.ForEach(subscription => subscription.Dispose());
 
-        private async Task InitializeFullTreeAsync()
-        {
-            IEnumerable<Departament> departaments = await Task.Run(_dataTreeService.GetFullTree).ConfigureAwait(false);
-            _ = ProcessInMainThreadAsync(() => FullTree = new ObservableCollection<Departament>(departaments));
-        }
+        //private async Task InitializeFullTreeAsync()
+        //{
+        //    var response = await _treeService.GetFullDepartamentsTree().ConfigureAwait(false);
+        //    if (response.StatusCode == StatusCode.Success)
+        //    {
+        //        _ = ProcessInMainThreadAsync(() => FullTree = new ObservableCollection<Departament>(response.Data));
+        //    }
+        //}
+
+        private async Task InitializeFullTreeAsync() => await Task.Run(async () =>
+            {
+                var response = await _treeService.GetFullDepartamentsTree().ConfigureAwait(false);
+                if (response.StatusCode == StatusCode.Success)
+                {
+                    _ = ProcessInMainThreadAsync(() => FullTree = new ObservableCollection<Departament>(response.Data));
+                }
+            });
 
         private async void OnReceiveMessageAsync(DepartamentMessage message) => 
             _ = ProcessInMainThreadAsync(() => FullTree.Add(message.Departament));

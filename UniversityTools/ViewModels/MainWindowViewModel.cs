@@ -49,13 +49,13 @@ namespace UniversityTool.ViewModels
 
         private bool OnCanAddDepartament(object arg) => true;
 
-        private void OnAddingDepartament(object obj) => _departamentAddWindow.OpenWindow();
+        private void OnAddingDepartament(object obj) => _ = ProcessInMainThreadAsync(_departamentAddWindow.OpenWindow);
 
         public ICommand AddGroupCommand { get; }                          
 
         private bool OnCanAddGroup(object arg) => true;
 
-        private void OnAddingGroup(object obj) => _groupAddWindow.OpenWindow();
+        private void OnAddingGroup(object obj) => _ = ProcessInMainThreadAsync(_groupAddWindow.OpenWindow);
 
         #endregion
 

@@ -12,6 +12,7 @@ namespace UniversityTool.DataBase.Registrators.Services
             .AddTransient<IDepartamentService, DepartamentService>()
             .AddTransient<IGroupService, GroupService>()
             .AddTransient(typeof(IResponseFactory<>), typeof(ResponseFactory<>))
+            .AddTransient<IDepartamentTreeService, DepartamentTreeService>()
             ;
     }
 }

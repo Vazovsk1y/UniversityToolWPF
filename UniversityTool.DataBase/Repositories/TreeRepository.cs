@@ -15,7 +15,7 @@ namespace UniversityTool.DataBase.Repositories
             _contextFactory = contextFactory;
         }
 
-        public async Task<IEnumerable<Departament>> GetFullTree()
+        public async Task<IEnumerable<Departament>> GetDepartamentsRelations()
         {
             using (UniversityToolDBContext context = _contextFactory.CreateDbContext())
             {

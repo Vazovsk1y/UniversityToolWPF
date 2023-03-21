@@ -35,6 +35,7 @@
             <RowDefinition Height="1*"/>
             <RowDefinition Height="0.5*"/>
             <RowDefinition Height="20*"/>
+            <RowDefinition Height="0.5*"/>
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0">
@@ -83,6 +84,11 @@
                 </TabControl>
             </Grid>
 
+        </Grid>
+
+        <Grid Grid.Row="3">
+            <TextBlock Background="Aqua" Style="{StaticResource baseText}"
+                      Text="StatusBar" TextAlignment="Center"/>
         </Grid>
 
     </Grid>

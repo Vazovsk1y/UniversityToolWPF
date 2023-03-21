@@ -4,6 +4,6 @@ namespace UniversityTool.Domain.Repositories
 {
     public interface ITreeRepository
     {
-        Task<IEnumerable<Departament>> GetFullTree();
+        Task<IEnumerable<Departament>> GetDepartamentsRelations();
     }
 }

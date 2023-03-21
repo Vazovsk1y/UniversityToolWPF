@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
-using UniversityTool.DataBase.Response;
 using UniversityTool.Domain.Codes;
 using UniversityTool.Domain.Models.Base;
 using UniversityTool.Domain.Repositories.Base;
@@ -20,6 +19,11 @@ namespace UniversityTool.DataBase.Services.Base
         public BaseService(IBaseRepository<T> repository, IResponseFactory<T> responceFactory)
         {
             _repository = repository;
+            _responseFactory = responceFactory;
+        }
+
+        public BaseService(IResponseFactory<T> responceFactory)
+        {
             _responseFactory = responceFactory;
         }
 
