@@ -6,6 +6,6 @@ namespace UniversityTool.Domain.Responses.Base
     {
         string Description { get; set; }
 
-        OperationStatusCode StatusCode { get; set; }
+        OperationResultStatusCode StatusCode { get; set; }
     }
 }

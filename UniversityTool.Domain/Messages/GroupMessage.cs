@@ -4,5 +4,5 @@ using UniversityTool.Domain.Models;
 
 namespace UniversityTool.Domain.Messages
 {
-    public record GroupMessage(Group Group, OperationTypeCode OperationType) : BaseMessage(OperationType);
+    public record GroupMessage(Group Group, UIOperationTypeCode OperationType) : BaseMessage(OperationType);
 }

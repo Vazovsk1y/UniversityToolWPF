@@ -128,7 +128,7 @@ namespace UniversityTool.ViewModels.ControlsViewModels
         private async Task InitializeFullTreeAsync() => await Task.Run(async () =>
             {
                 var response = await _departamentTreeService.GetFullDepartamentsTree().ConfigureAwait(false);
-                if (response.StatusCode == OperationStatusCode.Success)
+                if (response.StatusCode == OperationResultStatusCode.Success)
                 {
                     _ = ProcessInMainThreadAsync(() => FullTree = new ObservableCollection<Departament>(response.Data));
                 }
@@ -138,14 +138,14 @@ namespace UniversityTool.ViewModels.ControlsViewModels
         {
             switch (message.OperationType)
             {
-                case OperationTypeCode.Add:
+                case UIOperationTypeCode.Add:
                     {
                         _ = ProcessInMainThreadAsync(() => FullTree.Add(message.Departament));
                         break;
                     }
-                case OperationTypeCode.Remove:
+                case UIOperationTypeCode.Delete:
                     break;
-                case OperationTypeCode.Update:
+                case UIOperationTypeCode.Update:
                     break;
             }
         }
@@ -154,7 +154,7 @@ namespace UniversityTool.ViewModels.ControlsViewModels
         {
             switch (message.OperationType)
             {
-                case OperationTypeCode.Add:
+                case UIOperationTypeCode.Add:
                     {
                         _ = ProcessInMainThreadAsync(() =>
                         {
@@ -163,9 +163,9 @@ namespace UniversityTool.ViewModels.ControlsViewModels
                         });
                         break;
                     }
-                case OperationTypeCode.Remove:
+                case UIOperationTypeCode.Delete:
                     break;
-                case OperationTypeCode.Update:
+                case UIOperationTypeCode.Update:
                     break;
             }
         }

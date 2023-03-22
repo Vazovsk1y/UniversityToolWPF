@@ -82,9 +82,9 @@ namespace UniversityTool.ViewModels
 
             switch (response.StatusCode)
             {
-                case OperationStatusCode.Success:
+                case OperationResultStatusCode.Success:
                     {
-                        _ = SendMessageAsync(new GroupMessage(response.Data, OperationTypeCode.Add));
+                        _ = SendMessageAsync(new GroupMessage(response.Data, UIOperationTypeCode.Add));
                         _ = ProcessInMainThreadAsync(() =>
                         {
                             _windowService.CloseWindow();
@@ -92,7 +92,7 @@ namespace UniversityTool.ViewModels
                         });
                         break;
                     }
-                case OperationStatusCode.Fail:
+                case OperationResultStatusCode.Fail:
                     {
                         _ = ProcessInMainThreadAsync(() =>
                         {
@@ -112,7 +112,7 @@ namespace UniversityTool.ViewModels
         {
             var response = await Task.Run(_departamentService.GetAll).ConfigureAwait(false);
 
-            if (response.StatusCode == OperationStatusCode.Success)
+            if (response.StatusCode == OperationResultStatusCode.Success)
             {
                 _ = ProcessInMainThreadAsync(() => Departaments = response.Data);
             }

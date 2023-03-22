@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 using UniversityTool.Domain.Models;
-using UniversityTool.Domain.Services.DataServices.Base;
 using UniversityTool.ViewModels.Base;
 using System;
+using UniversityTool.Domain.Services.WindowsServices;
+using UniversityTool.Domain.Services.DataServices.Base;
 
 namespace UniversityTool.ViewModels
 {
-    internal class StudentAddViewModel : TitledViewModel
+    internal class StudentAddViewModel : DialogViewModel<IStudentAddWindowService>
     {
         #region --Fields--
 
@@ -38,26 +39,31 @@ namespace UniversityTool.ViewModels
             set => Set(ref _studentThirdName, value);
         }
 
-        public IEnumerable<Group> Groups 
-        { 
-            get => _groups; 
-            set => Set(ref _groups, value); 
+        public IEnumerable<Group> Groups
+        {
+            get => _groups;
+            set => Set(ref _groups, value);
         }
 
-        public Group SelectedGroup 
-        { 
-            get => _selectedGroup; 
-            set => Set(ref _selectedGroup, value); 
+        public Group SelectedGroup
+        {
+            get => _selectedGroup ?? new();
+            set => Set(ref _selectedGroup, value);
         }
 
         #endregion
 
         #region --Constructors--
 
-        public StudentAddViewModel() 
+        public StudentAddViewModel()
         {
             if (!App.IsDesignMode)
                 throw new InvalidOperationException("Constructor only for designTime");
+            WindowTitle = "Student Add";
+        }
+
+        public StudentAddViewModel(IMessageBusService messageBus, IStudentAddWindowService windowService) : base(messageBus, windowService)
+        { 
             WindowTitle = "Student Add";
         }
 
@@ -71,7 +77,10 @@ namespace UniversityTool.ViewModels
 
         #region --Methods--
 
+        protected override void OnAccepting(object action)
+        {
 
+        }
 
         #endregion
     }

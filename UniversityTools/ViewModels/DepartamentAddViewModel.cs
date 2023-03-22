@@ -54,9 +54,9 @@ namespace UniversityTool.ViewModels
             var response = await _departamentService.Add(new Departament { Title = DepartamentTitle }).ConfigureAwait(false);
             switch (response.StatusCode)
             {
-                case OperationStatusCode.Success:
+                case OperationResultStatusCode.Success:
                     {
-                        _ = SendMessageAsync(new DepartamentMessage(response.Data, OperationTypeCode.Add));
+                        _ = SendMessageAsync(new DepartamentMessage(response.Data, UIOperationTypeCode.Add));
                         _ = ProcessInMainThreadAsync(() =>
                         {
                             _windowService.CloseWindow();
@@ -64,7 +64,7 @@ namespace UniversityTool.ViewModels
                         });
                         break;
                     }
-                case OperationStatusCode.Fail:
+                case OperationResultStatusCode.Fail:
                     {
                         _ = ProcessInMainThreadAsync(() =>
                         {

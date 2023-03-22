@@ -35,21 +35,21 @@ namespace UniversityTool.DataBase.Services.Base
 
                 if (Item is null)
                 {
-                    return _responseFactory.CreateResponce(Resources.AddingErrorMessage, OperationStatusCode.Fail, Item);
+                    return _responseFactory.CreateResponce(Resources.AddingErrorMessage, OperationResultStatusCode.Fail, Item);
                 }
             }
             catch(DbUpdateException ex)
             {
                 Debug.WriteLine(ex);
-                return _responseFactory.CreateResponce(Resources.NullParametrErrorMessage, OperationStatusCode.Fail, Item);
+                return _responseFactory.CreateResponce(Resources.NullParametrErrorMessage, OperationResultStatusCode.Fail, Item);
             }
             catch (Exception ex)
             {
                 Debug.WriteLine(ex);
-                return _responseFactory.CreateResponce(Resources.AddingErrorMessage, OperationStatusCode.Fail, Item);
+                return _responseFactory.CreateResponce(Resources.AddingErrorMessage, OperationResultStatusCode.Fail, Item);
             }
 
-            return _responseFactory.CreateResponce(Resources.SuccessMessage, OperationStatusCode.Success, Item);
+            return _responseFactory.CreateResponce(Resources.SuccessMessage, OperationResultStatusCode.Success, Item);
         }
 
         public async virtual Task<ICollectionDataResponse<T>> GetAll()
@@ -60,21 +60,21 @@ namespace UniversityTool.DataBase.Services.Base
 
                 if (Items is null)
                 {
-                    return _responseFactory.CreateResponce(Resources.AddingErrorMessage, OperationStatusCode.Fail, Items);
+                    return _responseFactory.CreateResponce(Resources.AddingErrorMessage, OperationResultStatusCode.Fail, Items);
                 }
             }
             catch (DbUpdateException ex)
             {
                 Debug.WriteLine(ex);
-                return _responseFactory.CreateResponce(Resources.NullParametrErrorMessage, OperationStatusCode.Fail, Items);
+                return _responseFactory.CreateResponce(Resources.NullParametrErrorMessage, OperationResultStatusCode.Fail, Items);
             }
             catch (Exception ex)
             {
                 Debug.WriteLine(ex);
-                return _responseFactory.CreateResponce(Resources.AddingErrorMessage, OperationStatusCode.Fail, Items);
+                return _responseFactory.CreateResponce(Resources.AddingErrorMessage, OperationResultStatusCode.Fail, Items);
             }
 
-            return _responseFactory.CreateResponce(Resources.SuccessMessage, OperationStatusCode.Success, Items);
+            return _responseFactory.CreateResponce(Resources.SuccessMessage, OperationResultStatusCode.Success, Items);
         }
     }
 }

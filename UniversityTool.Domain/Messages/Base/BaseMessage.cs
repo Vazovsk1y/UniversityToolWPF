@@ -2,5 +2,5 @@
 
 namespace UniversityTool.Domain.Messages.Base
 {
-    public abstract record BaseMessage(OperationTypeCode OperationType);
+    public abstract record BaseMessage(UIOperationTypeCode OperationType);
 }

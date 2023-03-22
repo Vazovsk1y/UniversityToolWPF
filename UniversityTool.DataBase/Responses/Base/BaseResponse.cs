@@ -6,6 +6,6 @@ namespace UniversityTool.DataBase.Responses.Base
     internal abstract class BaseResponse<T> : IBaseResponse<T>
     {
         public string Description { get; set; }
-        public OperationStatusCode StatusCode { get; set; }
+        public OperationResultStatusCode StatusCode { get; set; }
     }
 }

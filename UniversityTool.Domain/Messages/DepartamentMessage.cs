@@ -4,5 +4,5 @@ using UniversityTool.Domain.Models;
 
 namespace UniversityTool.Domain.Messages
 {
-    public record DepartamentMessage(Departament Departament, OperationTypeCode OperationType) : BaseMessage(OperationType);
+    public record DepartamentMessage(Departament Departament, UIOperationTypeCode OperationType) : BaseMessage(OperationType);
 }
