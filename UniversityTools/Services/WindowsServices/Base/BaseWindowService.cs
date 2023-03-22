@@ -3,15 +3,15 @@ using System;
 using System.Windows;
 using UniversityTool.Domain.Services.Base;
 
-namespace UniversityTool.Services.WindowsServices.Implementaions.Base
+namespace UniversityTool.Services.WindowsServices.Base
 {
     internal abstract class BaseWindowService<T> : IBaseWindowService where T : Window
     {
         private IServiceProvider _serviceProvider;
-        protected IServiceProvider ServiceProvider 
-        { 
-            get => _serviceProvider; 
-            private set => _serviceProvider = value; 
+        protected IServiceProvider ServiceProvider
+        {
+            get => _serviceProvider;
+            private set => _serviceProvider = value;
         }
 
         protected T? Window { get; set; }
