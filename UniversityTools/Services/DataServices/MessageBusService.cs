@@ -4,7 +4,7 @@ using System;
 using System.Linq;
 using UniversityTool.Domain.Services.DataServices.Base;
 
-namespace UniversityTool.Services.DataServices.Impementations
+namespace UniversityTool.Services.DataServices
 {
     internal class MessageBusService : IMessageBusService
     {

@@ -25,12 +25,15 @@ namespace UniversityTool.ViewModels.Base
 
         #region --Constructors--
 
-        public DialogViewModel() { }
-
-        public DialogViewModel(IMessageBusService messageBus, T windowService) 
+        public DialogViewModel() 
         {
             AcceptCommand = new RelayCommand(OnAccepting, OnCanAccept);
             CancelCommand = new RelayCommand(OnCanceling, OnCanCancel);
+        }
+
+        public DialogViewModel(IMessageBusService messageBus, T windowService) : this()
+        {
+           
             _messageBusService = messageBus;
             _windowService = windowService;
         }
