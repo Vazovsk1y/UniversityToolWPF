@@ -22,7 +22,7 @@ namespace UniversityTool.ViewModels.ControlsViewModels
         private Group _selectedGroup;
         private Departament _selectedDepartament;
         private ObservableCollection<Departament> _fullTree;
-        private readonly IDepartamentTreeService _treeService;
+        private readonly IDepartamentTreeService _departamentTreeService;
         private readonly IMessageBusService _messageBus;
         private readonly List<IDisposable> _subscriptions = new();
 
@@ -72,14 +72,13 @@ namespace UniversityTool.ViewModels.ControlsViewModels
             else
             {
                 throw new InvalidOperationException("This constructor is only for design time");
-
             }
         }
 
-        public TreeViewViewModel(IDepartamentTreeService dataService, IMessageBusService messageBusService)
+        public TreeViewViewModel(IDepartamentTreeService treeService, IMessageBusService messageBusService)
         {
             _messageBus = messageBusService;
-            _treeService = dataService;
+            _departamentTreeService = treeService;
             _subscriptions.Add(_messageBus.RegisterHandler<DepartamentMessage>(OnReceiveMessageAsync));
             _subscriptions.Add(_messageBus.RegisterHandler<GroupMessage>(OnReceiveMessage));
             TreeViewItemSelectionChangedCommand = new RelayCommand(OnTreeViewItemSelectionChanged, OnCanSelectTreeViewItem);
@@ -128,14 +127,14 @@ namespace UniversityTool.ViewModels.ControlsViewModels
 
         private async Task InitializeFullTreeAsync() => await Task.Run(async () =>
             {
-                var response = await _treeService.GetFullDepartamentsTree().ConfigureAwait(false);
+                var response = await _departamentTreeService.GetFullDepartamentsTree().ConfigureAwait(false);
                 if (response.StatusCode == OperationStatusCode.Success)
                 {
                     _ = ProcessInMainThreadAsync(() => FullTree = new ObservableCollection<Departament>(response.Data));
                 }
             });
 
-        private async void OnReceiveMessageAsync(DepartamentMessage message)
+        private void OnReceiveMessageAsync(DepartamentMessage message)
         {
             switch (message.OperationType)
             {
@@ -151,7 +150,7 @@ namespace UniversityTool.ViewModels.ControlsViewModels
             }
         }
         
-        private async void OnReceiveMessage(GroupMessage message)
+        private void OnReceiveMessage(GroupMessage message)
         {
             switch (message.OperationType)
             {
@@ -169,8 +168,6 @@ namespace UniversityTool.ViewModels.ControlsViewModels
                 case OperationTypeCode.Update:
                     break;
             }
-
-            
         }
 
         #endregion

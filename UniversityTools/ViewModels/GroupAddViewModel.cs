@@ -1,34 +1,26 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Input;
 using UniversityTool.Domain.Models;
 using UniversityTool.Domain.Messages;
 using UniversityTool.Domain.Services.WindowsServices;
-using UniversityTool.Infastructure.Commands;
 using UniversityTool.ViewModels.Base;
 using UniversityTool.Domain.Services.DataServices.Base;
 using UniversityTool.Domain.Services.DataServices;
 using UniversityTool.Domain.Codes;
+using System;
 
 namespace UniversityTool.ViewModels
 {
-    internal class GroupAddViewModel : TitledViewModel
+    internal class GroupAddViewModel : DialogViewModel<IGroupAddWindowService>
     {
         #region --Fields--
 
         private string _groupName;
         private Departament _selectedDepartament;
         private IEnumerable<Departament> _departaments;
-
-        #region --Services--
-
         private readonly IDepartamentService _departamentService;
         private readonly IGroupService _groupService;
-        private readonly IGroupAddWindowService _groupAddWindowService;
-        private readonly IMessageBusService _messageBus;
-
-        #endregion
 
         #endregion
 
@@ -58,20 +50,19 @@ namespace UniversityTool.ViewModels
 
         public GroupAddViewModel()
         {
+            if (!App.IsDesignMode)
+                throw new InvalidOperationException("Standart constructor is only for design time");
             WindowTitle = "Group Window";
-            CancelCommand = new RelayCommand(OnCanceling, OnCanCancel);
-            AcceptCommand = new RelayCommand(OnAcceptingAsync, OnCanAccept);
         }
 
         public GroupAddViewModel(IDepartamentService departamentService, 
             IGroupService groupService, 
             IGroupAddWindowService groupAddWindowService, 
-            IMessageBusService messageBus) : this()
+            IMessageBusService messageBus) : base(messageBus, groupAddWindowService)
         {
             _departamentService = departamentService;
             _groupService = groupService;
-            _groupAddWindowService = groupAddWindowService;
-            _messageBus = messageBus;
+            WindowTitle = "Group Window";
             _ = InitializeDepartamentsAsync();
         }
 
@@ -79,16 +70,7 @@ namespace UniversityTool.ViewModels
 
         #region --Commands--
 
-        public ICommand CancelCommand { get; private set; }
-        public ICommand AcceptCommand { get; private set; }
-
-        private bool OnCanCancel(object p) => true;
-
-        private void OnCanceling(object p) => _groupAddWindowService.CloseWindow();
-
-        private bool OnCanAccept(object p) => true;
-
-        private async void OnAcceptingAsync(object a)
+        protected override async void OnAccepting(object a)
         {
             var response = await _groupService
                 .Add(new Group 
@@ -102,20 +84,20 @@ namespace UniversityTool.ViewModels
             {
                 case OperationStatusCode.Success:
                     {
-                        await SendMessageAsync(response.Data);
-                        await Application.Current.Dispatcher.InvokeAsync(() =>
+                        _ = SendMessageAsync(new GroupMessage(response.Data, OperationTypeCode.Add));
+                        _ = ProcessInMainThreadAsync(() =>
                         {
-                            _groupAddWindowService.CloseWindow();
-                            MessageBox.Show(response.Description, response.StatusCode.ToString(), MessageBoxButton.OK, MessageBoxImage.Information);
+                            _windowService.CloseWindow();
+                            ShowMessageBox(response.Description, response.StatusCode.ToString(), MessageBoxButton.OK, MessageBoxImage.Information);
                         });
                         break;
                     }
                 case OperationStatusCode.Fail:
                     {
-                        await Application.Current.Dispatcher.InvokeAsync(() =>
+                        _ = ProcessInMainThreadAsync(() =>
                         {
-                            _groupAddWindowService.CloseWindow();
-                            MessageBox.Show(response.Description, response.StatusCode.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
+                            _windowService.CloseWindow();
+                            ShowMessageBox(response.Description, response.StatusCode.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
                         });
                         break;
                     }
@@ -135,11 +117,6 @@ namespace UniversityTool.ViewModels
                 _ = ProcessInMainThreadAsync(() => Departaments = response.Data);
             }
         }
-
-        private async Task SendMessageAsync(Group entity) => await Task
-            .Run(() => _messageBus
-            .Send(new GroupMessage(entity, OperationTypeCode.Add)))
-            .ConfigureAwait(false);
 
         #endregion
     }

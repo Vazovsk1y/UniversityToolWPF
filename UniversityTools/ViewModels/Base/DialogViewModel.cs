@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using UniversityTool.Domain.Messages.Base;
 using UniversityTool.Domain.Services.Base;
@@ -55,6 +56,9 @@ namespace UniversityTool.ViewModels.Base
 
         protected virtual async Task SendMessageAsync<T>(T message) where T : BaseMessage =>
           await Task.Run(() => _messageBusService.Send(message)).ConfigureAwait(false);
+
+        protected virtual void ShowMessageBox(string message, string caption, MessageBoxButton button, MessageBoxImage image) =>
+            MessageBox.Show(message, caption, button, image);
 
         #endregion
     }
