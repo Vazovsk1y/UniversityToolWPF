@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UniversityTool.Views.Windows"
         xmlns:vm ="clr-namespace:UniversityTool.ViewModels"
+        xmlns:m="clr-namespace:UniversityTool.Domain.Models;assembly=UniversityTool.Domain"
         mc:Ignorable="d"
         Title="{Binding WindowTitle}" Height="400" Width="400"
         WindowStartupLocation="CenterScreen"
@@ -37,9 +38,19 @@
                      />
         </StackPanel>
 
-        <ComboBox ItemsSource="{Binding Departaments}" 
-                  DisplayMemberPath="Title"
-                  SelectedItem="{Binding SelectedDepartament}"/>
-
+        <StackPanel Grid.Row="0">
+            <TextBlock Text="Departament list:"/>
+            <ComboBox ItemsSource="{Binding Departaments}" 
+                  SelectedItem="{Binding SelectedDepartament}"
+                  VerticalAlignment="Top"
+                      Height="40">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate DataType="m:Departament">
+                        <TextBlock Text="{Binding Title}"/>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+        </StackPanel>
+        
     </Grid>
 </Window>

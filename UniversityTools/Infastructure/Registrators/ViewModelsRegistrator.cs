@@ -10,7 +10,8 @@ namespace UniversityTool.Infastructure.Registrators
             .AddTransient<MainWindowViewModel>()
             .AddTransient<DepartamentAddViewModel>()
             .AddTransient<GroupAddViewModel>()
-            .AddTransient<TreeViewViewModel>()
+            .AddSingleton<TreeViewViewModel>()
+            .AddTransient<StudentAddViewModel>()
             ;
     }
 }

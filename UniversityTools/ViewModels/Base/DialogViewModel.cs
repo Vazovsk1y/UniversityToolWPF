@@ -25,15 +25,15 @@ namespace UniversityTool.ViewModels.Base
 
         #region --Constructors--
 
-        public DialogViewModel() 
+        public DialogViewModel()
+        {
+
+        }
+
+        public DialogViewModel(IMessageBusService messageBus, T windowService) 
         {
             AcceptCommand = new RelayCommand(OnAccepting, OnCanAccept);
             CancelCommand = new RelayCommand(OnCanceling, OnCanCancel);
-        }
-
-        public DialogViewModel(IMessageBusService messageBus, T windowService) : this()
-        {
-           
             _messageBusService = messageBus;
             _windowService = windowService;
         }
@@ -57,7 +57,7 @@ namespace UniversityTool.ViewModels.Base
 
         #region --Methods--
 
-        protected virtual async Task SendMessageAsync<T>(T message) where T : BaseMessage =>
+        protected virtual async Task SendMessageAsync<M>(M message) where M : BaseMessage =>
           await Task.Run(() => _messageBusService.Send(message)).ConfigureAwait(false);
 
         protected virtual void ShowMessageBox(string message, string caption, MessageBoxButton button, MessageBoxImage image) =>

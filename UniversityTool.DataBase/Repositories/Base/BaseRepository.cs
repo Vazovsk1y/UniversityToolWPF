@@ -20,12 +20,10 @@ namespace UniversityTool.DataBase.Repositories.Base
         {
             try
             {
-                using (UniversityToolDbContext context = _contextFactory.CreateDbContext())
-                {
-                    EntityEntry<T> result = await context.Set<T>().AddAsync(entity).ConfigureAwait(false);
-                    await context.SaveChangesAsync();
-                    return result.Entity;
-                }
+                await using UniversityToolDbContext context = _contextFactory.CreateDbContext();
+                EntityEntry<T> result = await context.Set<T>().AddAsync(entity).ConfigureAwait(false);
+                await context.SaveChangesAsync();
+                return result.Entity;
             }
             catch 
             {
@@ -37,13 +35,11 @@ namespace UniversityTool.DataBase.Repositories.Base
         {
             try
             {
-                using (UniversityToolDbContext context = _contextFactory.CreateDbContext())
-                {
-                    T entity = await context.Set<T>().FirstOrDefaultAsync(e => e.Id == id).ConfigureAwait(false);
-                    context.Set<T>().Remove(entity);
-                    await context.SaveChangesAsync();
-                    return true;
-                }
+                await using UniversityToolDbContext context = _contextFactory.CreateDbContext();
+                T entity = await context.Set<T>().FirstOrDefaultAsync(e => e.Id == id).ConfigureAwait(false);
+                context.Set<T>().Remove(entity);
+                await context.SaveChangesAsync();
+                return true;
             }
             catch
             {
@@ -55,10 +51,8 @@ namespace UniversityTool.DataBase.Repositories.Base
         {
             try
             {
-                using (UniversityToolDbContext context = _contextFactory.CreateDbContext())
-                {
-                    return await context.Set<T>().FirstOrDefaultAsync(e => e.Id == id).ConfigureAwait(false);
-                }
+                await using UniversityToolDbContext context = _contextFactory.CreateDbContext();
+                return await context.Set<T>().FirstOrDefaultAsync(e => e.Id == id).ConfigureAwait(false);
             }
             catch
             {
@@ -70,10 +64,8 @@ namespace UniversityTool.DataBase.Repositories.Base
         {
             try
             {
-                using (UniversityToolDbContext context = _contextFactory.CreateDbContext())
-                {
-                    return await context.Set<T>().ToListAsync().ConfigureAwait(false);
-                }
+                await using UniversityToolDbContext context = _contextFactory.CreateDbContext();
+                return await context.Set<T>().ToListAsync().ConfigureAwait(false);
             }
             catch
             {
@@ -85,13 +77,11 @@ namespace UniversityTool.DataBase.Repositories.Base
         {
             try
             {
-                using (UniversityToolDbContext context = _contextFactory.CreateDbContext())
-                {
-                    entity.Id = id;
-                    context.Set<T>().Update(entity);
-                    await context.SaveChangesAsync();
-                    return entity;
-                }
+                await using UniversityToolDbContext context = _contextFactory.CreateDbContext();
+                entity.Id = id;
+                context.Set<T>().Update(entity);
+                await context.SaveChangesAsync();
+                return entity;
             }
             catch
             {

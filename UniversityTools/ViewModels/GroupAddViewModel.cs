@@ -73,10 +73,10 @@ namespace UniversityTool.ViewModels
         protected override async void OnAccepting(object a)
         {
             var response = await _groupService
-                .Add(new Group 
-                { 
-                    DepartamentId = SelectedDepartament.Id, 
-                    Title = GroupTitle 
+                .Add(new Group
+                {
+                    DepartamentId = SelectedDepartament.Id,
+                    Title = GroupTitle
                 })
                 .ConfigureAwait(false);
 

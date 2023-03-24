@@ -79,8 +79,9 @@ namespace UniversityTool.ViewModels.ControlsViewModels
         {
             _messageBus = messageBusService;
             _departamentTreeService = treeService;
-            _subscriptions.Add(_messageBus.RegisterHandler<DepartamentMessage>(OnReceiveMessageAsync));
+            _subscriptions.Add(_messageBus.RegisterHandler<DepartamentMessage>(OnReceiveMessage));
             _subscriptions.Add(_messageBus.RegisterHandler<GroupMessage>(OnReceiveMessage));
+            _subscriptions.Add(_messageBus.RegisterHandler<StudentMessage>(OnReceiveMessage));
             TreeViewItemSelectionChangedCommand = new RelayCommand(OnTreeViewItemSelectionChanged, OnCanSelectTreeViewItem);
             _ = InitializeFullTreeAsync();
         }
@@ -134,7 +135,7 @@ namespace UniversityTool.ViewModels.ControlsViewModels
                 }
             });
 
-        private void OnReceiveMessageAsync(DepartamentMessage message)
+        private void OnReceiveMessage(DepartamentMessage message)
         {
             switch (message.OperationType)
             {
@@ -166,6 +167,28 @@ namespace UniversityTool.ViewModels.ControlsViewModels
                 case UIOperationTypeCode.Delete:
                     break;
                 case UIOperationTypeCode.Update:
+                    break;
+            }
+        }
+
+        private void OnReceiveMessage(StudentMessage message)
+        {
+            switch (message.OperationType)
+            {
+                case UIOperationTypeCode.Add:
+                    {
+                        _ = ProcessInMainThreadAsync(() =>
+                        {
+                            var group = FullTree.SelectMany(d => d.Groups).FirstOrDefault(g => g.Id == message.Student.GroupId);
+                            group?.Students.Add(message.Student);
+                        });
+                        break;
+                    }
+                case UIOperationTypeCode.Delete:
+                    break;
+                case UIOperationTypeCode.Update:
+                    break;
+                case UIOperationTypeCode.Move:
                     break;
             }
         }
