@@ -49,7 +49,7 @@ namespace UniversityTool.ViewModels.Base
 
         protected virtual void OnCanceling(object p) => _windowService.CloseWindow();
 
-        protected virtual bool OnCanAccept(object p) => true;
+        protected virtual bool OnCanAccept(object p) => p is string { Length: > 0 };
 
         protected abstract void OnAccepting(object action);
 

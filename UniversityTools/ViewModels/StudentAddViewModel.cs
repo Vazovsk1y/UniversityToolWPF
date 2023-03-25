@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using UniversityTool.Domain.Codes;
 using UniversityTool.Domain.Messages;
 using System.Windows;
+using System.Linq;
 
 namespace UniversityTool.ViewModels
 {
@@ -79,7 +80,6 @@ namespace UniversityTool.ViewModels
             _ = InitializeGroupsAsync();
         }
 
-
         #endregion
 
         #region --Commands--
@@ -118,6 +118,8 @@ namespace UniversityTool.ViewModels
             }
         }
 
+        protected override bool OnCanAccept(object p) => IsButtonEnable(StudentName, StudentSurname, StudentThirdName);
+
         #endregion
 
         #region --Methods--
@@ -130,6 +132,8 @@ namespace UniversityTool.ViewModels
                 _ = ProcessInMainThreadAsync(() => Groups = response.Data);
             }
         }
+
+        private bool IsButtonEnable(params string[] args) => args.ToList().TrueForAll(row => row is not null && row.Length > 0);
 
         #endregion
     }

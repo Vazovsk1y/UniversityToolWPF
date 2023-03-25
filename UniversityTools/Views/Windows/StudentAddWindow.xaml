@@ -32,7 +32,7 @@
             <TextBox FontFamily="Century Gothic"
                      FontSize="20"
                      TextAlignment="Center"
-                     Text="{Binding StudentName}"
+                     Text="{Binding StudentName, UpdateSourceTrigger=PropertyChanged}"
                      />
         </StackPanel>
         
@@ -41,7 +41,7 @@
             <TextBox FontFamily="Century Gothic"
                      FontSize="20"
                      TextAlignment="Center"
-                     Text="{Binding StudentSurname}"
+                     Text="{Binding StudentSurname, UpdateSourceTrigger=PropertyChanged}"
                      />
         </StackPanel>
 
@@ -50,7 +50,7 @@
             <TextBox FontFamily="Century Gothic"
                      FontSize="20"
                      TextAlignment="Center"
-                     Text="{Binding StudentThirdName}"
+                     Text="{Binding StudentThirdName, UpdateSourceTrigger=PropertyChanged}"
                      />
         </StackPanel>
 

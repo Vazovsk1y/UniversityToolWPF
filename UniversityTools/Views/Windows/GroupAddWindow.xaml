@@ -23,7 +23,9 @@
         <GroupBox Grid.Row="4">
             <DockPanel>
                 <UniformGrid DockPanel.Dock="Bottom" Rows="1" >
-                    <Button Margin ="20" Content="Ок" Command="{Binding AcceptCommand}"/>
+                    <Button Margin ="20" Content="Ок" 
+                            Command="{Binding AcceptCommand}"
+                            CommandParameter="{Binding GroupTitle}"/>
                     <Button Margin ="20" Content="Отмена" Command="{Binding CancelCommand}"/>
                 </UniformGrid>
             </DockPanel>
@@ -34,7 +36,7 @@
             <TextBox FontFamily="Century Gothic"
                      FontSize="20"
                      TextAlignment="Center"
-                     Text="{Binding GroupTitle}"
+                     Text="{Binding GroupTitle, UpdateSourceTrigger=PropertyChanged}"
                      />
         </StackPanel>
 
@@ -46,7 +48,7 @@
                       Height="40">
                 <ComboBox.ItemTemplate>
                     <DataTemplate DataType="m:Departament">
-                        <TextBlock Text="{Binding Title}"/>
+                        <TextBlock Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}"/>
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
             </ComboBox>
