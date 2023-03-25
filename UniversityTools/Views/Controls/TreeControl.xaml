@@ -38,7 +38,7 @@
 
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName = "SelectedItemChanged" >
-                    <i:InvokeCommandAction Command = "{Binding TreeViewItemSelectionChangedCommand}"
+                    <i:InvokeCommandAction Command = "{Binding TreeViewItemSelectionChangedCommand, UpdateSourceTrigger=PropertyChanged}"
                                         CommandParameter="{Binding ElementName=mainTree, Path=SelectedItem}"/>
                 </i:EventTrigger>
             </i:Interaction.Triggers>

@@ -8,7 +8,8 @@ namespace UniversityTool.Infastructure.Registrators
     {
         public static IServiceCollection AddViewModels(this IServiceCollection services) => services
             .AddSingleton<MainWindowViewModel>()
-            .AddScoped<TreeViewViewModel>()
+            .AddSingleton<TreeViewViewModel>()
+            .AddSingleton<MenuViewModel>()
             .AddTransient<DepartamentAddViewModel>()
             .AddTransient<GroupAddViewModel>()
             .AddTransient<StudentAddViewModel>()

@@ -22,7 +22,8 @@ namespace UniversityTool.Infastructure.Registrators
                 {
                     case "MSSQL":
                         {
-                            options.UseSqlServer(configuration.GetConnectionString(dbType)).UseSnakeCaseNamingConvention();
+                            options.UseSqlServer(configuration.GetConnectionString(dbType), 
+                                o => o.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery)).UseSnakeCaseNamingConvention();
                             break;
                         }
 

@@ -82,7 +82,6 @@ namespace UniversityTool.ViewModels.ControlsViewModels
             _subscriptions.Add(_messageBus.RegisterHandler<DepartamentMessage>(OnReceiveMessage));
             _subscriptions.Add(_messageBus.RegisterHandler<GroupMessage>(OnReceiveMessage));
             _subscriptions.Add(_messageBus.RegisterHandler<StudentMessage>(OnReceiveMessage));
-            TreeViewItemSelectionChangedCommand = new RelayCommand(OnTreeViewItemSelectionChanged, OnCanSelectTreeViewItem);
             _ = InitializeFullTreeAsync();
         }
 
@@ -90,9 +89,7 @@ namespace UniversityTool.ViewModels.ControlsViewModels
 
         #region --Commands--
 
-        public ICommand TreeViewItemSelectionChangedCommand { get; private set; }
-
-        private bool OnCanSelectTreeViewItem(object arg) => true;
+        public ICommand TreeViewItemSelectionChangedCommand => new RelayCommand(OnTreeViewItemSelectionChanged);
 
         private void OnTreeViewItemSelectionChanged(object selectedItem)
         {
@@ -100,13 +97,25 @@ namespace UniversityTool.ViewModels.ControlsViewModels
             switch (selectedItem)
             {
                 case Student student:
-                    SelectedStudent = student;
+                    {
+                        SelectedDepartament = null;
+                        SelectedGroup = null;
+                        SelectedStudent = student;
+                    }
                     break;
                 case Group group:
-                    SelectedGroup = group;
+                    {
+                        SelectedStudent = null;
+                        SelectedDepartament = null;
+                        SelectedGroup = group;
+                    }
                     break;
                 case Departament departament:
-                    SelectedDepartament = departament;
+                    {
+                        SelectedGroup = null;
+                        SelectedStudent = null;
+                        SelectedDepartament = departament;
+                    }
                     break;
             }
         }
@@ -116,15 +125,6 @@ namespace UniversityTool.ViewModels.ControlsViewModels
         #region --Methods--
 
         public void Dispose() => _subscriptions.ForEach(subscription => subscription.Dispose());
-
-        //private async Task InitializeFullTreeAsync()
-        //{
-        //    var response = await _treeService.GetFullDepartamentsTree().ConfigureAwait(false);
-        //    if (response.StatusCode == StatusCode.Success)
-        //    {
-        //        _ = ProcessInMainThreadAsync(() => FullTree = new ObservableCollection<Departament>(response.Data));
-        //    }
-        //}
 
         private async Task InitializeFullTreeAsync() => await Task.Run(async () =>
             {
