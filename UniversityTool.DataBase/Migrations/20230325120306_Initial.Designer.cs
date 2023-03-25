@@ -11,7 +11,7 @@ using UniversityTool.DataBase.Context;
 namespace UniversityTool.DataBase.Migrations
 {
     [DbContext(typeof(UniversityToolDbContext))]
-    [Migration("20230304160456_Initial")]
+    [Migration("20230325120306_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -19,7 +19,7 @@ namespace UniversityTool.DataBase.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.3")
+                .HasAnnotation("ProductVersion", "7.0.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -28,69 +28,84 @@ namespace UniversityTool.DataBase.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("id");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("title");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("pk_departaments");
 
-                    b.ToTable("Departaments");
+                    b.ToTable("departaments", (string)null);
                 });
 
             modelBuilder.Entity("UniversityTool.Domain.Models.Group", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("id");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("DepartamentId")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("departament_id");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("title");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("pk_groups");
 
-                    b.HasIndex("DepartamentId");
+                    b.HasIndex("DepartamentId")
+                        .HasDatabaseName("ix_groups_departament_id");
 
-                    b.ToTable("Groups");
+                    b.ToTable("groups", (string)null);
                 });
 
             modelBuilder.Entity("UniversityTool.Domain.Models.Student", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("id");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("GroupId")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("group_id");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("name");
 
                     b.Property<string>("SecondName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("second_name");
 
                     b.Property<string>("ThirdName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("third_name");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("pk_students");
 
-                    b.HasIndex("GroupId");
+                    b.HasIndex("GroupId")
+                        .HasDatabaseName("ix_students_group_id");
 
-                    b.ToTable("Students");
+                    b.ToTable("students", (string)null);
                 });
 
             modelBuilder.Entity("UniversityTool.Domain.Models.Group", b =>
@@ -98,8 +113,9 @@ namespace UniversityTool.DataBase.Migrations
                     b.HasOne("UniversityTool.Domain.Models.Departament", "Departament")
                         .WithMany("Groups")
                         .HasForeignKey("DepartamentId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_groups_departaments_departament_id");
 
                     b.Navigation("Departament");
                 });
@@ -109,8 +125,9 @@ namespace UniversityTool.DataBase.Migrations
                     b.HasOne("UniversityTool.Domain.Models.Group", "Group")
                         .WithMany("Students")
                         .HasForeignKey("GroupId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_students_groups_group_id");
 
                     b.Navigation("Group");
                 });

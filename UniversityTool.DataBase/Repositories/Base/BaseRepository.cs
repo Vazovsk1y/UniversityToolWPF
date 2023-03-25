@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using UniversityTool.DataBase.Context;
-using UniversityTool.DataBase.Factory;
 using UniversityTool.Domain.Models.Base;
 using UniversityTool.Domain.Repositories.Base;
 
@@ -9,9 +8,9 @@ namespace UniversityTool.DataBase.Repositories.Base
 {
     internal class BaseRepository<T> : IBaseRepository<T> where T : BaseModel
     {
-        protected readonly UniversityToolDbContextFactory _contextFactory;
+        protected readonly IDbContextFactory<UniversityToolDbContext> _contextFactory;
 
-        public BaseRepository(UniversityToolDbContextFactory contextFactory)
+        public BaseRepository(IDbContextFactory<UniversityToolDbContext> contextFactory)
         {
             _contextFactory = contextFactory;
         }

@@ -9,7 +9,7 @@ namespace UniversityTool.DataBase.Context
         public DbSet<Group> Groups { get; set; }
         public DbSet<Student> Students { get; set; }
 
-        public UniversityToolDbContext(DbContextOptions options) : base(options) { }
+        public UniversityToolDbContext(DbContextOptions<UniversityToolDbContext> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -21,7 +21,7 @@ namespace UniversityTool.DataBase.Context
                 d.HasMany(x => x.Groups)
                     .WithOne(x => x.Departament)
                     .HasForeignKey(x => x.DepartamentId)
-                    .OnDelete(DeleteBehavior.Restrict);
+                    .OnDelete(DeleteBehavior.Cascade);
             });
 
             modelBuilder.Entity<Group>(g =>
@@ -32,7 +32,7 @@ namespace UniversityTool.DataBase.Context
                 g.HasMany(x => x.Students)
                     .WithOne(x => x.Group)
                     .HasForeignKey(x => x.GroupId)
-                    .OnDelete(DeleteBehavior.Restrict);
+                    .OnDelete(DeleteBehavior.Cascade);
             });
 
             modelBuilder.Entity<Student>(s =>
@@ -45,7 +45,7 @@ namespace UniversityTool.DataBase.Context
                 s.HasOne(x => x.Group)
                     .WithMany(x => x.Students)
                     .HasForeignKey(x => x.GroupId)
-                    .OnDelete(DeleteBehavior.Restrict);
+                    .OnDelete(DeleteBehavior.Cascade);
             });
         }
     }
