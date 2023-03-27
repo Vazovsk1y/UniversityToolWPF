@@ -10,22 +10,17 @@ using System;
 
 namespace UniversityTool.ViewModels
 {
-    internal class DepartamentAddViewModel : DialogViewModel<IDepartamentAddWindowService>
+    internal class DepartamentAddViewModel : BaseDepartamentViewModel<IDepartamentAddWindowService>
     {
         #region --Fields--
 
-        private string _departamentTitle;
-        private readonly IDepartamentService _departamentService;
+
 
         #endregion
 
         #region --Properties--
 
-        public string DepartamentTitle
-        {
-            get => _departamentTitle;
-            set => Set(ref _departamentTitle, value);
-        }
+
 
         #endregion
 
@@ -35,14 +30,13 @@ namespace UniversityTool.ViewModels
         {
             if (!App.IsDesignMode)
                 throw new InvalidOperationException("Standart constructor is only for design time");
-            WindowTitle = "Departament Window";
+            WindowTitle = "Departament add Window";
         }
 
         public DepartamentAddViewModel(IDepartamentAddWindowService departamentAddWindowService, IMessageBusService messageBus
-            , IDepartamentService departamentService) : base(messageBus, departamentAddWindowService)
+            , IDepartamentService departamentService) : base(messageBus, departamentAddWindowService, departamentService)
         {
-            WindowTitle = "Departament Window";
-            _departamentService = departamentService;
+            WindowTitle = "Departament add Window";
         }
 
         #endregion

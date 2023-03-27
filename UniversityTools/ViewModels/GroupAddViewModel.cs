@@ -12,15 +12,12 @@ using System;
 
 namespace UniversityTool.ViewModels
 {
-    internal class GroupAddViewModel : DialogViewModel<IGroupAddWindowService>
+    internal class GroupAddViewModel : BaseGroupViewModel<IGroupAddWindowService>
     {
         #region --Fields--
 
         private string _groupName;
-        private Departament _selectedDepartament;
         private IEnumerable<Departament> _departaments;
-        private readonly IDepartamentService _departamentService;
-        private readonly IGroupService _groupService;
 
         #endregion
 
@@ -38,12 +35,6 @@ namespace UniversityTool.ViewModels
             set => Set(ref _groupName, value); 
         }
 
-        public Departament SelectedDepartament 
-        { 
-            get => _selectedDepartament ?? new(); 
-            set => Set(ref _selectedDepartament, value); 
-        }
-
         #endregion
 
         #region --Constructors--
@@ -55,13 +46,12 @@ namespace UniversityTool.ViewModels
             WindowTitle = "Group Window";
         }
 
-        public GroupAddViewModel(IDepartamentService departamentService, 
+        public GroupAddViewModel(
+            IDepartamentService departamentService, 
             IGroupService groupService, 
             IGroupAddWindowService groupAddWindowService, 
-            IMessageBusService messageBus) : base(messageBus, groupAddWindowService)
+            IMessageBusService messageBus) : base(messageBus, groupAddWindowService, groupService, departamentService)
         {
-            _departamentService = departamentService;
-            _groupService = groupService;
             WindowTitle = "Group Window";
             _ = InitializeDepartamentsAsync();
         }

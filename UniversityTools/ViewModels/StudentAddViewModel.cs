@@ -13,50 +13,20 @@ using System.Linq;
 
 namespace UniversityTool.ViewModels
 {
-    internal class StudentAddViewModel : DialogViewModel<IStudentAddWindowService>
+    internal class StudentAddViewModel : BaseStudentViewModel<IStudentAddWindowService>
     {
         #region --Fields--
 
         private IEnumerable<Group> _groups;
-        private Group _selectedGroup;
-        private string _studentName;
-        private string _studentSurname;
-        private string _studentThirdName;
-        private readonly IStudentService _studentService;
-        private readonly IGroupService _groupService;
 
         #endregion
 
         #region --Properties--
 
-        public string StudentName
-        {
-            get => _studentName;
-            set => Set(ref _studentName, value);
-        }
-
-        public string StudentSurname
-        {
-            get => _studentSurname;
-            set => Set(ref _studentSurname, value);
-        }
-
-        public string StudentThirdName
-        {
-            get => _studentThirdName;
-            set => Set(ref _studentThirdName, value);
-        }
-
         public IEnumerable<Group> Groups
         {
             get => _groups;
             set => Set(ref _groups, value);
-        }
-
-        public Group SelectedGroup
-        {
-            get => _selectedGroup ?? new();
-            set => Set(ref _selectedGroup, value);
         }
 
         #endregion
@@ -73,10 +43,8 @@ namespace UniversityTool.ViewModels
         public StudentAddViewModel(IStudentService studentService, 
             IGroupService groupService, 
             IMessageBusService messageBus, 
-            IStudentAddWindowService studentAddWindowService) : base(messageBus, studentAddWindowService) 
+            IStudentAddWindowService studentAddWindowService) : base(messageBus, studentAddWindowService, groupService, studentService) 
         {
-            _studentService = studentService;
-            _groupService = groupService;
             _ = InitializeGroupsAsync();
         }
 
@@ -118,7 +86,7 @@ namespace UniversityTool.ViewModels
             }
         }
 
-        protected override bool OnCanAccept(object p) => IsButtonEnable(StudentName, StudentSurname, StudentThirdName);
+        protected override bool OnCanAccept(object p) => IsAcceptButtonEnable(StudentName, StudentSurname, StudentThirdName);
 
         #endregion
 
@@ -133,7 +101,7 @@ namespace UniversityTool.ViewModels
             }
         }
 
-        private bool IsButtonEnable(params string[] args) => args.ToList().TrueForAll(row => row is not null && row.Length > 0);
+        private bool IsAcceptButtonEnable(params string[] args) => args.ToList().TrueForAll(row => row is not null && row.Length > 0);
 
         #endregion
     }
