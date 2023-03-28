@@ -10,7 +10,7 @@ namespace UniversityTool.DataBase.Registrators.Repositories
     {
         public static IServiceCollection AddDbRepositories(this IServiceCollection services) => services
             .AddTransient(typeof(IBaseRepository<>), typeof(BaseRepository<>))
-            .AddTransient<ITreeRepository, TreeRepository>()
+            .AddTransient<IDepartamentTreeRepository, DepartamentTreeRepository>()
             ;
     }
 }

@@ -15,13 +15,13 @@ namespace UniversityTool.DataBase.Repositories.Base
             _contextFactory = contextFactory;
         }
 
-        public async Task<T> Add(T entity)
+        public async Task<T> Add(T entity, CancellationToken token = default)
         {
             try
             {
                 await using UniversityToolDbContext context = _contextFactory.CreateDbContext();
-                EntityEntry<T> result = await context.Set<T>().AddAsync(entity).ConfigureAwait(false);
-                await context.SaveChangesAsync();
+                EntityEntry<T> result = await context.Set<T>().AddAsync(entity, token).ConfigureAwait(false);
+                await context.SaveChangesAsync(token);
                 return result.Entity;
             }
             catch 
@@ -30,14 +30,14 @@ namespace UniversityTool.DataBase.Repositories.Base
             }
         }
 
-        public async Task<bool> Delete(int id)
+        public async Task<bool> Delete(int id, CancellationToken token = default)
         {
             try
             {
                 await using UniversityToolDbContext context = _contextFactory.CreateDbContext();
-                T entity = await context.Set<T>().FirstOrDefaultAsync(e => e.Id == id).ConfigureAwait(false);
+                T entity = await context.Set<T>().FirstOrDefaultAsync(e => e.Id == id, token).ConfigureAwait(false);
                 context.Set<T>().Remove(entity);
-                await context.SaveChangesAsync();
+                await context.SaveChangesAsync(token);
                 return true;
             }
             catch
@@ -46,12 +46,12 @@ namespace UniversityTool.DataBase.Repositories.Base
             }
         }
 
-        public async Task<T> Get(int id)
+        public async Task<T> Get(int id, CancellationToken token = default)
         {
             try
             {
                 await using UniversityToolDbContext context = _contextFactory.CreateDbContext();
-                return await context.Set<T>().FirstOrDefaultAsync(e => e.Id == id).ConfigureAwait(false);
+                return await context.Set<T>().FirstOrDefaultAsync(e => e.Id == id, token).ConfigureAwait(false);
             }
             catch
             {
@@ -59,12 +59,12 @@ namespace UniversityTool.DataBase.Repositories.Base
             }
         }
 
-        public async Task<IEnumerable<T>> GetAll()
+        public async Task<IEnumerable<T>> GetAll(CancellationToken token = default)
         {
             try
             {
                 await using UniversityToolDbContext context = _contextFactory.CreateDbContext();
-                return await context.Set<T>().ToListAsync().ConfigureAwait(false);
+                return await context.Set<T>().ToListAsync(token).ConfigureAwait(false);
             }
             catch
             {
@@ -72,14 +72,13 @@ namespace UniversityTool.DataBase.Repositories.Base
             }
         }
 
-        public async Task<T> Update(int id, T entity)
+        public async Task<T> Update(T entity, CancellationToken token = default)
         {
             try
             {
                 await using UniversityToolDbContext context = _contextFactory.CreateDbContext();
-                entity.Id = id;
                 context.Set<T>().Update(entity);
-                await context.SaveChangesAsync();
+                await context.SaveChangesAsync(token);
                 return entity;
             }
             catch

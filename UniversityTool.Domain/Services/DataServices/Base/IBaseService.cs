@@ -7,6 +7,8 @@ namespace UniversityTool.Domain.Services.DataServices.Base
     {
         Task<ISingleDataResponse<T>> Add(T entity);
 
+        Task<ISingleDataResponse<T>> Update(T entity);
+
         Task<ICollectionDataResponse<T>> GetAll();
     }
 }

@@ -10,7 +10,7 @@ using UniversityTool.Domain.Services.DataServices;
 using UniversityTool.Domain.Codes;
 using System;
 
-namespace UniversityTool.ViewModels
+namespace UniversityTool.ViewModels.AddingViemModels
 {
     internal class GroupAddViewModel : BaseGroupViewModel<IGroupAddWindowService>
     {
@@ -26,13 +26,13 @@ namespace UniversityTool.ViewModels
         public IEnumerable<Departament> Departaments
         {
             get => _departaments;
-            set => Set(ref _departaments, value);                         
+            set => Set(ref _departaments, value);
         }
 
-        public string GroupTitle 
+        public string GroupTitle
         {
-            get => _groupName; 
-            set => Set(ref _groupName, value); 
+            get => _groupName;
+            set => Set(ref _groupName, value);
         }
 
         #endregion
@@ -47,9 +47,9 @@ namespace UniversityTool.ViewModels
         }
 
         public GroupAddViewModel(
-            IDepartamentService departamentService, 
-            IGroupService groupService, 
-            IGroupAddWindowService groupAddWindowService, 
+            IDepartamentService departamentService,
+            IGroupService groupService,
+            IGroupAddWindowService groupAddWindowService,
             IMessageBusService messageBus) : base(messageBus, groupAddWindowService, groupService, departamentService)
         {
             WindowTitle = "Group Window";

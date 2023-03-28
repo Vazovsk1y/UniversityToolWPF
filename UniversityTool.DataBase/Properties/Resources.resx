@@ -118,15 +118,27 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AddingErrorMessage" xml:space="preserve">
-    <value>The adding was failed!</value>
+    <value>Adding was failed!</value>
     <comment>Base unsuccessfull notification.</comment>
   </data>
+  <data name="AddingSuccessMessage" xml:space="preserve">
+    <value>Adding was succesfully completed!</value>
+    <comment>The adding was successfull without any error.</comment>
+  </data>
+  <data name="GettingErrorMessage" xml:space="preserve">
+    <value>Error occurs while you try to get data.</value>
+  </data>
+  <data name="GettingSuccessMessage" xml:space="preserve">
+    <value>All required data was getting!</value>
+  </data>
   <data name="NullParametrErrorMessage" xml:space="preserve">
-    <value>Some of required parametrs was empty. Adding was failed!</value>
+    <value>Some of required parametrs was empty.</value>
     <comment>When someone try to add entity with some of data that equals null.</comment>
   </data>
-  <data name="SuccessMessage" xml:space="preserve">
-    <value>The adding was succesfully completed!</value>
-    <comment>The adding was successfull without any error.</comment>
+  <data name="UpdateErrorMessage" xml:space="preserve">
+    <value>Updating was failed!</value>
+  </data>
+  <data name="UpdateSuccessMessage" xml:space="preserve">
+    <value>Updating was succesfully completed!</value>
   </data>
 </root>

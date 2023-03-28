@@ -11,7 +11,7 @@ using UniversityTool.Domain.Messages;
 using System.Windows;
 using System.Linq;
 
-namespace UniversityTool.ViewModels
+namespace UniversityTool.ViewModels.AddingViemModels
 {
     internal class StudentAddViewModel : BaseStudentViewModel<IStudentAddWindowService>
     {
@@ -40,10 +40,10 @@ namespace UniversityTool.ViewModels
             WindowTitle = "Student Add";
         }
 
-        public StudentAddViewModel(IStudentService studentService, 
-            IGroupService groupService, 
-            IMessageBusService messageBus, 
-            IStudentAddWindowService studentAddWindowService) : base(messageBus, studentAddWindowService, groupService, studentService) 
+        public StudentAddViewModel(IStudentService studentService,
+            IGroupService groupService,
+            IMessageBusService messageBus,
+            IStudentAddWindowService studentAddWindowService) : base(messageBus, studentAddWindowService, groupService, studentService)
         {
             _ = InitializeGroupsAsync();
         }

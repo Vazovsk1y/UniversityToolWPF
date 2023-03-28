@@ -5,10 +5,6 @@ using UniversityTool.Domain.Services;
 using System.Threading;
 using UniversityTool.Infastructure.Registrators;
 using Microsoft.Extensions.Hosting;
-using UniversityTool.DataBase.Context;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using UniversityTool.Data;
 using UniversityTool.Domain.Services.DataServices;
 
 namespace UniversityTool

@@ -8,7 +8,7 @@ using UniversityTool.Domain.Codes;
 using UniversityTool.Domain.Services.DataServices.Base;
 using System;
 
-namespace UniversityTool.ViewModels
+namespace UniversityTool.ViewModels.AddingViemModels
 {
     internal class DepartamentAddViewModel : BaseDepartamentViewModel<IDepartamentAddWindowService>
     {

@@ -127,13 +127,13 @@ namespace UniversityTool.ViewModels.ControlsViewModels
         public void Dispose() => _subscriptions.ForEach(subscription => subscription.Dispose());
 
         private async Task InitializeFullTreeAsync() => await Task.Run(async () =>
+        {
+            var response = await _departamentTreeService.GetFullDepartamentsTree().ConfigureAwait(false);
+            if (response.StatusCode == OperationResultStatusCode.Success)
             {
-                var response = await _departamentTreeService.GetFullDepartamentsTree().ConfigureAwait(false);
-                if (response.StatusCode == OperationResultStatusCode.Success)
-                {
-                    _ = ProcessInMainThreadAsync(() => FullTree = new ObservableCollection<Departament>(response.Data));
-                }
-            });
+                _ = ProcessInMainThreadAsync(() => FullTree = new ObservableCollection<Departament>(response.Data));
+            }
+        });
 
         private void OnReceiveMessage(DepartamentMessage message)
         {
@@ -147,7 +147,20 @@ namespace UniversityTool.ViewModels.ControlsViewModels
                 case UIOperationTypeCode.Delete:
                     break;
                 case UIOperationTypeCode.Update:
-                    break;
+                    {
+                        _ = ProcessInMainThreadAsync(() =>
+                        {
+                            var updatedDepartamentIndex = FullTree.IndexOf(SelectedDepartament);
+                            if (updatedDepartamentIndex != -1)
+                            {
+                                message.Departament.Groups = SelectedDepartament.Groups;
+
+                                FullTree[updatedDepartamentIndex] = message.Departament;
+                                SelectedDepartament = message.Departament;
+                            }
+                        });
+                        break;
+                    }
             }
         }
         

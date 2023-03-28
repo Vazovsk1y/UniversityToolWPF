@@ -2,7 +2,7 @@
 
 namespace UniversityTool.Domain.Repositories
 {
-    public interface ITreeRepository
+    public interface IDepartamentTreeRepository
     {
         Task<IEnumerable<Departament>> GetDepartamentsRelations();
     }

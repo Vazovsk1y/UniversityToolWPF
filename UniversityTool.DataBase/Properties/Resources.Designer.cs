@@ -61,7 +61,7 @@ namespace UniversityTool.DataBase.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The adding was failed!.
+        ///   Looks up a localized string similar to Adding was failed!.
         /// </summary>
         internal static string AddingErrorMessage {
             get {
@@ -70,7 +70,34 @@ namespace UniversityTool.DataBase.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Some of required parametrs was empty. Adding was failed!.
+        ///   Looks up a localized string similar to Adding was succesfully completed!.
+        /// </summary>
+        internal static string AddingSuccessMessage {
+            get {
+                return ResourceManager.GetString("AddingSuccessMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error occurs while you try to get data..
+        /// </summary>
+        internal static string GettingErrorMessage {
+            get {
+                return ResourceManager.GetString("GettingErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All required data was getting!.
+        /// </summary>
+        internal static string GettingSuccessMessage {
+            get {
+                return ResourceManager.GetString("GettingSuccessMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Some of required parametrs was empty..
         /// </summary>
         internal static string NullParametrErrorMessage {
             get {
@@ -79,11 +106,20 @@ namespace UniversityTool.DataBase.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The adding was succesfully completed!.
+        ///   Looks up a localized string similar to Updating was failed!.
         /// </summary>
-        internal static string SuccessMessage {
+        internal static string UpdateErrorMessage {
             get {
-                return ResourceManager.GetString("SuccessMessage", resourceCulture);
+                return ResourceManager.GetString("UpdateErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Updating was succesfully completed!.
+        /// </summary>
+        internal static string UpdateSuccessMessage {
+            get {
+                return ResourceManager.GetString("UpdateSuccessMessage", resourceCulture);
             }
         }
     }

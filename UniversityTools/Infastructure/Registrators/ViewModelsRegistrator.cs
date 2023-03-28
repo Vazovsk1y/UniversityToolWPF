@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using UniversityTool.ViewModels;
+using UniversityTool.ViewModels.AddingViemModels;
 using UniversityTool.ViewModels.ControlsViewModels;
+using UniversityTool.ViewModels.UpdatingViewModels;
 
 namespace UniversityTool.Infastructure.Registrators
 {
@@ -13,6 +15,7 @@ namespace UniversityTool.Infastructure.Registrators
             .AddTransient<DepartamentAddViewModel>()
             .AddTransient<GroupAddViewModel>()
             .AddTransient<StudentAddViewModel>()
+            .AddTransient<DepartamentUpdateViewModel>()
             ;
     }
 }

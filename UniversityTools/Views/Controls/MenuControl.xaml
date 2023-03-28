@@ -26,6 +26,7 @@
         <Menu Style="{StaticResource menu}">
             <MenuItem Header="File" Style="{StaticResource menuItem}" >
                 <MenuItem Header="Add Department" Style="{StaticResource menuItem}" Command="{Binding AddDepartamentCommand}"/>
+                <MenuItem Header="Update Department" Style="{StaticResource menuItem}" Command="{Binding UpdateDepartamentCommand}"/>
             </MenuItem>
             <MenuItem Header="Structure" Style="{StaticResource menuItem}">
                 <MenuItem Header="AddGroup" Style="{StaticResource menuItem}" Command="{Binding AddGroupCommand}"/>

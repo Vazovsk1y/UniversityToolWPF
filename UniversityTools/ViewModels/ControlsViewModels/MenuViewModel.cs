@@ -14,6 +14,7 @@ namespace UniversityTool.ViewModels.ControlsViewModels
         private readonly IDepartamentAddWindowService _departamentAddWindow;
         private readonly IGroupAddWindowService _groupAddWindow;
         private readonly IStudentAddWindowService _studentAddWindowService;
+        private readonly IDepartamentUpdateWindowService _departamentUpdateWindowService;
 
         #endregion
 
@@ -28,8 +29,10 @@ namespace UniversityTool.ViewModels.ControlsViewModels
         public MenuViewModel(IDepartamentAddWindowService departamentAddWindow,
             IGroupAddWindowService groupAddWindow,
             IStudentAddWindowService studentAddWindowService,
-            TreeViewViewModel tree)
+            TreeViewViewModel tree,
+            IDepartamentUpdateWindowService departamentUpdateWindowService)
         {
+            _departamentUpdateWindowService = departamentUpdateWindowService;
             _tree = tree;
             _departamentAddWindow = departamentAddWindow;
             _groupAddWindow = groupAddWindow;
@@ -39,6 +42,12 @@ namespace UniversityTool.ViewModels.ControlsViewModels
         #endregion
 
         #region --Commands--
+
+        public ICommand UpdateDepartamentCommand => new RelayCommand(OnUpdatingDepartament, OnCanUpdateDepartament);
+
+        private bool OnCanUpdateDepartament(object arg) => _tree.SelectedDepartament is not null;
+
+        private void OnUpdatingDepartament(object obj) => _departamentUpdateWindowService.OpenWindow();
 
         public ICommand AddDepartamentCommand => new RelayCommand(OnAddingDepartament);
 

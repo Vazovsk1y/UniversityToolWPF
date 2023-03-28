@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UniversityTool.Views.Windows"
-        xmlns:vm ="clr-namespace:UniversityTool.ViewModels"
+        xmlns:vm ="clr-namespace:UniversityTool.ViewModels.AddingViemModels"
         xmlns:m="clr-namespace:UniversityTool.Domain.Models;assembly=UniversityTool.Domain"
         mc:Ignorable="d"
         Title="{Binding WindowTitle}" Height="400" Width="400"

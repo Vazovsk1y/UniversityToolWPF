@@ -2,14 +2,14 @@
 {
     public interface IBaseRepository<T> where T : class
     {
-        Task<IEnumerable<T>> GetAll();
+        Task<IEnumerable<T>> GetAll(CancellationToken token = default);
 
-        Task<T> Get(int id);
+        Task<T> Get(int id, CancellationToken token = default);
 
-        Task<T> Add(T entity);
+        Task<T> Add(T entity, CancellationToken token = default);
 
-        Task<T> Update(int id, T entity);
+        Task<T> Update(T entity, CancellationToken token = default);
 
-        Task<bool> Delete(int id);
+        Task<bool> Delete(int id, CancellationToken token = default);
     }
 }

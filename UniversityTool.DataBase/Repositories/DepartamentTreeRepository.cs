@@ -5,11 +5,11 @@ using UniversityTool.Domain.Repositories;
 
 namespace UniversityTool.DataBase.Repositories
 {
-    internal class TreeRepository : ITreeRepository
+    internal class DepartamentTreeRepository : IDepartamentTreeRepository
     {
         protected readonly IDbContextFactory<UniversityToolDbContext> _contextFactory;
 
-        public TreeRepository(IDbContextFactory<UniversityToolDbContext>  contextFactory)
+        public DepartamentTreeRepository(IDbContextFactory<UniversityToolDbContext>  contextFactory)
         {
             _contextFactory = contextFactory;
         }

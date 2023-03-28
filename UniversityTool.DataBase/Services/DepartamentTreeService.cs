@@ -11,31 +11,31 @@ namespace UniversityTool.DataBase.Services
 {
     internal class DepartamentTreeService : BaseService<Departament>, IDepartamentTreeService
     {
-        private readonly ITreeRepository _treeRepository;
+        private readonly IDepartamentTreeRepository _departamentTreeRepository;
 
-        public DepartamentTreeService(ITreeRepository repository, IResponseFactory<Departament> responceFactory) : base(responceFactory)
+        public DepartamentTreeService(IDepartamentTreeRepository repository, IResponseFactory<Departament> responceFactory) : base(responceFactory)
         {
-            _treeRepository = repository;
+            _departamentTreeRepository = repository;
         }
 
         public async Task<ICollectionDataResponse<Departament>> GetFullDepartamentsTree()
         {
             try
             {
-                Items = await _treeRepository.GetDepartamentsRelations().ConfigureAwait(false);
+                Items = await _departamentTreeRepository.GetDepartamentsRelations().ConfigureAwait(false);
 
                 if (Items is null)
                 {
-                    return _responseFactory.CreateResponce(Resources.AddingErrorMessage, OperationResultStatusCode.Fail, Items);
+                    return _responseFactory.CreateResponce(Resources.GettingErrorMessage, OperationResultStatusCode.Fail, Items);
                 }
             }
             catch (Exception ex)
             {
                 Debug.WriteLine(ex);
-                return _responseFactory.CreateResponce(Resources.AddingErrorMessage, OperationResultStatusCode.Fail, Items);
+                return _responseFactory.CreateResponce(Resources.GettingErrorMessage, OperationResultStatusCode.Fail, Items);
             }
 
-            return _responseFactory.CreateResponce(Resources.SuccessMessage, OperationResultStatusCode.Success, Items);
+            return _responseFactory.CreateResponce(Resources.GettingSuccessMessage, OperationResultStatusCode.Success, Items);
         }
     }
 }
