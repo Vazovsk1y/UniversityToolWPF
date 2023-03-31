@@ -5,13 +5,13 @@ using UniversityTool.ViewModels.Base;
 using System;
 using UniversityTool.ViewModels.ControlsViewModels;
 using UniversityTool.Domain.Models;
-using System.Windows;
 using UniversityTool.Domain.Codes;
 using UniversityTool.Domain.Messages;
+using System.Windows;
 
 namespace UniversityTool.ViewModels.UpdatingViewModels
 {
-    internal class DepartamentUpdateViewModel : BaseDepartamentViewModel<IDepartamentUpdateWindowService>
+    internal class GroupUpdateViewModel : BaseGroupViewModel<IGroupUpdateWindowService>
     {
         #region --Fields--
 
@@ -27,22 +27,21 @@ namespace UniversityTool.ViewModels.UpdatingViewModels
 
         #region --Constructors--
 
-        public DepartamentUpdateViewModel()
+        public GroupUpdateViewModel()
         {
-            if (!App.IsDesignMode) 
-                throw new InvalidOperationException("Constructor only for design time");
-            WindowTitle = "Departament Update Window";
+            WindowTitle = "Group Update";
         }
 
-        public DepartamentUpdateViewModel(
-           IMessageBusService messageBus,
-           IDepartamentUpdateWindowService windowService,
-           IDepartamentService departamentService,
-           TreeViewViewModel tree) : base(messageBus, windowService, departamentService)
+        public GroupUpdateViewModel(
+            IMessageBusService messageBus,
+            IGroupUpdateWindowService windowService,
+            IGroupService groupService,
+            IDepartamentService departamentService,
+            TreeViewViewModel tree) : base(messageBus, windowService, groupService, departamentService)
         {
             _tree = tree;
-            DepartamentTitle = _tree.SelectedDepartament.Title;
-            WindowTitle = "Departament Update Window";
+            GroupName = _tree.SelectedGroup.Title;
+            WindowTitle = "Group Update";
         }
 
         #endregion
@@ -51,24 +50,25 @@ namespace UniversityTool.ViewModels.UpdatingViewModels
 
         protected override async void OnAccepting(object action)
         {
-            var response = await _departamentService.Update(new Departament
+            var response = await _groupService.Update(new Group
             {
-                Id = _tree.SelectedDepartament.Id,                              // id is required, else new entity will be added not updated.
-                Title = DepartamentTitle
-            }); 
+                Id = _tree.SelectedGroup.Id,
+                DepartamentId = _tree.SelectedGroup.DepartamentId,
+                Title = GroupName,
+            }).ConfigureAwait(false);
 
             switch (response.StatusCode)
             {
                 case OperationResultStatusCode.Success:
                     {
-                        _ = SendMessageAsync(new DepartamentMessage(response.Data, UIOperationTypeCode.Update));
+                        _ = SendMessageAsync(new GroupMessage(response.Data, UIOperationTypeCode.Update));
                         _ = ProcessInMainThreadAsync(() =>
                         {
                             _windowService.CloseWindow();
                             ShowMessageBox(response.Description, response.StatusCode.ToString(), MessageBoxButton.OK, MessageBoxImage.Information);
                         });
-                        break;
                     }
+                    break;
                 case OperationResultStatusCode.Fail:
                     {
                         _ = ProcessInMainThreadAsync(() =>
@@ -76,8 +76,8 @@ namespace UniversityTool.ViewModels.UpdatingViewModels
                             _windowService.CloseWindow();
                             ShowMessageBox(response.Description, response.StatusCode.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
                         });
-                        break;
                     }
+                    break;
             }
         }
 

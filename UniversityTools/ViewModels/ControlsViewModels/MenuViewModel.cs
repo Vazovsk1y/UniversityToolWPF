@@ -13,8 +13,9 @@ namespace UniversityTool.ViewModels.ControlsViewModels
         private readonly TreeViewViewModel _tree;
         private readonly IDepartamentAddWindowService _departamentAddWindow;
         private readonly IGroupAddWindowService _groupAddWindow;
-        private readonly IStudentAddWindowService _studentAddWindowService;
-        private readonly IDepartamentUpdateWindowService _departamentUpdateWindowService;
+        private readonly IStudentAddWindowService _studentAddWindow;
+        private readonly IDepartamentUpdateWindowService _departamentUpdateWindow;
+        private readonly IGroupUpdateWindowService _groupUpdateWindow;
 
         #endregion
 
@@ -26,40 +27,48 @@ namespace UniversityTool.ViewModels.ControlsViewModels
 
         #region --Constructors--
 
-        public MenuViewModel(IDepartamentAddWindowService departamentAddWindow,
-            IGroupAddWindowService groupAddWindow,
+        public MenuViewModel(IDepartamentAddWindowService departamentAddWindowService,
+            IGroupAddWindowService groupAddWindowService,
             IStudentAddWindowService studentAddWindowService,
             TreeViewViewModel tree,
-            IDepartamentUpdateWindowService departamentUpdateWindowService)
+            IDepartamentUpdateWindowService departamentUpdateWindowService,
+            IGroupUpdateWindowService groupUpdateWindowService)
         {
-            _departamentUpdateWindowService = departamentUpdateWindowService;
+            _groupUpdateWindow = groupUpdateWindowService;
+            _departamentUpdateWindow = departamentUpdateWindowService;
+            _departamentAddWindow = departamentAddWindowService;
+            _groupAddWindow = groupAddWindowService;
+            _studentAddWindow = studentAddWindowService;
             _tree = tree;
-            _departamentAddWindow = departamentAddWindow;
-            _groupAddWindow = groupAddWindow;
-            _studentAddWindowService = studentAddWindowService;
         }
 
         #endregion
 
         #region --Commands--
 
-        public ICommand UpdateDepartamentCommand => new RelayCommand(OnUpdatingDepartament, OnCanUpdateDepartament);
+        public ICommand UpdateGroupCommand => new RelayCommand(OnGroupUpdating, OnCanGroupUpdate);
+
+        private bool OnCanGroupUpdate(object arg) => _tree.SelectedGroup is not null;
+
+        private void OnGroupUpdating(object obj) => _groupUpdateWindow.OpenWindow();
+
+        public ICommand UpdateDepartamentCommand => new RelayCommand(OnDepartamentUpdating, OnCanUpdateDepartament);
 
         private bool OnCanUpdateDepartament(object arg) => _tree.SelectedDepartament is not null;
 
-        private void OnUpdatingDepartament(object obj) => _departamentUpdateWindowService.OpenWindow();
+        private void OnDepartamentUpdating(object obj) => _departamentUpdateWindow.OpenWindow();
 
-        public ICommand AddDepartamentCommand => new RelayCommand(OnAddingDepartament);
+        public ICommand AddDepartamentCommand => new RelayCommand(OnDepartamentAdding);
 
-        private void OnAddingDepartament(object obj) => _ = ProcessInMainThreadAsync(_departamentAddWindow.OpenWindow);
+        private void OnDepartamentAdding(object obj) => _ = ProcessInMainThreadAsync(_departamentAddWindow.OpenWindow);
 
-        public ICommand AddGroupCommand => new RelayCommand(OnAddingGroup);
+        public ICommand AddGroupCommand => new RelayCommand(OnGroupAdding);
 
-        private void OnAddingGroup(object obj) => _ = ProcessInMainThreadAsync(_groupAddWindow.OpenWindow);
+        private void OnGroupAdding(object obj) => _ = ProcessInMainThreadAsync(_groupAddWindow.OpenWindow);
 
         public ICommand AddStudentCommand => new RelayCommand(OnStudentAdding);
 
-        private void OnStudentAdding(object obj) => _ = ProcessInMainThreadAsync(_studentAddWindowService.OpenWindow);
+        private void OnStudentAdding(object obj) => _ = ProcessInMainThreadAsync(_studentAddWindow.OpenWindow);
 
         #endregion
 

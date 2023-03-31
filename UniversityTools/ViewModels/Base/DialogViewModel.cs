@@ -25,15 +25,10 @@ namespace UniversityTool.ViewModels.Base
 
         #region --Constructors--
 
-        public DialogViewModel()
-        {
-
-        }
-
+        public DialogViewModel() { }
+        
         public DialogViewModel(IMessageBusService messageBus, T windowService) 
         {
-            AcceptCommand = new RelayCommand(OnAccepting, OnCanAccept);
-            CancelCommand = new RelayCommand(OnCanceling, OnCanCancel);
             _messageBusService = messageBus;
             _windowService = windowService;
         }
@@ -42,8 +37,8 @@ namespace UniversityTool.ViewModels.Base
 
         #region --Commands--
 
-        public ICommand CancelCommand { get; private set; }
-        public ICommand AcceptCommand { get; private set; }
+        public ICommand CancelCommand => new RelayCommand(OnCanceling, OnCanCancel);
+        public ICommand AcceptCommand => new RelayCommand(OnAccepting, OnCanAccept);
 
         protected virtual bool OnCanCancel(object p) => true;
 

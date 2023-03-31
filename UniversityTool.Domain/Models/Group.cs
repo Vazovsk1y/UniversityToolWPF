@@ -12,6 +12,6 @@ namespace UniversityTool.Domain.Models
         public Departament Departament { get; set; }
 
         public string Title { get; set; }
-        public ICollection<Student> Students { get; set; } = new ObservableCollection<Student>();
+        public IList<Student> Students { get; set; } = new ObservableCollection<Student>();
     }
 }

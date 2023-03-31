@@ -16,7 +16,6 @@ namespace UniversityTool.ViewModels.AddingViemModels
     {
         #region --Fields--
 
-        private string _groupName;
         private IEnumerable<Departament> _departaments;
 
         #endregion
@@ -27,12 +26,6 @@ namespace UniversityTool.ViewModels.AddingViemModels
         {
             get => _departaments;
             set => Set(ref _departaments, value);
-        }
-
-        public string GroupTitle
-        {
-            get => _groupName;
-            set => Set(ref _groupName, value);
         }
 
         #endregion
@@ -66,7 +59,7 @@ namespace UniversityTool.ViewModels.AddingViemModels
                 .Add(new Group
                 {
                     DepartamentId = SelectedDepartament.Id,
-                    Title = GroupTitle
+                    Title = GroupName
                 })
                 .ConfigureAwait(false);
 

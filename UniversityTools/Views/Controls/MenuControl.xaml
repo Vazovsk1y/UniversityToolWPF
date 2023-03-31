@@ -25,12 +25,18 @@
     <Grid>
         <Menu Style="{StaticResource menu}">
             <MenuItem Header="File" Style="{StaticResource menuItem}" >
-                <MenuItem Header="Add Department" Style="{StaticResource menuItem}" Command="{Binding AddDepartamentCommand}"/>
-                <MenuItem Header="Update Department" Style="{StaticResource menuItem}" Command="{Binding UpdateDepartamentCommand}"/>
+                <MenuItem Header="Add Department" Style="{StaticResource menuItem}" 
+                          Command="{Binding AddDepartamentCommand}"/>
+                <MenuItem Header="Update Department" Style="{StaticResource menuItem}" 
+                          Command="{Binding UpdateDepartamentCommand}"/>
             </MenuItem>
             <MenuItem Header="Structure" Style="{StaticResource menuItem}">
-                <MenuItem Header="AddGroup" Style="{StaticResource menuItem}" Command="{Binding AddGroupCommand}"/>
-                <MenuItem Header="Add Student" Style="{StaticResource menuItem}" Command="{Binding AddStudentCommand}"/>
+                <MenuItem Header="AddGroup" Style="{StaticResource menuItem}" 
+                          Command="{Binding AddGroupCommand}"/>
+                <MenuItem Header="UpdateGroup" Style="{StaticResource menuItem}"
+                          Command="{Binding UpdateGroupCommand}"/>
+                <MenuItem Header="Add Student" Style="{StaticResource menuItem}" 
+                          Command="{Binding AddStudentCommand}"/>
             </MenuItem>
             <MenuItem Header="View" Style="{StaticResource menuItem}"/>
             <MenuItem Header="Help" Style="{StaticResource menuItem}"/>

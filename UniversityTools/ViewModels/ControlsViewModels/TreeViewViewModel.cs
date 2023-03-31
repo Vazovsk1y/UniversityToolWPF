@@ -24,7 +24,7 @@ namespace UniversityTool.ViewModels.ControlsViewModels
         private ObservableCollection<Departament> _fullTree;
         private readonly IDepartamentTreeService _departamentTreeService;
         private readonly IMessageBusService _messageBus;
-        private readonly List<IDisposable> _subscriptions = new();
+        private readonly ICollection<IDisposable> _subscriptions = new List<IDisposable>();
 
         #endregion
 
@@ -124,7 +124,13 @@ namespace UniversityTool.ViewModels.ControlsViewModels
 
         #region --Methods--
 
-        public void Dispose() => _subscriptions.ForEach(subscription => subscription.Dispose());
+        public void Dispose()
+        {
+            foreach(IDisposable subscription in _subscriptions)
+            {
+                subscription.Dispose();
+            }
+        }
 
         private async Task InitializeFullTreeAsync() => await Task.Run(async () =>
         {
@@ -150,20 +156,22 @@ namespace UniversityTool.ViewModels.ControlsViewModels
                     {
                         _ = ProcessInMainThreadAsync(() =>
                         {
-                            var updatedDepartamentIndex = FullTree.IndexOf(SelectedDepartament);
-                            if (updatedDepartamentIndex != -1)
+                            var index = FullTree.IndexOf(SelectedDepartament);
+                            if (index != -1)
                             {
                                 message.Departament.Groups = SelectedDepartament.Groups;
 
-                                FullTree[updatedDepartamentIndex] = message.Departament;
+                                FullTree[index] = message.Departament;
                                 SelectedDepartament = message.Departament;
                             }
                         });
                         break;
                     }
+                case UIOperationTypeCode.Move:
+                    break;
             }
         }
-        
+
         private void OnReceiveMessage(GroupMessage message)
         {
             switch (message.OperationType)
@@ -180,6 +188,23 @@ namespace UniversityTool.ViewModels.ControlsViewModels
                 case UIOperationTypeCode.Delete:
                     break;
                 case UIOperationTypeCode.Update:
+                    {
+                        _ = ProcessInMainThreadAsync(() =>
+                        {
+                            var departament = FullTree.FirstOrDefault(d => d.Id == SelectedGroup.DepartamentId);
+
+                            if (departament is not null)
+                            {
+                                message.Group.Students = SelectedGroup.Students;
+
+                                var index = departament.Groups.IndexOf(SelectedGroup);
+                                departament.Groups[index] = message.Group;
+                                SelectedGroup = message.Group;
+                            }
+                        });
+                    }
+                    break;
+                case UIOperationTypeCode.Move:
                     break;
             }
         }
