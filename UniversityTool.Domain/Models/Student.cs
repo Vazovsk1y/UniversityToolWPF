@@ -1,4 +1,5 @@
-﻿using UniversityTool.Domain.Models.Base;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using UniversityTool.Domain.Models.Base;
 
 namespace UniversityTool.Domain.Models
 {
@@ -13,5 +14,8 @@ namespace UniversityTool.Domain.Models
         public string Name { get; set; }
         public string SecondName { get; set; }
         public string ThirdName { get; set; }
+
+        [NotMapped]
+        public string FullName => $"{SecondName} {Name[0]}.{ThirdName[0]}";
     }
 }

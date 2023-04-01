@@ -13,7 +13,7 @@
         <TreeView x:Name="mainTree"
                    ItemsSource="{Binding FullTree, UpdateSourceTrigger=PropertyChanged}">
             <TreeView.ItemTemplate>
-                <HierarchicalDataTemplate 
+            <HierarchicalDataTemplate 
                             DataType="m:Departament"
                             ItemsSource="{Binding Groups, UpdateSourceTrigger=PropertyChanged}">
                     <TextBlock Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}"
@@ -27,7 +27,7 @@
                             <HierarchicalDataTemplate.ItemTemplate>
                                 <DataTemplate 
                                             DataType="m:Student">
-                                    <TextBlock Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"
+                                    <TextBlock Text="{Binding FullName, UpdateSourceTrigger=PropertyChanged}"
                                                        Style="{StaticResource baseText}"/>
                                 </DataTemplate>
                             </HierarchicalDataTemplate.ItemTemplate>
