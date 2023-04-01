@@ -1,4 +1,5 @@
-﻿using UniversityTool.Domain.Models;
+﻿using System.Linq;
+using UniversityTool.Domain.Models;
 using UniversityTool.Domain.Services.Base;
 using UniversityTool.Domain.Services.DataServices;
 using UniversityTool.Domain.Services.DataServices.Base;
@@ -63,13 +64,13 @@ namespace UniversityTool.ViewModels.Base
 
         #region --Commands--
 
-
+        protected override bool OnCanAccept(object p) => IsAcceptButtonEnable(StudentName, StudentSurname, StudentThirdName);
 
         #endregion
 
         #region --Methods--
 
-
+        private bool IsAcceptButtonEnable(params string[] args) => args.ToList().TrueForAll(row => row is not null && row.Length > 0);
 
         #endregion
     }

@@ -220,11 +220,27 @@ namespace UniversityTool.ViewModels.ControlsViewModels
                             var group = FullTree.SelectMany(d => d.Groups).FirstOrDefault(g => g.Id == message.Student.GroupId);
                             group?.Students.Add(message.Student);
                         });
-                        break;
                     }
+                    break;
                 case UIOperationTypeCode.Delete:
                     break;
                 case UIOperationTypeCode.Update:
+                    {
+                        _ = ProcessInMainThreadAsync(() =>
+                        {
+                            var group = FullTree.SelectMany(d => d.Groups).FirstOrDefault(g => g.Id == message.Student.GroupId);
+                            
+                            if (group is not null)
+                            {
+                                int index = group.Students.IndexOf(SelectedStudent);
+                                if (index is not -1)
+                                {
+                                    group.Students[index] = message.Student;
+                                    SelectedStudent = message.Student;
+                                }
+                            }
+                        });
+                    }
                     break;
                 case UIOperationTypeCode.Move:
                     break;

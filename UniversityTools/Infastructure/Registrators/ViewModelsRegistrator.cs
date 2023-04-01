@@ -17,6 +17,7 @@ namespace UniversityTool.Infastructure.Registrators
             .AddTransient<StudentAddViewModel>()
             .AddTransient<DepartamentUpdateViewModel>()
             .AddTransient<GroupUpdateViewModel>()
+            .AddTransient<StudentUpdateViewModel>()
             ;
     }
 }

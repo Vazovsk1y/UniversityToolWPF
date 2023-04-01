@@ -3,6 +3,7 @@ using UniversityTool.Domain.Services;
 using UniversityTool.ViewModels.Base;
 using System.Windows.Input;
 using UniversityTool.Infastructure.Commands;
+using System;
 
 namespace UniversityTool.ViewModels.ControlsViewModels
 {
@@ -16,6 +17,7 @@ namespace UniversityTool.ViewModels.ControlsViewModels
         private readonly IStudentAddWindowService _studentAddWindow;
         private readonly IDepartamentUpdateWindowService _departamentUpdateWindow;
         private readonly IGroupUpdateWindowService _groupUpdateWindow;
+        private readonly IStudentUpdateWindowService _studentUpdateWindow;
 
         #endregion
 
@@ -32,8 +34,10 @@ namespace UniversityTool.ViewModels.ControlsViewModels
             IStudentAddWindowService studentAddWindowService,
             TreeViewViewModel tree,
             IDepartamentUpdateWindowService departamentUpdateWindowService,
-            IGroupUpdateWindowService groupUpdateWindowService)
+            IGroupUpdateWindowService groupUpdateWindowService,
+            IStudentUpdateWindowService studentUpdateWindowService)
         {
+            _studentUpdateWindow = studentUpdateWindowService;
             _groupUpdateWindow = groupUpdateWindowService;
             _departamentUpdateWindow = departamentUpdateWindowService;
             _departamentAddWindow = departamentAddWindowService;
@@ -45,6 +49,12 @@ namespace UniversityTool.ViewModels.ControlsViewModels
         #endregion
 
         #region --Commands--
+
+        public ICommand UpdateStudentCommand => new RelayCommand(OnStudentUpdating, OnCanStudentUpdate);
+
+        private bool OnCanStudentUpdate(object arg) => _tree.SelectedStudent is not null;
+
+        private void OnStudentUpdating(object obj) => _studentUpdateWindow.OpenWindow();
 
         public ICommand UpdateGroupCommand => new RelayCommand(OnGroupUpdating, OnCanGroupUpdate);
 

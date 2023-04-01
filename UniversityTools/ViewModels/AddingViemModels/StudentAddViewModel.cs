@@ -86,8 +86,6 @@ namespace UniversityTool.ViewModels.AddingViemModels
             }
         }
 
-        protected override bool OnCanAccept(object p) => IsAcceptButtonEnable(StudentName, StudentSurname, StudentThirdName);
-
         #endregion
 
         #region --Methods--
@@ -100,8 +98,6 @@ namespace UniversityTool.ViewModels.AddingViemModels
                 _ = ProcessInMainThreadAsync(() => Groups = response.Data);
             }
         }
-
-        private bool IsAcceptButtonEnable(params string[] args) => args.ToList().TrueForAll(row => row is not null && row.Length > 0);
 
         #endregion
     }
