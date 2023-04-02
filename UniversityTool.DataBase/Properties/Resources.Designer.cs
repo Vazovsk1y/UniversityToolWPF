@@ -79,6 +79,24 @@ namespace UniversityTool.DataBase.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Deleting was failed!.
+        /// </summary>
+        internal static string DeleteErrorMessage {
+            get {
+                return ResourceManager.GetString("DeleteErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deleting was succesfully completed!.
+        /// </summary>
+        internal static string DeleteSuccessMessage {
+            get {
+                return ResourceManager.GetString("DeleteSuccessMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error occurs while you try to get data..
         /// </summary>
         internal static string GettingErrorMessage {

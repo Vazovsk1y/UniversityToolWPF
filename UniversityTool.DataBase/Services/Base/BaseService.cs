@@ -101,5 +101,30 @@ namespace UniversityTool.DataBase.Services.Base
 
             return _responseFactory.CreateResponce(Resources.UpdateSuccessMessage, OperationResultStatusCode.Success, Item);
         }
+
+        public async Task<ISingleDataResponse<T>> Delete(T entity)
+        {
+            try
+            {
+                Item = await _repository.Delete(entity.Id).ConfigureAwait(false);
+
+                if (Item is null)
+                {
+                    return _responseFactory.CreateResponce(Resources.DeleteErrorMessage, OperationResultStatusCode.Fail, Item);
+                }
+            }
+            catch (DbUpdateException ex)
+            {
+                Debug.WriteLine(ex);
+                return _responseFactory.CreateResponce(Resources.NullParametrErrorMessage + Resources.DeleteErrorMessage, OperationResultStatusCode.Fail, Item);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+                return _responseFactory.CreateResponce(Resources.DeleteErrorMessage, OperationResultStatusCode.Fail, Item);
+            }
+
+            return _responseFactory.CreateResponce(Resources.DeleteSuccessMessage, OperationResultStatusCode.Success, Item);
+        }
     }
 }

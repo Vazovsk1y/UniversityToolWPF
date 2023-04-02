@@ -151,6 +151,17 @@ namespace UniversityTool.ViewModels.ControlsViewModels
                         break;
                     }
                 case UIOperationTypeCode.Delete:
+                    {
+                        _ = ProcessInMainThreadAsync(() =>
+                        {
+                            var index = FullTree.IndexOf(SelectedDepartament);
+                            if (index != -1)
+                            {
+                                FullTree.RemoveAt(index);
+                                SelectedDepartament = null;
+                            }
+                        });
+                    }
                     break;
                 case UIOperationTypeCode.Update:
                     {

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using UniversityTool.ViewModels;
 using UniversityTool.ViewModels.AddingViemModels;
+using UniversityTool.ViewModels.DeletingVIewModels;
 using UniversityTool.ViewModels.UpdatingViewModels;
 using UniversityTool.Views.Windows;
 
@@ -64,6 +65,14 @@ namespace UniversityTool.Infastructure.Registrators
                 {
                     var viewModel = s.GetRequiredService<StudentUpdateViewModel>();
                     var window = new StudentUpdateWindow { DataContext = viewModel };
+
+                    return window;
+                })
+            .AddTransient(
+                s =>
+                {
+                    var viewModel = s.GetRequiredService<DepartamentDeleteViewModel>();
+                    var window = new DepartamentDeleteWindow { DataContext = viewModel };
 
                     return window;
                 })

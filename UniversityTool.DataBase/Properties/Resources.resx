@@ -125,6 +125,12 @@
     <value>Adding was succesfully completed!</value>
     <comment>The adding was successfull without any error.</comment>
   </data>
+  <data name="DeleteErrorMessage" xml:space="preserve">
+    <value>Deleting was failed!</value>
+  </data>
+  <data name="DeleteSuccessMessage" xml:space="preserve">
+    <value>Deleting was succesfully completed!</value>
+  </data>
   <data name="GettingErrorMessage" xml:space="preserve">
     <value>Error occurs while you try to get data.</value>
   </data>

@@ -30,15 +30,20 @@ namespace UniversityTool.DataBase.Repositories.Base
             }
         }
 
-        public async Task<bool> Delete(int id, CancellationToken token = default)
+        public async Task<T> Delete(int id, CancellationToken token = default)
         {
             try
             {
                 await using UniversityToolDbContext context = _contextFactory.CreateDbContext();
                 T entity = await context.Set<T>().FirstOrDefaultAsync(e => e.Id == id, token).ConfigureAwait(false);
-                context.Set<T>().Remove(entity);
-                await context.SaveChangesAsync(token);
-                return true;
+
+                if (entity is not null)
+                {
+                    context.Set<T>().Remove(entity);
+                    await context.SaveChangesAsync(token);
+                    return entity;
+                }
+                return entity;
             }
             catch
             {

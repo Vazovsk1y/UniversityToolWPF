@@ -10,6 +10,6 @@
 
         Task<T> Update(T entity, CancellationToken token = default);
 
-        Task<bool> Delete(int id, CancellationToken token = default);
+        Task<T> Delete(int id, CancellationToken token = default);
     }
 }

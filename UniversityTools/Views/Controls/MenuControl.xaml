@@ -29,6 +29,8 @@
                           Command="{Binding AddDepartamentCommand}"/>
                 <MenuItem Header="Update Department" Style="{StaticResource menuItem}" 
                           Command="{Binding UpdateDepartamentCommand}"/>
+                <MenuItem Header="Delete Departament"
+                          Command="{Binding DeleteDepartamentCommand}"/>
             </MenuItem>
             <MenuItem Header="Structure" Style="{StaticResource menuItem}">
                 <MenuItem Header="AddGroup" Style="{StaticResource menuItem}" 
