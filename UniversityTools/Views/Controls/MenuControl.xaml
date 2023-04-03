@@ -37,6 +37,8 @@
                           Command="{Binding AddGroupCommand}"/>
                 <MenuItem Header="UpdateGroup" Style="{StaticResource menuItem}"
                           Command="{Binding UpdateGroupCommand}"/>
+                <MenuItem Header="DeleteGroup" Style="{StaticResource menuItem}"
+                          Command="{Binding DeleteGroupCommand}"/>
                 <MenuItem Header="Add Student" Style="{StaticResource menuItem}" 
                           Command="{Binding AddStudentCommand}"/>
                 <MenuItem Header="Update Student" Style="{StaticResource menuItem}"

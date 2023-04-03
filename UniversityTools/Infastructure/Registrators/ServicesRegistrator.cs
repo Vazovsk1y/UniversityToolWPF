@@ -19,6 +19,7 @@ namespace UniversityTool.Infastructure.Registrators
             .AddSingleton<IGroupUpdateWindowService, GroupUpdateWindowService>()
             .AddSingleton<IStudentUpdateWindowService, StudentUpdateWindowService>()
             .AddSingleton<IDepartamentDeleteWindowService, DepartamentDeleteWindowService>()
+            .AddSingleton<IGroupDeleteWindowService, GroupDeleteWindowService>()
             ;
     }
 }

@@ -76,6 +76,14 @@ namespace UniversityTool.Infastructure.Registrators
 
                     return window;
                 })
+            .AddTransient(
+                s =>
+                {
+                    var viewModel = s.GetRequiredService<GroupDeleteViewModel>();
+                    var window = new GroupDeleteWindow { DataContext = viewModel };
+
+                    return window;
+                })
                 ;
     }
 }

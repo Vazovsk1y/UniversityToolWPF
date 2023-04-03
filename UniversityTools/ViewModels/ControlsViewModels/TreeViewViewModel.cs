@@ -14,6 +14,9 @@ using UniversityTool.Domain.Codes;
 
 namespace UniversityTool.ViewModels.ControlsViewModels
 {
+    /// <summary>
+    /// Singleton class that stores the state of the UI tree.
+    /// </summary>
     internal class TreeViewViewModel : BaseViewModel, IDisposable
     {
         #region --Fields--
@@ -197,6 +200,19 @@ namespace UniversityTool.ViewModels.ControlsViewModels
                         break;
                     }
                 case UIOperationTypeCode.Delete:
+                    {
+                        _ = ProcessInMainThreadAsync(() =>
+                        {
+                            var departament = FullTree.FirstOrDefault(d => d.Id == SelectedGroup.DepartamentId);
+
+                            if (departament != null)
+                            {
+                                int index = departament.Groups.IndexOf(SelectedGroup);
+                                departament.Groups.RemoveAt(index);
+                                SelectedGroup = null;
+                            }
+                        });
+                    }
                     break;
                 case UIOperationTypeCode.Update:
                     {
