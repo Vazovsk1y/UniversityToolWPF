@@ -1,4 +1,5 @@
-﻿using UniversityTool.ViewModels.Base;
+﻿using System;
+using UniversityTool.ViewModels.Base;
 using UniversityTool.ViewModels.ControlsViewModels;
 
 namespace UniversityTool.ViewModels
@@ -7,7 +8,7 @@ namespace UniversityTool.ViewModels
     {
         #region --Fields--
 
-        
+
 
         #endregion
 
@@ -23,6 +24,8 @@ namespace UniversityTool.ViewModels
 
         public MainWindowViewModel()
         {
+            if (!App.IsDesignMode)
+                throw new InvalidOperationException("The default constructor of this view model type is only for design time");
             WindowTitle = "UniversityTool";
         }
 

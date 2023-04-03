@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using UniversityTool.Infastructure.Registrators.Base;
 using UniversityTool.ViewModels;
 using UniversityTool.ViewModels.AddingViemModels;
 using UniversityTool.ViewModels.DeletingVIewModels;
@@ -20,70 +21,14 @@ namespace UniversityTool.Infastructure.Registrators
 
                     return window;
                 })
-            .AddTransient(
-                s =>
-                {
-                    var viewModel = s.GetRequiredService<DepartamentAddViewModel>();
-                    var window = new DepartamentAddWindow { DataContext = viewModel };
-
-                    return window;
-                })
-            .AddTransient(
-                s =>
-                {
-                    var viewModel = s.GetRequiredService<GroupAddViewModel>();
-                    var window = new GroupAddWindow { DataContext = viewModel };
-
-                    return window;
-                })
-            .AddTransient(
-                s =>
-                {
-                    var viewModel = s.GetRequiredService<StudentAddViewModel>();
-                    var window = new StudentAddWindow { DataContext = viewModel };
-    
-                    return window;
-                })
-            .AddTransient(
-                s =>
-                {
-                    var viewModel = s.GetRequiredService<DepartamentUpdateViewModel>();
-                    var window = new DepartamentUpdateWindow { DataContext = viewModel };
-
-                    return window;
-                })
-            .AddTransient(
-                s =>
-                {
-                    var viewModel = s.GetRequiredService<GroupUpdateViewModel>();
-                    var window = new GroupUpdateWindow { DataContext = viewModel };
-
-                    return window;
-                })
-            .AddTransient(
-                s =>
-                {
-                    var viewModel = s.GetRequiredService<StudentUpdateViewModel>();
-                    var window = new StudentUpdateWindow { DataContext = viewModel };
-
-                    return window;
-                })
-            .AddTransient(
-                s =>
-                {
-                    var viewModel = s.GetRequiredService<DepartamentDeleteViewModel>();
-                    var window = new DepartamentDeleteWindow { DataContext = viewModel };
-
-                    return window;
-                })
-            .AddTransient(
-                s =>
-                {
-                    var viewModel = s.GetRequiredService<GroupDeleteViewModel>();
-                    var window = new GroupDeleteWindow { DataContext = viewModel };
-
-                    return window;
-                })
-                ;
+            .AddWindowTransient<DepartamentAddViewModel, DepartamentAddWindow>()
+            .AddWindowTransient<DepartamentUpdateViewModel, DepartamentUpdateWindow>()
+            .AddWindowTransient<DepartamentDeleteViewModel, DepartamentDeleteWindow>()
+            .AddWindowTransient<GroupAddViewModel, GroupAddWindow>()
+            .AddWindowTransient<GroupUpdateViewModel, GroupUpdateWindow>()
+            .AddWindowTransient<GroupDeleteViewModel, GroupDeleteWindow>()
+            .AddWindowTransient<StudentAddViewModel, StudentAddWindow>()
+            .AddWindowTransient<StudentUpdateViewModel, StudentUpdateWindow>()
+            ;
     }
 }

@@ -21,7 +21,7 @@ namespace UniversityTool.ViewModels.Base
             return true;
         }
 
-        protected virtual async Task ProcessInMainThreadAsync(Action actions) =>
-           await Application.Current.Dispatcher.InvokeAsync(actions ?? throw new ArgumentNullException(nameof(actions)));
+        protected virtual async Task ProcessInMainThreadAsync(Action action) =>
+           await Application.Current.Dispatcher.InvokeAsync(action ?? throw new ArgumentNullException(nameof(action)));
     }
 }

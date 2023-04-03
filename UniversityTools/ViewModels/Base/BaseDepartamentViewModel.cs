@@ -25,7 +25,10 @@ namespace UniversityTool.ViewModels.Base
 
         #region --Constructors--
 
-        public BaseDepartamentViewModel() { }
+        public BaseDepartamentViewModel() 
+        {
+
+        }
 
         public BaseDepartamentViewModel(IMessageBusService messageBus, T windowService, IDepartamentService departamentService) : base(messageBus, windowService)
         {

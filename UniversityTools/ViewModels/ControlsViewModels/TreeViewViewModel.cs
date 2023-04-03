@@ -60,22 +60,10 @@ namespace UniversityTool.ViewModels.ControlsViewModels
         #endregion
 
         #region --Constructors--
-        /// <summary>
-        /// Constructor for designer, Debuging instrument.
-        /// </summary>
         public TreeViewViewModel()
         {
-            if (App.IsDesignMode)
-            {
-                var students = Enumerable.Range(1, 6).Select(s => new Student { Name = $"Kui {s}" });
-                var groups = Enumerable.Range(1, 5).Select(g => new Group { Title = $"Giu {g}", Students = students.ToList() });
-                var departaments = Enumerable.Range(1, 10).Select(d => new Departament { Title = $"Siu {d}", Groups = groups.ToList() });
-                FullTree = new ObservableCollection<Departament>(departaments);
-            }
-            else
-            {
-                throw new InvalidOperationException("This constructor is only for design time");
-            }
+            if (!App.IsDesignMode)
+                throw new InvalidOperationException("The default constructor of this view model type is only for design time");
         }
 
         public TreeViewViewModel(IDepartamentTreeService treeService, IMessageBusService messageBusService)
@@ -144,47 +132,7 @@ namespace UniversityTool.ViewModels.ControlsViewModels
             }
         });
 
-        private void OnReceiveMessage(DepartamentMessage message)
-        {
-            switch (message.OperationType)
-            {
-                case UIOperationTypeCode.Add:
-                    {
-                        _ = ProcessInMainThreadAsync(() => FullTree.Add(message.Departament));
-                        break;
-                    }
-                case UIOperationTypeCode.Delete:
-                    {
-                        _ = ProcessInMainThreadAsync(() =>
-                        {
-                            var index = FullTree.IndexOf(SelectedDepartament);
-                            if (index != -1)
-                            {
-                                FullTree.RemoveAt(index);
-                                SelectedDepartament = null;
-                            }
-                        });
-                    }
-                    break;
-                case UIOperationTypeCode.Update:
-                    {
-                        _ = ProcessInMainThreadAsync(() =>
-                        {
-                            var index = FullTree.IndexOf(SelectedDepartament);
-                            if (index != -1)
-                            {
-                                message.Departament.Groups = SelectedDepartament.Groups;
-
-                                FullTree[index] = message.Departament;
-                                SelectedDepartament = message.Departament;
-                            }
-                        });
-                        break;
-                    }
-                case UIOperationTypeCode.Move:
-                    break;
-            }
-        }
+        private void OnReceiveMessage(DepartamentMessage message) => DepartamentMessageHandler(message);
 
         private void OnReceiveMessage(GroupMessage message)
         {
@@ -273,6 +221,35 @@ namespace UniversityTool.ViewModels.ControlsViewModels
                     break;
             }
         }
+
+        private Task DepartamentMessageHandler(DepartamentMessage message) => message.OperationType switch
+        {
+            UIOperationTypeCode.Add => _ = ProcessInMainThreadAsync(() =>
+            {
+                FullTree.Add(message.Departament);
+            }),
+            UIOperationTypeCode.Delete => _ = ProcessInMainThreadAsync(() =>
+            {
+                var index = FullTree.IndexOf(SelectedDepartament);
+                if (index is not -1)
+                {
+                    FullTree.RemoveAt(index);
+                }
+            }),
+            UIOperationTypeCode.Update => _ = ProcessInMainThreadAsync(() =>
+            {
+                var index = FullTree.IndexOf(SelectedDepartament);
+                if (index != -1)
+                {
+                    message.Departament.Groups = SelectedDepartament.Groups;
+
+                    FullTree[index] = message.Departament;
+                    SelectedDepartament = message.Departament;
+                }
+            }),
+            UIOperationTypeCode.Move => Task.CompletedTask,
+            _ => Task.CompletedTask,
+        };
 
         #endregion
     }

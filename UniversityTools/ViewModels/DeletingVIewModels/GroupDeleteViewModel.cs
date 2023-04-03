@@ -29,6 +29,8 @@ namespace UniversityTool.ViewModels.DeletingVIewModels
 
         public GroupDeleteViewModel()
         {
+            if (!App.IsDesignMode)
+                throw new InvalidOperationException("The default constructor of this view model type is only for design time");
             WindowTitle = "Group Delete";
         }
 

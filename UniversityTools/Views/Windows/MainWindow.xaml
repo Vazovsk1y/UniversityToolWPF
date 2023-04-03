@@ -48,7 +48,7 @@
 
             <Grid Grid.Column="1">
                 <TabControl>
-                    <TabItem Header="Студенты">
+                    <TabItem Header="Таблица">
                         <GroupBox Header="{Binding TreeView.SelectedGroup.Title, UpdateSourceTrigger=PropertyChanged}">
                             <DataGrid ItemsSource="{Binding TreeView.SelectedGroup.Students}" AutoGenerateColumns="False" IsReadOnly="True">
                                 <DataGrid.Columns>
@@ -58,6 +58,9 @@
                                 </DataGrid.Columns>
                             </DataGrid>
                         </GroupBox>
+                    </TabItem>
+                    <TabItem Header="Полная информация">
+                        <TextBlock Text="{Binding TreeView.SelectedGroup.Title}"/>
                     </TabItem>
                 </TabControl>
             </Grid>

@@ -35,7 +35,7 @@ namespace UniversityTool.ViewModels.AddingViemModels
         public GroupAddViewModel()
         {
             if (!App.IsDesignMode)
-                throw new InvalidOperationException("Standart constructor is only for design time");
+                throw new InvalidOperationException("The default constructor of this view model type is only for design time");
             WindowTitle = "Group Window";
         }
 

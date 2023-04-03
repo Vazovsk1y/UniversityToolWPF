@@ -29,8 +29,8 @@ namespace UniversityTool.ViewModels.UpdatingViewModels
 
         public DepartamentUpdateViewModel()
         {
-            if (!App.IsDesignMode) 
-                throw new InvalidOperationException("Constructor only for design time");
+            if (!App.IsDesignMode)
+                throw new InvalidOperationException("The default constructor of this view model type is only for design time");
             WindowTitle = "Departament Update Window";
         }
 

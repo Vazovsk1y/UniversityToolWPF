@@ -36,7 +36,7 @@ namespace UniversityTool.ViewModels.AddingViemModels
         public StudentAddViewModel()
         {
             if (!App.IsDesignMode)
-                throw new InvalidOperationException("Constructor only for designTime");
+                throw new InvalidOperationException("The default constructor of this view model type is only for design time");
             WindowTitle = "Student Add";
         }
 

@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using UniversityTool.Domain.Codes;
 using UniversityTool.Domain.Messages;
 using UniversityTool.Domain.Models;
@@ -28,6 +29,8 @@ namespace UniversityTool.ViewModels.DeletingVIewModels
 
         public DepartamentDeleteViewModel()
         {
+            if (!App.IsDesignMode)
+                throw new InvalidOperationException("The default constructor of this view model type is only for design time");
             WindowTitle = "Departament Delete";
         }
 

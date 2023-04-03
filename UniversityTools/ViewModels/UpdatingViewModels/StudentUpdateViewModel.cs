@@ -30,6 +30,8 @@ namespace UniversityTool.ViewModels.UpdatingViewModels
 
         public StudentUpdateViewModel() 
         {
+            if (!App.IsDesignMode)
+                throw new InvalidOperationException("The default constructor of this view model type is only for design time");
             WindowTitle = "Student Update";
         }
 
