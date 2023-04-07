@@ -1,72 +1,73 @@
 ﻿using System.Collections.Generic;
-using UniversityTool.Domain.Models;
-using UniversityTool.ViewModels.Base;
-using System;
-using UniversityTool.Domain.Services.WindowsServices;
-using UniversityTool.Domain.Services.DataServices;
-using UniversityTool.Domain.Services.DataServices.Base;
 using System.Threading.Tasks;
-using UniversityTool.Domain.Codes;
-using UniversityTool.Domain.Messages;
 using System.Windows;
-using System.Linq;
+using UniversityTool.Domain.Models;
+using UniversityTool.Domain.Messages;
+using UniversityTool.Domain.Services.WindowsServices;
+using UniversityTool.Domain.Services.DataServices.Base;
+using UniversityTool.Domain.Services.DataServices;
+using UniversityTool.Domain.Codes;
+using System;
+using UniversityTool.ViewModels.GroupVMs.Base;
 
-namespace UniversityTool.ViewModels.AddingViemModels
+namespace UniversityTool.ViewModels.GroupVMs
 {
-    internal class StudentAddViewModel : BaseStudentViewModel<IStudentAddWindowService>
+    internal class GroupAddViewModel : BaseGroupViewModel<IGroupAddWindowService>
     {
         #region --Fields--
 
-        private IEnumerable<Group> _groups;
+        private IEnumerable<Departament> _departaments;
 
         #endregion
 
         #region --Properties--
 
-        public IEnumerable<Group> Groups
+        public IEnumerable<Departament> Departaments
         {
-            get => _groups;
-            set => Set(ref _groups, value);
+            get => _departaments;
+            set => Set(ref _departaments, value);
         }
 
         #endregion
 
         #region --Constructors--
 
-        public StudentAddViewModel()
+        public GroupAddViewModel()
         {
             if (!App.IsDesignMode)
                 throw new InvalidOperationException("The default constructor of this view model type is only for design time");
-            WindowTitle = "Student Add";
+            WindowTitle = "Group Window";
         }
 
-        public StudentAddViewModel(IStudentService studentService,
+        public GroupAddViewModel(
+            IDepartamentService departamentService,
             IGroupService groupService,
-            IMessageBusService messageBus,
-            IStudentAddWindowService studentAddWindowService) : base(messageBus, studentAddWindowService, groupService, studentService)
+            IGroupAddWindowService groupAddWindowService,
+            IMessageBusService messageBus) : base(messageBus, groupAddWindowService, groupService, departamentService)
         {
-            _ = InitializeGroupsAsync();
+            WindowTitle = "Group Window";
+            _ = InitializeDepartamentsAsync();
         }
 
         #endregion
 
         #region --Commands--
 
-        protected override async void OnAccepting(object action)
+        protected override async void OnAccepting(object a)
         {
-            var response = await _studentService.Add(new Student
-            {
-                GroupId = SelectedGroup.Id,
-                Name = StudentName,
-                SecondName = StudentSurname,
-                ThirdName = StudentThirdName,
-            }).ConfigureAwait(false);
+            var response = await _groupService
+                .Add(new Group
+                {
+                    DepartamentId = SelectedDepartament.Id,
+                    Title = GroupName
+                })
+                .ConfigureAwait(false);
 
             switch (response.StatusCode)
             {
                 case OperationResultStatusCode.Success:
                     {
-                        _ = SendMessageAsync(new StudentMessage(response.Data, UIOperationTypeCode.Add));
+                        _ = SendMessageAsync(new GroupMessage(response.Data, UIOperationTypeCode.Add));
                         _ = ProcessInMainThreadAsync(() =>
                         {
                             _windowService.CloseWindow();
@@ -90,12 +91,13 @@ namespace UniversityTool.ViewModels.AddingViemModels
 
         #region --Methods--
 
-        private async Task InitializeGroupsAsync()
+        private async Task InitializeDepartamentsAsync()
         {
-            var response = await _groupService.GetAll().ConfigureAwait(false);
+            var response = await Task.Run(_departamentService.GetAll).ConfigureAwait(false);
+
             if (response.StatusCode == OperationResultStatusCode.Success)
             {
-                _ = ProcessInMainThreadAsync(() => Groups = response.Data);
+                _ = ProcessInMainThreadAsync(() => Departaments = response.Data);
             }
         }
 

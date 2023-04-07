@@ -1,8 +1,9 @@
 ﻿using UniversityTool.Domain.Services.Base;
 using UniversityTool.Domain.Services.DataServices;
 using UniversityTool.Domain.Services.DataServices.Base;
+using UniversityTool.ViewModels.Base;
 
-namespace UniversityTool.ViewModels.Base
+namespace UniversityTool.ViewModels.DepartamentVMs.Base
 {
     internal abstract class BaseDepartamentViewModel<T> : DialogViewModel<T> where T : IBaseWindowService
     {
@@ -25,12 +26,14 @@ namespace UniversityTool.ViewModels.Base
 
         #region --Constructors--
 
-        public BaseDepartamentViewModel() 
+        public BaseDepartamentViewModel()
         {
 
         }
 
-        public BaseDepartamentViewModel(IMessageBusService messageBus, T windowService, IDepartamentService departamentService) : base(messageBus, windowService)
+        public BaseDepartamentViewModel(IMessageBusService messageBus,
+            T windowService,
+            IDepartamentService departamentService) : base(messageBus, windowService)
         {
             _departamentService = departamentService;
         }

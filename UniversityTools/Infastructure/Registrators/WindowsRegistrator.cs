@@ -1,9 +1,9 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using UniversityTool.Infastructure.Registrators.Base;
 using UniversityTool.ViewModels;
-using UniversityTool.ViewModels.AddingViemModels;
-using UniversityTool.ViewModels.DeletingVIewModels;
-using UniversityTool.ViewModels.UpdatingViewModels;
+using UniversityTool.ViewModels.DepartamentVMs;
+using UniversityTool.ViewModels.GroupVMs;
+using UniversityTool.ViewModels.StudentVMs;
 using UniversityTool.Views.Windows;
 
 namespace UniversityTool.Infastructure.Registrators

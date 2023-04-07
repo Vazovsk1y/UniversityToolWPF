@@ -1,17 +1,17 @@
-﻿using System;
+﻿using UniversityTool.Domain.Services.DataServices;
+using UniversityTool.Domain.Services.DataServices.Base;
+using UniversityTool.Domain.Services.WindowsServices;
+using System;
+using UniversityTool.ViewModels.ControlsVMs;
+using UniversityTool.Domain.Models;
 using System.Windows;
 using UniversityTool.Domain.Codes;
 using UniversityTool.Domain.Messages;
-using UniversityTool.Domain.Models;
-using UniversityTool.Domain.Services.DataServices;
-using UniversityTool.Domain.Services.DataServices.Base;
-using UniversityTool.Domain.Services.WindowsServices;
-using UniversityTool.ViewModels.Base;
-using UniversityTool.ViewModels.ControlsViewModels;
+using UniversityTool.ViewModels.DepartamentVMs.Base;
 
-namespace UniversityTool.ViewModels.DeletingVIewModels
+namespace UniversityTool.ViewModels.DepartamentVMs
 {
-    internal class DepartamentDeleteViewModel : BaseDepartamentViewModel<IDepartamentDeleteWindowService>
+    internal class DepartamentUpdateViewModel : BaseDepartamentViewModel<IDepartamentUpdateWindowService>
     {
         #region --Fields--
 
@@ -21,26 +21,28 @@ namespace UniversityTool.ViewModels.DeletingVIewModels
 
         #region --Properties--
 
-        public string Message => $"Are you sure that you want to delete \"{_tree.SelectedDepartament.Title}\" departament?";
+
 
         #endregion
 
         #region --Constructors--
 
-        public DepartamentDeleteViewModel()
+        public DepartamentUpdateViewModel()
         {
             if (!App.IsDesignMode)
                 throw new InvalidOperationException("The default constructor of this view model type is only for design time");
-            WindowTitle = "Departament Delete";
+            WindowTitle = "Departament Update Window";
         }
 
-        public DepartamentDeleteViewModel(IMessageBusService messageBus, 
-            IDepartamentDeleteWindowService windowService, 
-            IDepartamentService departamentService,
-            TreeViewViewModel tree) : base(messageBus, windowService, departamentService)
+        public DepartamentUpdateViewModel(
+           IMessageBusService messageBus,
+           IDepartamentUpdateWindowService windowService,
+           IDepartamentService departamentService,
+           TreeViewViewModel tree) : base(messageBus, windowService, departamentService)
         {
             _tree = tree;
-            WindowTitle = "Departament Delete";
+            DepartamentTitle = _tree.SelectedDepartament.Title;
+            WindowTitle = "Departament Update Window";
         }
 
         #endregion
@@ -49,20 +51,24 @@ namespace UniversityTool.ViewModels.DeletingVIewModels
 
         protected override async void OnAccepting(object action)
         {
-            var response = await _departamentService.Delete(_tree.SelectedDepartament);
+            var response = await _departamentService.Update(new Departament
+            {
+                Id = _tree.SelectedDepartament.Id,                              // id is required, else new entity will be added not updated.
+                Title = DepartamentTitle
+            });
 
             switch (response.StatusCode)
             {
                 case OperationResultStatusCode.Success:
                     {
-                        _ = SendMessageAsync(new DepartamentMessage(response.Data, UIOperationTypeCode.Delete));
+                        _ = SendMessageAsync(new DepartamentMessage(response.Data, UIOperationTypeCode.Update));
                         _ = ProcessInMainThreadAsync(() =>
                         {
                             _windowService.CloseWindow();
                             ShowMessageBox(response.Description, response.StatusCode.ToString(), MessageBoxButton.OK, MessageBoxImage.Information);
                         });
+                        break;
                     }
-                    break;
                 case OperationResultStatusCode.Fail:
                     {
                         _ = ProcessInMainThreadAsync(() =>
@@ -70,12 +76,10 @@ namespace UniversityTool.ViewModels.DeletingVIewModels
                             _windowService.CloseWindow();
                             ShowMessageBox(response.Description, response.StatusCode.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
                         });
+                        break;
                     }
-                    break;
             }
         }
-
-        protected override bool OnCanAccept(object p) => true;
 
         #endregion
 

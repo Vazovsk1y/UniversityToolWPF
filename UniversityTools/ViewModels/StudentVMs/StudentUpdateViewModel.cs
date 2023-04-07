@@ -1,17 +1,18 @@
-﻿using System;
-using System.Windows;
+﻿using UniversityTool.Domain.Services.WindowsServices;
+using System;
+using UniversityTool.Domain.Services.DataServices.Base;
+using UniversityTool.Domain.Services.DataServices;
+using UniversityTool.ViewModels.ControlsVMs;
+using UniversityTool.Domain.Models;
 using UniversityTool.Domain.Codes;
 using UniversityTool.Domain.Messages;
-using UniversityTool.Domain.Models;
-using UniversityTool.Domain.Services.DataServices;
-using UniversityTool.Domain.Services.DataServices.Base;
-using UniversityTool.Domain.Services.WindowsServices;
-using UniversityTool.ViewModels.Base;
-using UniversityTool.ViewModels.ControlsViewModels;
+using System.Windows;
+using System.Linq;
+using UniversityTool.ViewModels.StudentVMs.Base;
 
-namespace UniversityTool.ViewModels.DeletingVIewModels
+namespace UniversityTool.ViewModels.StudentVMs
 {
-    internal class GroupDeleteViewModel : BaseGroupViewModel<IGroupDeleteWindowService>
+    internal class StudentUpdateViewModel : BaseStudentViewModel<IStudentUpdateWindowService>
     {
         #region --Fields--
 
@@ -21,27 +22,30 @@ namespace UniversityTool.ViewModels.DeletingVIewModels
 
         #region --Properties--
 
-        public string Message => $"Are you sure that you want to delete {_tree.SelectedGroup.Title}";
+
 
         #endregion
 
         #region --Constructors--
 
-        public GroupDeleteViewModel()
+        public StudentUpdateViewModel()
         {
             if (!App.IsDesignMode)
                 throw new InvalidOperationException("The default constructor of this view model type is only for design time");
-            WindowTitle = "Group Delete";
+            WindowTitle = "Student Update";
         }
 
-        public GroupDeleteViewModel(IMessageBusService messageBus, 
-            IGroupDeleteWindowService windowService, 
-            IGroupService groupService, 
-            IDepartamentService departamentService,
-            TreeViewViewModel tree) : base(messageBus, windowService, groupService, departamentService)
+        public StudentUpdateViewModel(IMessageBusService messageBus,
+            IStudentUpdateWindowService windowService,
+            IGroupService groupService,
+            IStudentService studentService,
+            TreeViewViewModel tree) : base(messageBus, windowService, groupService, studentService)
         {
             _tree = tree;
-            WindowTitle = "Group Delete";
+            StudentName = _tree.SelectedStudent.Name;
+            StudentSurname = _tree.SelectedStudent.SecondName;
+            StudentThirdName = _tree.SelectedStudent.ThirdName;
+            WindowTitle = "Student Update";
         }
 
         #endregion
@@ -50,13 +54,20 @@ namespace UniversityTool.ViewModels.DeletingVIewModels
 
         protected override async void OnAccepting(object action)
         {
-            var response = await _groupService.Delete(_tree.SelectedGroup).ConfigureAwait(false);
+            var response = await _studentService.Update(new Student
+            {
+                Id = _tree.SelectedStudent.Id,
+                GroupId = _tree.SelectedStudent.GroupId,
+                Name = StudentName,
+                SecondName = StudentSurname,
+                ThirdName = StudentThirdName
+            });
 
             switch (response.StatusCode)
             {
                 case OperationResultStatusCode.Success:
                     {
-                        _ = SendMessageAsync(new GroupMessage(response.Data, UIOperationTypeCode.Delete));
+                        _ = SendMessageAsync(new StudentMessage(response.Data, UIOperationTypeCode.Update));
                         _ = ProcessInMainThreadAsync(() =>
                         {
                             _windowService.CloseWindow();
@@ -75,8 +86,6 @@ namespace UniversityTool.ViewModels.DeletingVIewModels
                     break;
             }
         }
-
-        protected override bool OnCanAccept(object p) => true;
 
         #endregion
 

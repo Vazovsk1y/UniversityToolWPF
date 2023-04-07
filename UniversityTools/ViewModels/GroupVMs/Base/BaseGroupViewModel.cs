@@ -2,8 +2,9 @@
 using UniversityTool.Domain.Services.Base;
 using UniversityTool.Domain.Services.DataServices;
 using UniversityTool.Domain.Services.DataServices.Base;
+using UniversityTool.ViewModels.Base;
 
-namespace UniversityTool.ViewModels.Base
+namespace UniversityTool.ViewModels.GroupVMs.Base
 {
     internal abstract class BaseGroupViewModel<T> : DialogViewModel<T> where T : IBaseWindowService
     {
@@ -36,7 +37,8 @@ namespace UniversityTool.ViewModels.Base
 
         public BaseGroupViewModel() { }
 
-        public BaseGroupViewModel(IMessageBusService messageBus,
+        public BaseGroupViewModel(
+            IMessageBusService messageBus,
             T windowService,
             IGroupService groupService,
             IDepartamentService departamentService) : base(messageBus, windowService)

@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UniversityTool.Views.Windows" 
-        xmlns:updatingviewmodels="clr-namespace:UniversityTool.ViewModels.UpdatingViewModels" 
+        xmlns:updatingviewmodels="clr-namespace:UniversityTool.ViewModels.StudentVMs" 
         d:DataContext="{d:DesignInstance Type=updatingviewmodels:StudentUpdateViewModel, IsDesignTimeCreatable=True}"
         mc:Ignorable="d"
         Title="{Binding WindowTitle}" Height="400" Width="400">

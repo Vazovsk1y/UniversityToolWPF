@@ -1,6 +1,6 @@
 ﻿using System;
 using UniversityTool.ViewModels.Base;
-using UniversityTool.ViewModels.ControlsViewModels;
+using UniversityTool.ViewModels.ControlsVMs;
 
 namespace UniversityTool.ViewModels
 {
@@ -29,7 +29,9 @@ namespace UniversityTool.ViewModels
             WindowTitle = "UniversityTool";
         }
 
-        public MainWindowViewModel(TreeViewViewModel treeViewViewModel, MenuViewModel menuViewModel)
+        public MainWindowViewModel(
+            TreeViewViewModel treeViewViewModel, 
+            MenuViewModel menuViewModel)
         {
             Menu = menuViewModel;
             TreeView = treeViewViewModel;

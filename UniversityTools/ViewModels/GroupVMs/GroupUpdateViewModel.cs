@@ -1,15 +1,15 @@
 ﻿using UniversityTool.Domain.Services.DataServices;
 using UniversityTool.Domain.Services.DataServices.Base;
 using UniversityTool.Domain.Services.WindowsServices;
-using UniversityTool.ViewModels.Base;
 using System;
-using UniversityTool.ViewModels.ControlsViewModels;
+using UniversityTool.ViewModels.ControlsVMs;
 using UniversityTool.Domain.Models;
 using UniversityTool.Domain.Codes;
 using UniversityTool.Domain.Messages;
 using System.Windows;
+using UniversityTool.ViewModels.GroupVMs.Base;
 
-namespace UniversityTool.ViewModels.UpdatingViewModels
+namespace UniversityTool.ViewModels.GroupVMs
 {
     internal class GroupUpdateViewModel : BaseGroupViewModel<IGroupUpdateWindowService>
     {

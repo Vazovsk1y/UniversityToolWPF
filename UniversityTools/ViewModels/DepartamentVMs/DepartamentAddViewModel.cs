@@ -1,14 +1,14 @@
 ﻿using UniversityTool.Domain.Messages;
 using UniversityTool.Domain.Services;
-using UniversityTool.ViewModels.Base;
 using UniversityTool.Domain.Models;
 using System.Windows;
 using UniversityTool.Domain.Services.DataServices;
 using UniversityTool.Domain.Codes;
 using UniversityTool.Domain.Services.DataServices.Base;
 using System;
+using UniversityTool.ViewModels.DepartamentVMs.Base;
 
-namespace UniversityTool.ViewModels.AddingViemModels
+namespace UniversityTool.ViewModels.DepartamentVMs
 {
     internal class DepartamentAddViewModel : BaseDepartamentViewModel<IDepartamentAddWindowService>
     {
