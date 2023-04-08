@@ -43,8 +43,14 @@
                           Command="{Binding AddStudentCommand}"/>
                 <MenuItem Header="Update Student" Style="{StaticResource menuItem}"
                           Command="{Binding UpdateStudentCommand}"/>
+                <MenuItem Header="Delete Student" Style="{StaticResource menuItem}"
+                          Command="{Binding DeleteStudentCommand}"/>
             </MenuItem>
-            <MenuItem Header="View" Style="{StaticResource menuItem}"/>
+            <MenuItem Header="View" Style="{StaticResource menuItem}">
+                <MenuItem>
+                    <CheckBox x:Name="Check" IsChecked="False"/>
+                </MenuItem> 
+            </MenuItem>
             <MenuItem Header="Help" Style="{StaticResource menuItem}"/>
         </Menu>
     </Grid>

@@ -1,11 +1,11 @@
-﻿<Window x:Class="UniversityTool.Views.Windows.DepartamentDeleteWindow"
+﻿<Window x:Class="UniversityTool.Views.Windows.StudentDeleteWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UniversityTool.Views.Windows" 
-        xmlns:deletingviewmodels="clr-namespace:UniversityTool.ViewModels.DepartamentVMs"
-        d:DataContext="{d:DesignInstance Type=deletingviewmodels:DepartamentDeleteViewModel, IsDesignTimeCreatable=True}"
+        xmlns:studentvms="clr-namespace:UniversityTool.ViewModels.StudentVMs" 
+        d:DataContext="{d:DesignInstance Type=studentvms:StudentDeleteViewModel, IsDesignTimeCreatable=True}"
         mc:Ignorable="d"
         Title="{Binding WindowTitle}" Height="150" Width="400">
     <Grid>
@@ -20,8 +20,7 @@
             <DockPanel>
                 <UniformGrid DockPanel.Dock="Bottom" Rows="1">
                     <Button Margin ="20" Content="Ок" 
-                            Command="{Binding AcceptCommand}" 
-                            CommandParameter="{Binding DepartamentTitle}"/>
+                            Command="{Binding AcceptCommand}"/>
                     <Button Margin ="20" Content="Отмена" 
                             Command="{Binding CancelCommand}"/>
                 </UniformGrid>

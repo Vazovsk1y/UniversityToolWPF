@@ -164,10 +164,7 @@ namespace UniversityTool.ViewModels.ControlsVMs
         private Task MessageHandler(GroupMessage message) => message.OperationType switch
         {
             UIOperationTypeCode.Add => _ = ProcessInMainThreadAsync(() => FullTree.AddGroup(message.Group)),
-            UIOperationTypeCode.Delete => _ = ProcessInMainThreadAsync(() => 
-            { 
-                FullTree.DeleteGroup(SelectedGroup);
-            }),
+            UIOperationTypeCode.Delete => _ = ProcessInMainThreadAsync(() => FullTree.DeleteGroup(SelectedGroup)),
             UIOperationTypeCode.Update => _ = ProcessInMainThreadAsync(() =>
             {
                 FullTree.UpdateGroup(SelectedGroup, message.Group);
@@ -180,7 +177,7 @@ namespace UniversityTool.ViewModels.ControlsVMs
         private Task MessageHandler(StudentMessage message) => message.OperationType switch
         {
             UIOperationTypeCode.Add => _ = ProcessInMainThreadAsync(() => FullTree.AddStudent(message.Student)),
-            UIOperationTypeCode.Delete => Task.CompletedTask,
+            UIOperationTypeCode.Delete => _ = ProcessInMainThreadAsync(() => FullTree.DeleteStudent(SelectedStudent)),
             UIOperationTypeCode.Update => _ = ProcessInMainThreadAsync(() =>
             {
                 FullTree.UpdateStudent(SelectedStudent, message.Student);

@@ -20,6 +20,7 @@ namespace UniversityTool.ViewModels.ControlsVMs
         private readonly IGroupDeleteWindowService _groupDeleteWindow;
         private readonly IStudentAddWindowService _studentAddWindow;
         private readonly IStudentUpdateWindowService _studentUpdateWindow;
+        private readonly IStudentDeleteWindowService _studentDeleteWindow;
 
         #endregion
 
@@ -40,6 +41,7 @@ namespace UniversityTool.ViewModels.ControlsVMs
             IStudentUpdateWindowService studentUpdateWindowService,
             IDepartamentDeleteWindowService departamentDeleteWindowService,
             IGroupDeleteWindowService groupDeleteWindowService,
+            IStudentDeleteWindowService studentDeleteWindowService,
             TreeViewViewModel tree)
         {
             _studentUpdateWindow = studentUpdateWindowService;
@@ -50,6 +52,7 @@ namespace UniversityTool.ViewModels.ControlsVMs
             _studentAddWindow = studentAddWindowService;
             _departamentDeleteWindow = departamentDeleteWindowService;
             _groupDeleteWindow = groupDeleteWindowService;
+            _studentDeleteWindow = studentDeleteWindowService;
             _tree = tree;
         }
 
@@ -81,6 +84,10 @@ namespace UniversityTool.ViewModels.ControlsVMs
 
         public ICommand UpdateStudentCommand => new RelayCommand(
             (arg) => _studentUpdateWindow.OpenWindow(),
+            (arg) => _tree.SelectedStudent is not null);
+
+        public ICommand DeleteStudentCommand => new RelayCommand(
+            (arg) => _studentDeleteWindow.OpenWindow(),
             (arg) => _tree.SelectedStudent is not null);
 
         #endregion
