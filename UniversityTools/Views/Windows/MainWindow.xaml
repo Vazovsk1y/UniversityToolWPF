@@ -23,6 +23,7 @@
             <RowDefinition Height="1*"/>
             <RowDefinition Height="0.5*"/>
             <RowDefinition Height="20*"/>
+            <RowDefinition Height="0,1*"/>
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0">
@@ -42,32 +43,26 @@
             </Grid.ColumnDefinitions>
 
             <Grid Grid.Column="0">
-                <c:TreeControl DataContext="{Binding TreeView}"
-                               d:DataContext="{d:DesignInstance vmcontrols:TreeViewViewModel,d:IsDesignTimeCreatable=True}"/>
+                <UserControl>
+                    <c:TreeControl DataContext="{Binding TreeView}"
+                               d:DataContext="{d:DesignInstance vmcontrols:TreeViewViewModel,
+                        IsDesignTimeCreatable=True}"/>
+                </UserControl>
             </Grid>
 
             <Grid Grid.Column="1">
-                <TabControl>
-                    <TabItem Header="Таблица">
-                        <GroupBox Header="{Binding TreeView.SelectedGroup.Title, UpdateSourceTrigger=PropertyChanged}">
-                            <DataGrid ItemsSource="{Binding TreeView.SelectedGroup.Students}" 
-                                      AutoGenerateColumns="False" IsReadOnly="True">
-                                <DataGrid.Columns>
-                                    <DataGridTextColumn Header="Имя" Binding="{Binding Name}"/>
-                                    <DataGridTextColumn Header="Фамилия" Binding="{Binding SecondName}"/>
-                                    <DataGridTextColumn Header="Отчество" Binding="{Binding ThirdName}"/>
-                                </DataGrid.Columns>
-                            </DataGrid>
-                        </GroupBox>
-                    </TabItem>
-                    
-                    
-                    <TabItem Header="Полная информация">
-                        <TextBlock Text="{Binding TreeView.SelectedGroup.Title}"/>
-                    </TabItem>
-                </TabControl>
+                <UserControl>
+                    <c:WorkSpaceControl 
+                        DataContext="{Binding WorkSpace}"
+                                        d:DataContext="{d:DesignInstance vmcontrols:WorkSpaceViewModel, 
+                        IsDesignTimeCreatable=True}"/>
+                </UserControl>
             </Grid>
-            
+        </Grid>
+        
+        
+        
+        <Grid Grid.Row="3">
         </Grid>
     </Grid>
 </Window>

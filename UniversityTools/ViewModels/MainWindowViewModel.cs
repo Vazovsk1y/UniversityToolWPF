@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using UniversityTool.ViewModels.Base;
 using UniversityTool.ViewModels.ControlsVMs;
 
@@ -18,6 +19,8 @@ namespace UniversityTool.ViewModels
 
         public MenuViewModel Menu { get; }
 
+        public WorkSpaceViewModel WorkSpace { get; }
+
         #endregion
 
         #region --Constructors--
@@ -31,10 +34,12 @@ namespace UniversityTool.ViewModels
 
         public MainWindowViewModel(
             TreeViewViewModel treeViewViewModel, 
-            MenuViewModel menuViewModel)
+            MenuViewModel menuViewModel,
+            WorkSpaceViewModel workSpaceModel)
         {
             Menu = menuViewModel;
             TreeView = treeViewViewModel;
+            WorkSpace = workSpaceModel;
             WindowTitle = "UniversityTool";
         }
 

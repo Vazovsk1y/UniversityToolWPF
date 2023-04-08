@@ -11,8 +11,6 @@ using UniversityTool.Domain.Services.DataServices.Base;
 using UniversityTool.Domain.Services.DataServices;
 using UniversityTool.Domain.Codes;
 using UniversityTool.Infastructure.Extensions;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System.Linq;
 
 namespace UniversityTool.ViewModels.ControlsVMs
 {
