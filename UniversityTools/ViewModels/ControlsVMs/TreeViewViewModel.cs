@@ -22,6 +22,9 @@ namespace UniversityTool.ViewModels.ControlsVMs
     {
         #region --Fields--
 
+        private object _selectedItem;
+        private bool _isGroupSelected;
+        private bool _isStudentSelected;
         private bool _isAnyItemSelected;
         private Student _selectedStudent;
         private Group _selectedGroup;
@@ -35,10 +38,28 @@ namespace UniversityTool.ViewModels.ControlsVMs
 
         #region --Properties--
 
+        public object SelectedItem
+        {
+            get => _selectedItem;
+            set => Set(ref _selectedItem, value);
+        }
+
+        public bool IsGroupSelected 
+        { 
+            get => _isGroupSelected; 
+            set => Set(ref _isGroupSelected, value);
+        }
+
+        public bool IsStudentSelected
+        {
+            get => _isStudentSelected;
+            private set => Set(ref _isStudentSelected, value);
+        }
+
         public bool IsAnyItemSelected
         {
             get => _isAnyItemSelected;
-            set => Set(ref _isAnyItemSelected, value);
+            private set => Set(ref _isAnyItemSelected, value);
         }
 
         public ObservableCollection<Departament> FullTree
@@ -93,28 +114,36 @@ namespace UniversityTool.ViewModels.ControlsVMs
 
         private void OnTreeViewItemSelectionChanged(object selectedItem)
         {
-            // depends on selected item type
             switch (selectedItem)
             {
                 case Student student:
                     {
+                        SelectedItem = student;
                         SelectedDepartament = null;
                         SelectedGroup = null;
                         SelectedStudent = student;
+                        IsStudentSelected = true;
+                        IsGroupSelected = false;
                     }
                     break;
                 case Group group:
                     {
+                        SelectedItem = group;
                         SelectedStudent = null;
                         SelectedDepartament = null;
                         SelectedGroup = group;
+                        IsStudentSelected = false;
+                        IsGroupSelected = true;
                     }
                     break;
                 case Departament departament:
                     {
+                        SelectedItem = departament;
                         SelectedGroup = null;
                         SelectedStudent = null;
                         SelectedDepartament = departament;
+                        IsStudentSelected = false;
+                        IsGroupSelected = false;
                     }
                     break;
             }

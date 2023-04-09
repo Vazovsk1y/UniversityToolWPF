@@ -10,15 +10,6 @@
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance vm:MainWindowViewModel, d:IsDesignTimeCreatable=True}"
         Title="{Binding WindowTitle}" Height="650" Width="950">
-    
-    <Window.Resources>
-        <Style TargetType="TreeViewItem" x:Key="treeViewItem">
-            <Setter Property="FontFamily" Value="Century Gothic"/>
-            <Setter Property="FontSize" Value="20"/>
-            <Setter Property="Foreground" Value="Black"/>
-        </Style>
-    </Window.Resources>
-
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
@@ -44,17 +35,12 @@
                         IsDesignTimeCreatable=True}"/>
                     </UserControl>
                 </StackPanel>
-                
             </Grid>
 
             <Grid Grid.Column="1">
                 
                 <!--#region Visibility With Converters-->
-                <!--<Grid.Resources>
-                    <conv:BoolToVisibiltyConverter x:Key="BoolToVisibilityConverter"/>
-                    <conv:InverseBoolToVisibilityConverter x:Key="InverseBoolToVisibilityConverter"/>
-                </Grid.Resources>-->
-
+                
                 <!--<c:WorkSpaceControl DataContext="{Binding WorkSpace}"
                                         d:DataContext="{d:DesignInstance vmcontrols:WorkSpaceViewModel, IsDesignTimeCreatable=True}"
                         Visibility="{Binding TreeView.IsAnyItemSelected, 
@@ -72,7 +58,8 @@
                     <c:WorkSpaceControl.Style>
                         <Style TargetType="UserControl">
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding TreeView.IsAnyItemSelected, FallbackValue=False}" Value="False">
+                                <DataTrigger 
+                                    Binding="{Binding TreeView.IsAnyItemSelected, FallbackValue=False}" Value="False">
                                     <Setter Property="Visibility" Value="Collapsed"/>
                                 </DataTrigger>
                             </Style.Triggers>
@@ -80,7 +67,7 @@
                     </c:WorkSpaceControl.Style>
                 </c:WorkSpaceControl>
 
-                <TextBlock Margin="250" Text="Выберите что-нибудь!" TextAlignment="Center">
+                <TextBlock Margin="250" Text="ВЫБЕРИТЕ ЧТО-НИБУДЬ!" TextAlignment="Center">
                     <TextBlock.Style>
                         <Style TargetType="TextBlock">
                             <Style.Triggers>
@@ -94,9 +81,6 @@
                 <!--#endregion-->
                 
             </Grid>
-        </Grid>
-
-        <Grid Grid.Row="3">
         </Grid>
     </Grid>
 </Window>

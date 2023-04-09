@@ -4,24 +4,26 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:controlsvms="clr-namespace:UniversityTool.ViewModels.ControlsVMs" 
-             d:DataContext="{d:DesignInstance Type=controlsvms:WorkSpaceViewModel, IsDesignTimeCreatable=True}"
+             xmlns:conv="clr-namespace:UniversityTool.Infastructure.Converters"
+             xmlns:models="clr-namespace:UniversityTool.Domain.Models;assembly=UniversityTool.Domain"
+             d:DataContext="{d:DesignInstance Type=controlsvms:WorkSpaceViewModel, 
+    IsDesignTimeCreatable=True}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <TabControl>
-            <TabItem Header="Таблица">
-                <GroupBox Header="{Binding TreeView.SelectedGroup.Title, UpdateSourceTrigger=PropertyChanged}">
-                    <DataGrid ItemsSource="{Binding TreeView.SelectedGroup.Students}" 
-                                      AutoGenerateColumns="False" IsReadOnly="True">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="Имя" Binding="{Binding Name}"/>
-                            <DataGridTextColumn Header="Фамилия" Binding="{Binding SecondName}"/>
-                            <DataGridTextColumn Header="Отчество" Binding="{Binding ThirdName}"/>
-                        </DataGrid.Columns>
-                    </DataGrid>
-                </GroupBox>
+            <TabItem Header="Таблица" Visibility="{Binding TreeView.IsStudentSelected, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                <DataGrid ItemsSource="{Binding TreeView.SelectedGroup.Students}" 
+                                      AutoGenerateColumns="False" IsReadOnly="True" 
+                          Visibility="{Binding TreeView.IsGroupSelected, Converter={StaticResource BoolToVisibilityConverter}}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Имя" Binding="{Binding Name}"/>
+                        <DataGridTextColumn Header="Фамилия" Binding="{Binding SecondName}"/>
+                        <DataGridTextColumn Header="Отчество" Binding="{Binding ThirdName}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
             </TabItem>
-            
+
             <TabItem Header="Полная информация">
                 <TextBlock Text="{Binding TreeView.SelectedGroup.Title}"/>
             </TabItem>
