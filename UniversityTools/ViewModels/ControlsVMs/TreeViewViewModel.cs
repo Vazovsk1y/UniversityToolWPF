@@ -11,6 +11,7 @@ using UniversityTool.Domain.Services.DataServices.Base;
 using UniversityTool.Domain.Services.DataServices;
 using UniversityTool.Domain.Codes;
 using UniversityTool.Infastructure.Extensions;
+using System.Windows;
 
 namespace UniversityTool.ViewModels.ControlsVMs
 {
@@ -21,6 +22,7 @@ namespace UniversityTool.ViewModels.ControlsVMs
     {
         #region --Fields--
 
+        private bool _isAnyItemSelected;
         private Student _selectedStudent;
         private Group _selectedGroup;
         private Departament _selectedDepartament;
@@ -32,6 +34,12 @@ namespace UniversityTool.ViewModels.ControlsVMs
         #endregion
 
         #region --Properties--
+
+        public bool IsAnyItemSelected
+        {
+            get => _isAnyItemSelected;
+            set => Set(ref _isAnyItemSelected, value);
+        }
 
         public ObservableCollection<Departament> FullTree
         {
@@ -110,6 +118,8 @@ namespace UniversityTool.ViewModels.ControlsVMs
                     }
                     break;
             }
+
+            IsAnyItemSelected = selectedItem is not null;
         }
 
         #endregion
@@ -148,6 +158,7 @@ namespace UniversityTool.ViewModels.ControlsVMs
                 if (FullTree.Count is 0)
                 {
                     SelectedDepartament = null;
+                    IsAnyItemSelected = false;
                 }
             }),
             UIOperationTypeCode.Update => ProcessInMainThreadAsync(() => 

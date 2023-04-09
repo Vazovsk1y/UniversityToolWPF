@@ -6,6 +6,7 @@
         xmlns:vm ="clr-namespace:UniversityTool.ViewModels"
         xmlns:vmcontrols="clr-namespace:UniversityTool.ViewModels.ControlsVMs"
         xmlns:c="clr-namespace:UniversityTool.Views.Controls"
+        xmlns:conv="clr-namespace:UniversityTool.Infastructure.Converters"
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance vm:MainWindowViewModel, d:IsDesignTimeCreatable=True}"
         Title="{Binding WindowTitle}" Height="650" Width="950">
@@ -21,19 +22,11 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
-            <RowDefinition Height="0.5*"/>
             <RowDefinition Height="20*"/>
-            <RowDefinition Height="0,1*"/>
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0">
             <c:MenuControl DataContext="{Binding Menu}"/>
-        </Grid>
-
-        <Grid Grid.Row="1" Background="Gray" >
-            <TextBlock Text="TOOL BAR MENU" 
-                       HorizontalAlignment="Center"
-                       />
         </Grid>
 
         <Grid Grid.Row="2">
@@ -43,25 +36,66 @@
             </Grid.ColumnDefinitions>
 
             <Grid Grid.Column="0">
-                <UserControl>
-                    <c:TreeControl DataContext="{Binding TreeView}"
+                <StackPanel>
+                    <TextBlock Text="Search" TextAlignment="Center"/>
+                    <UserControl>
+                        <c:TreeControl DataContext="{Binding TreeView}"
                                d:DataContext="{d:DesignInstance vmcontrols:TreeViewViewModel,
                         IsDesignTimeCreatable=True}"/>
-                </UserControl>
+                    </UserControl>
+                </StackPanel>
+                
             </Grid>
 
             <Grid Grid.Column="1">
-                <UserControl>
-                    <c:WorkSpaceControl 
-                        DataContext="{Binding WorkSpace}"
-                                        d:DataContext="{d:DesignInstance vmcontrols:WorkSpaceViewModel, 
-                        IsDesignTimeCreatable=True}"/>
-                </UserControl>
+                
+                <!--#region Visibility With Converters-->
+                <!--<Grid.Resources>
+                    <conv:BoolToVisibiltyConverter x:Key="BoolToVisibilityConverter"/>
+                    <conv:InverseBoolToVisibilityConverter x:Key="InverseBoolToVisibilityConverter"/>
+                </Grid.Resources>-->
+
+                <!--<c:WorkSpaceControl DataContext="{Binding WorkSpace}"
+                                        d:DataContext="{d:DesignInstance vmcontrols:WorkSpaceViewModel, IsDesignTimeCreatable=True}"
+                        Visibility="{Binding TreeView.IsAnyItemSelected, 
+                        Converter={StaticResource BoolToVisibilityConverter}}">
+                    </c:WorkSpaceControl>-->
+
+                <!--<TextBlock Text="Выберите что-нибудь!" 
+                           Visibility="{Binding TreeView.IsAnyItemSelected, 
+                    Converter={StaticResource InverseBoolToVisibilityConverter}, 
+                    FallbackValue=Collapsed}"/>-->
+                <!--#endregion-->
+
+                <!--region Visibility Without Converters-->
+                <c:WorkSpaceControl DataContext="{Binding WorkSpace}">
+                    <c:WorkSpaceControl.Style>
+                        <Style TargetType="UserControl">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding TreeView.IsAnyItemSelected, FallbackValue=False}" Value="False">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </c:WorkSpaceControl.Style>
+                </c:WorkSpaceControl>
+
+                <TextBlock Margin="250" Text="Выберите что-нибудь!" TextAlignment="Center">
+                    <TextBlock.Style>
+                        <Style TargetType="TextBlock">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding TreeView.IsAnyItemSelected, FallbackValue=False}" Value="True">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+                <!--#endregion-->
+                
             </Grid>
         </Grid>
-        
-        
-        
+
         <Grid Grid.Row="3">
         </Grid>
     </Grid>
