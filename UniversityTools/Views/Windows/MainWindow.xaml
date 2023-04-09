@@ -28,7 +28,7 @@
 
             <Grid Grid.Column="0">
                 <StackPanel>
-                    <TextBlock Text="Search" TextAlignment="Center"/>
+                    <TextBox Text="Search" TextAlignment="Center"/>
                     <UserControl>
                         <c:TreeControl DataContext="{Binding TreeView}"
                                d:DataContext="{d:DesignInstance vmcontrols:TreeViewViewModel,
@@ -38,7 +38,6 @@
             </Grid>
 
             <Grid Grid.Column="1">
-                
                 <!--#region Visibility With Converters-->
                 
                 <!--<c:WorkSpaceControl DataContext="{Binding WorkSpace}"
@@ -79,7 +78,6 @@
                     </TextBlock.Style>
                 </TextBlock>
                 <!--#endregion-->
-                
             </Grid>
         </Grid>
     </Grid>
