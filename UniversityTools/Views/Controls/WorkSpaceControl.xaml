@@ -39,6 +39,10 @@
                                 </DataGrid>
                             </GroupBox>
                         </DataTemplate>
+
+                        <DataTemplate DataType="{x:Type models:Student}">
+                            <!--Nothing to display-->
+                        </DataTemplate>
                     </ContentControl.Resources>
                 </ContentControl>
             </TabItem>

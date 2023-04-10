@@ -15,19 +15,19 @@
                   BorderThickness="0">
             <TreeView.ItemTemplate>
             <HierarchicalDataTemplate 
-                            DataType="m:Departament"
+                            DataType="{x:Type m:Departament}"
                             ItemsSource="{Binding Groups, UpdateSourceTrigger=PropertyChanged}">
                     <TextBlock Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}"
                                        Style="{StaticResource baseText}"/>
                     <HierarchicalDataTemplate.ItemTemplate>
                         <HierarchicalDataTemplate 
-                                    DataType="m:Group"
+                                    DataType="{x:Type m:Group}"
                                     ItemsSource="{Binding Students, UpdateSourceTrigger=PropertyChanged}">
                             <TextBlock Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}"
                                                Style="{StaticResource baseText}"/>
                             <HierarchicalDataTemplate.ItemTemplate>
                                 <DataTemplate 
-                                            DataType="m:Student">
+                                            DataType="{x:Type m:Student}">
                                     <TextBlock Text="{Binding FullName, UpdateSourceTrigger=PropertyChanged}"
                                                        Style="{StaticResource baseText}"/>
                                 </DataTemplate>

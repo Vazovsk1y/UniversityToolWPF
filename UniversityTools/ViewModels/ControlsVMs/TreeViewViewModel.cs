@@ -41,7 +41,44 @@ namespace UniversityTool.ViewModels.ControlsVMs
         public object SelectedItem
         {
             get => _selectedItem;
-            set => Set(ref _selectedItem, value);
+            private set
+            {
+                IsAnyItemSelected = value is not null;
+
+                switch (value)
+                {
+                    case Departament departament:
+                        {
+                            SelectedGroup = null;
+                            SelectedStudent = null;
+                            SelectedDepartament = departament;
+                        }
+                        break;
+                    case Group group:
+                        {
+                            SelectedDepartament = null;
+                            SelectedStudent = null;
+                            SelectedGroup = group;
+                        }
+                        break;
+                    case Student student:
+                        {
+                            SelectedDepartament = null;
+                            SelectedGroup = null;
+                            SelectedStudent = student;
+                        }
+                        break;
+                    case null:
+                        {
+                            SelectedDepartament = null;
+                            SelectedGroup = null;
+                            SelectedStudent = null;
+                        }
+                        break;
+                }
+
+                Set(ref _selectedItem, value);
+            }
         }
 
         public bool IsGroupSelected 
@@ -71,13 +108,21 @@ namespace UniversityTool.ViewModels.ControlsVMs
         public Group SelectedGroup
         {
             get => _selectedGroup;
-            private set => Set(ref _selectedGroup, value);
+            private set
+            {
+                IsGroupSelected = value is not null;
+                Set(ref _selectedGroup, value);
+            }
         }
 
         public Student SelectedStudent
         {
             get => _selectedStudent;
-            private set => Set(ref _selectedStudent, value);
+            private set
+            {
+                IsStudentSelected = value is not null;
+                Set(ref _selectedStudent, value);
+            }
         }
 
         public Departament SelectedDepartament
@@ -96,7 +141,9 @@ namespace UniversityTool.ViewModels.ControlsVMs
                 throw new InvalidOperationException("The default constructor of this view model type is only for design time");
         }
 
-        public TreeViewViewModel(IDepartamentTreeService treeService, IMessageBusService messageBusService)
+        public TreeViewViewModel(
+            IDepartamentTreeService treeService, 
+            IMessageBusService messageBusService)
         {
             _messageBus = messageBusService;
             _departamentTreeService = treeService;
@@ -112,44 +159,7 @@ namespace UniversityTool.ViewModels.ControlsVMs
 
         public ICommand TreeViewItemSelectionChangedCommand => new RelayCommand(OnTreeViewItemSelectionChanged);
 
-        private void OnTreeViewItemSelectionChanged(object selectedItem)
-        {
-            switch (selectedItem)
-            {
-                case Student student:
-                    {
-                        SelectedItem = student;
-                        SelectedDepartament = null;
-                        SelectedGroup = null;
-                        SelectedStudent = student;
-                        IsStudentSelected = true;
-                        IsGroupSelected = false;
-                    }
-                    break;
-                case Group group:
-                    {
-                        SelectedItem = group;
-                        SelectedStudent = null;
-                        SelectedDepartament = null;
-                        SelectedGroup = group;
-                        IsStudentSelected = false;
-                        IsGroupSelected = true;
-                    }
-                    break;
-                case Departament departament:
-                    {
-                        SelectedItem = departament;
-                        SelectedGroup = null;
-                        SelectedStudent = null;
-                        SelectedDepartament = departament;
-                        IsStudentSelected = false;
-                        IsGroupSelected = false;
-                    }
-                    break;
-            }
-
-            IsAnyItemSelected = selectedItem is not null;
-        }
+        private void OnTreeViewItemSelectionChanged(object selectedItem) => SelectedItem = selectedItem;
 
         #endregion
 
@@ -181,13 +191,12 @@ namespace UniversityTool.ViewModels.ControlsVMs
         private Task MessageHandler(DepartamentMessage message) => message.OperationType switch
         {
             UIOperationTypeCode.Add => ProcessInMainThreadAsync(() => FullTree.AddDepapartament(message.Departament)),
-            UIOperationTypeCode.Delete => ProcessInMainThreadAsync(() => 
+            UIOperationTypeCode.Delete => ProcessInMainThreadAsync(() =>
             {
                 FullTree.DeleteDepartament(SelectedDepartament);
                 if (FullTree.Count is 0)
                 {
-                    SelectedDepartament = null;
-                    IsAnyItemSelected = false;
+                    SelectedItem = null;
                 }
             }),
             UIOperationTypeCode.Update => ProcessInMainThreadAsync(() => 

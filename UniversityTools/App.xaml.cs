@@ -6,6 +6,7 @@ using System.Threading;
 using UniversityTool.Infastructure.Registrators;
 using Microsoft.Extensions.Hosting;
 using UniversityTool.Domain.Services.DataServices;
+using System.Windows.Threading;
 
 namespace UniversityTool
 {
@@ -88,6 +89,11 @@ namespace UniversityTool
             .AddViewModels()
             .AddWindows()
             ;
+
+        private static void OnDispatcherUnhandledExceptinon(object sender, DispatcherUnhandledExceptionEventArgs e)
+        {
+            MessageBox.Show($"{e.Exception.Message}\n{e.Exception.StackTrace}");
+        }
 
         #endregion
 
