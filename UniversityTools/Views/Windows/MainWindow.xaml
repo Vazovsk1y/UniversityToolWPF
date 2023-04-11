@@ -27,14 +27,9 @@
             </Grid.ColumnDefinitions>
 
             <Grid Grid.Column="0">
-                <StackPanel>
-                    <TextBox Text="Search" TextAlignment="Center"/>
-                    <UserControl>
-                        <c:TreeControl DataContext="{Binding TreeView}"
+                <c:TreeControl DataContext="{Binding TreeView}"
                                d:DataContext="{d:DesignInstance vmcontrols:TreeViewViewModel,
                         IsDesignTimeCreatable=True}"/>
-                    </UserControl>
-                </StackPanel>
             </Grid>
 
             <Grid Grid.Column="1">

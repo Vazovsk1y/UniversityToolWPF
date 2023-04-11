@@ -12,6 +12,9 @@ using UniversityTool.Domain.Services.DataServices;
 using UniversityTool.Domain.Codes;
 using UniversityTool.Infastructure.Extensions;
 using System.Windows;
+using System.Windows.Data;
+using System.ComponentModel;
+using System.Linq;
 
 namespace UniversityTool.ViewModels.ControlsVMs
 {
@@ -22,6 +25,7 @@ namespace UniversityTool.ViewModels.ControlsVMs
     {
         #region --Fields--
 
+        private string _departamentFilterText;
         private object _selectedItem;
         private bool _isGroupSelected;
         private bool _isStudentSelected;
@@ -33,10 +37,25 @@ namespace UniversityTool.ViewModels.ControlsVMs
         private readonly IDepartamentTreeService _departamentTreeService;
         private readonly IMessageBusService _messageBus;
         private readonly ICollection<IDisposable> _subscriptions = new List<IDisposable>();
+        private readonly CollectionViewSource _filtredFullTree = new();
 
         #endregion
 
         #region --Properties--
+
+        public ICollectionView FiltredFullTreeView => _filtredFullTree?.View;
+
+        public string DepartamentFilterText
+        {
+            get => _departamentFilterText;
+            set
+            {
+                if (Set(ref _departamentFilterText, value))
+                {
+                    FiltredFullTreeView.Refresh();
+                }
+            }
+        }
 
         public object SelectedItem
         {
@@ -102,7 +121,14 @@ namespace UniversityTool.ViewModels.ControlsVMs
         public ObservableCollection<Departament> FullTree
         {
             get => _fullTree;
-            private set => Set(ref _fullTree, value);
+            private set
+            {
+                if (Set(ref _fullTree, value))
+                {
+                    _filtredFullTree.Source = value;
+                    OnPropertyChanged(nameof(FiltredFullTreeView));
+                }
+            }
         }
 
         public Group SelectedGroup
@@ -139,6 +165,10 @@ namespace UniversityTool.ViewModels.ControlsVMs
         {
             if (!App.IsDesignMode)
                 throw new InvalidOperationException("The default constructor of this view model type is only for design time");
+
+            var groups = Enumerable.Range(0, 5).Select(g => new Group { Title = $"Mama Mia{g}" }).ToList();
+            var departaments = Enumerable.Range(1, 10).Select(d => new Departament { Title = $"Siu {d}",Groups = groups }).ToList();
+            FullTree = new ObservableCollection<Departament>(departaments);
         }
 
         public TreeViewViewModel(
@@ -150,6 +180,8 @@ namespace UniversityTool.ViewModels.ControlsVMs
             _subscriptions.Add(_messageBus.RegisterHandler<DepartamentMessage>(OnReceiveMessage));
             _subscriptions.Add(_messageBus.RegisterHandler<GroupMessage>(OnReceiveMessage));
             _subscriptions.Add(_messageBus.RegisterHandler<StudentMessage>(OnReceiveMessage));
+            _filtredFullTree.Filter += OnDepartamentTreeViewFilter;
+            _filtredFullTree.SortDescriptions.Add(new SortDescription(nameof(Departament.Title), ListSortDirection.Ascending));
             InitializeFullTree();
         }
 
@@ -164,6 +196,19 @@ namespace UniversityTool.ViewModels.ControlsVMs
         #endregion
 
         #region --Methods--
+
+        private void OnDepartamentTreeViewFilter(object sender, FilterEventArgs e)
+        {
+            var filterText = DepartamentFilterText;
+            if (string.IsNullOrEmpty(filterText)) 
+                return;
+
+            if (e.Item is Departament departament && departament.Title is not null) 
+            {
+                if (departament.Title.Contains(filterText, StringComparison.OrdinalIgnoreCase)) return;
+                e.Accepted = false;
+            }
+        }
 
         public void Dispose()
         {

@@ -11,22 +11,22 @@ namespace UniversityTool.Infastructure.Extensions
 {
     internal static class ObservableCollectionExtensions
     {
-        public static void AddDepapartament(this ObservableCollection<Departament> departamentTree, Departament departament)
+        public static void AddDepapartament(this IList<Departament> departamentTree, Departament departament)
             => departamentTree.Add(departament);
 
-        public static void AddGroup(this ObservableCollection<Departament> departamentsTree, Group group)
+        public static void AddGroup(this IList<Departament> departamentsTree, Group group)
         {
             var departament = departamentsTree.FirstOrDefault(d => d.Id == group.DepartamentId);
             departament?.Groups.Add(group);
         }
 
-        public static void AddStudent(this ObservableCollection<Departament> departaments, Student student)
+        public static void AddStudent(this IList<Departament> departaments, Student student)
         {
             var group = departaments.SelectMany(d => d.Groups).FirstOrDefault(g => g.Id == student.GroupId);
             group?.Students.Add(student);
         }
 
-        public static void UpdateDepartament(this ObservableCollection<Departament> departaments, Departament previousDepartament, Departament newDepartament)
+        public static void UpdateDepartament(this IList<Departament> departaments, Departament previousDepartament, Departament newDepartament)
         {
             var index = departaments.IndexOf(previousDepartament);
             if (index != -1)
@@ -36,7 +36,7 @@ namespace UniversityTool.Infastructure.Extensions
             }
         }
 
-        public static void UpdateGroup(this ObservableCollection<Departament> departaments, Group previousGroup, Group newGroup)
+        public static void UpdateGroup(this IList<Departament> departaments, Group previousGroup, Group newGroup)
         {
             var departament = departaments.FirstOrDefault(d => d.Id == previousGroup.DepartamentId);
 
@@ -54,7 +54,7 @@ namespace UniversityTool.Infastructure.Extensions
             }
         }
 
-        public static void UpdateStudent(this ObservableCollection<Departament> departaments, Student previousStudent, Student newStudent)
+        public static void UpdateStudent(this IList<Departament> departaments, Student previousStudent, Student newStudent)
         {
             var group = departaments.SelectMany(d => d.Groups).FirstOrDefault(g => g.Id == previousStudent.GroupId);
 
@@ -69,7 +69,7 @@ namespace UniversityTool.Infastructure.Extensions
             }
         }
 
-        public static void DeleteDepartament(this ObservableCollection<Departament> departaments, Departament departament)
+        public static void DeleteDepartament(this IList<Departament> departaments, Departament departament)
         {
             var index = departaments.IndexOf(departament);
             if (index is not -1)
@@ -78,7 +78,7 @@ namespace UniversityTool.Infastructure.Extensions
             }
         }
 
-        public static void DeleteGroup(this ObservableCollection<Departament> departaments, Group group)
+        public static void DeleteGroup(this IList<Departament> departaments, Group group)
         {
             var departament = departaments.FirstOrDefault(d => d.Id == group.DepartamentId);
 
@@ -92,7 +92,7 @@ namespace UniversityTool.Infastructure.Extensions
             }
         }
 
-        public static void DeleteStudent(this ObservableCollection<Departament> departaments, Student student)
+        public static void DeleteStudent(this IList<Departament> departaments, Student student)
         {
             var group = departaments.SelectMany(d => d.Groups).FirstOrDefault(g => g.Id == student.GroupId);
 

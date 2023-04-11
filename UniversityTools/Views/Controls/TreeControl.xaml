@@ -10,39 +10,43 @@
              d:DataContext="{d:DesignInstance vm:TreeViewViewModel,IsDesignTimeCreatable=True}"
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <TreeView x:Name="mainTree"
-                   ItemsSource="{Binding FullTree, UpdateSourceTrigger=PropertyChanged}"
+        <StackPanel>
+            <TextBox Margin="10" Text="{Binding DepartamentFilterText, UpdateSourceTrigger=PropertyChanged}"/>
+            <TreeView x:Name="mainTree"
+                   ItemsSource="{Binding FiltredFullTreeView, UpdateSourceTrigger=PropertyChanged}"
                   BorderThickness="0">
-            <TreeView.ItemTemplate>
-            <HierarchicalDataTemplate 
+                <TreeView.ItemTemplate>
+                    <HierarchicalDataTemplate 
                             DataType="{x:Type m:Departament}"
                             ItemsSource="{Binding Groups, UpdateSourceTrigger=PropertyChanged}">
-                    <TextBlock Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}"
+                        <TextBlock Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}"
                                        Style="{StaticResource baseText}"/>
-                    <HierarchicalDataTemplate.ItemTemplate>
-                        <HierarchicalDataTemplate 
+                        <HierarchicalDataTemplate.ItemTemplate>
+                            <HierarchicalDataTemplate 
                                     DataType="{x:Type m:Group}"
                                     ItemsSource="{Binding Students, UpdateSourceTrigger=PropertyChanged}">
-                            <TextBlock Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}"
+                                <TextBlock Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}"
                                                Style="{StaticResource baseText}"/>
-                            <HierarchicalDataTemplate.ItemTemplate>
-                                <DataTemplate 
+                                <HierarchicalDataTemplate.ItemTemplate>
+                                    <DataTemplate 
                                             DataType="{x:Type m:Student}">
-                                    <TextBlock Text="{Binding FullName, UpdateSourceTrigger=PropertyChanged}"
+                                        <TextBlock Text="{Binding FullName, UpdateSourceTrigger=PropertyChanged}"
                                                        Style="{StaticResource baseText}"/>
-                                </DataTemplate>
-                            </HierarchicalDataTemplate.ItemTemplate>
-                        </HierarchicalDataTemplate>
-                    </HierarchicalDataTemplate.ItemTemplate>
-                </HierarchicalDataTemplate>
-            </TreeView.ItemTemplate>
+                                    </DataTemplate>
+                                </HierarchicalDataTemplate.ItemTemplate>
+                            </HierarchicalDataTemplate>
+                        </HierarchicalDataTemplate.ItemTemplate>
+                    </HierarchicalDataTemplate>
+                </TreeView.ItemTemplate>
 
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName = "SelectedItemChanged" >
-                    <i:InvokeCommandAction Command = "{Binding TreeViewItemSelectionChangedCommand, UpdateSourceTrigger=PropertyChanged}"
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName = "SelectedItemChanged" >
+                        <i:InvokeCommandAction Command = "{Binding TreeViewItemSelectionChangedCommand, UpdateSourceTrigger=PropertyChanged}"
                                         CommandParameter="{Binding ElementName=mainTree, Path=SelectedItem, UpdateSourceTrigger=PropertyChanged}"/>
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
-        </TreeView>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </TreeView>
+        </StackPanel>
+        
     </Grid>
 </UserControl>

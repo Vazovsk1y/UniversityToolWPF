@@ -59,7 +59,6 @@ namespace BenchmarksApp
 
         public static void Main(string[] args)
         {
-            
             BenchmarkRunner.Run<Test>();
         }
     }

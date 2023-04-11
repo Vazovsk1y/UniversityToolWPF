@@ -29,7 +29,6 @@ namespace UniversityTool.Services.WindowsServices
         {
             if (Window is { } window)
             {
-                // Task.Delay(1700).Wait();       // to see the main window with full tree when app is starting.
                 window.Show();
                 return;
             }
@@ -38,7 +37,6 @@ namespace UniversityTool.Services.WindowsServices
             window.Closed += (_, _) => Window = null;
 
             Window = window;
-            // Task.Delay(1700).Wait();           // to see the main window with full tree when app is starting.
             window.Show();
         }
     }
