@@ -27,14 +27,17 @@
             </Grid.ColumnDefinitions>
 
             <Grid Grid.Column="0">
-                <c:TreeControl DataContext="{Binding TreeView}"
+                <UserControl Visibility="{Binding Menu.IsTreeVisible, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                    <c:TreeControl
+                    DataContext="{Binding TreeView}"
                                d:DataContext="{d:DesignInstance vmcontrols:TreeViewViewModel,
                         IsDesignTimeCreatable=True}"/>
+                </UserControl>
             </Grid>
 
             <Grid Grid.Column="1">
                 <!--#region Visibility With Converters-->
-                
+
                 <!--<c:WorkSpaceControl DataContext="{Binding WorkSpace}"
                                         d:DataContext="{d:DesignInstance vmcontrols:WorkSpaceViewModel, IsDesignTimeCreatable=True}"
                         Visibility="{Binding TreeView.IsAnyItemSelected, 
@@ -45,9 +48,11 @@
                            Visibility="{Binding TreeView.IsAnyItemSelected, 
                     Converter={StaticResource InverseBoolToVisibilityConverter}, 
                     FallbackValue=Collapsed}"/>-->
+                
                 <!--#endregion-->
 
                 <!--region Visibility Without Converters-->
+                
                 <c:WorkSpaceControl DataContext="{Binding WorkSpace}" 
                                     d:DataContext="{d:DesignInstance vmcontrols:WorkSpaceViewModel, 
                     IsDesignTimeCreatable=True}">
@@ -74,6 +79,7 @@
                         </Style>
                     </TextBlock.Style>
                 </TextBlock>
+                
                 <!--#endregion-->
             </Grid>
         </Grid>

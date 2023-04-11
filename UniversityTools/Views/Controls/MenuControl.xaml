@@ -46,10 +46,9 @@
                 <MenuItem Header="Delete Student" Style="{StaticResource menuItem}"
                           Command="{Binding DeleteStudentCommand}"/>
             </MenuItem>
+            
             <MenuItem Header="View" Style="{StaticResource menuItem}">
-                <MenuItem>
-                    <CheckBox x:Name="Check" IsChecked="False"/>
-                </MenuItem> 
+                <CheckBox IsChecked="{Binding IsTreeVisible}" Content="Дерево"/>
             </MenuItem>
             <MenuItem Header="Help" Style="{StaticResource menuItem}"/>
         </Menu>

@@ -14,6 +14,7 @@ namespace UniversityTool.ViewModels.ControlsVMs
     {
         #region --Fields--
 
+        private bool _isTreeVisible;
         private readonly TreeViewViewModel _tree;
         private readonly IDepartamentAddWindowService _departamentAddWindow;
         private readonly IDepartamentUpdateWindowService _departamentUpdateWindow;
@@ -29,7 +30,11 @@ namespace UniversityTool.ViewModels.ControlsVMs
 
         #region --Properties--
 
-
+        public bool IsTreeVisible
+        {
+            get => _isTreeVisible;
+            set => Set(ref _isTreeVisible, value);
+        }
 
         #endregion
 
