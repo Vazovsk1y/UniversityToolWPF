@@ -40,7 +40,8 @@ namespace UniversityTool.ViewModels.StudentVMs
             WindowTitle = "Student Add";
         }
 
-        public StudentAddViewModel(IStudentService studentService,
+        public StudentAddViewModel(
+            IStudentService studentService,
             IGroupService groupService,
             IMessageBusService messageBus,
             IStudentAddWindowService studentAddWindowService) : base(messageBus, studentAddWindowService, groupService, studentService)

@@ -42,7 +42,7 @@ namespace UniversityTool.ViewModels.StudentVMs.Base
 
         public Group SelectedGroup
         {
-            get => _selectedGroup ?? new();
+            get => _selectedGroup ?? new Group { Id = -1}; // group is not selected.
             set => Set(ref _selectedGroup, value);
         }
 

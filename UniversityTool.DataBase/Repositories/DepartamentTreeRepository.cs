@@ -16,14 +16,21 @@ namespace UniversityTool.DataBase.Repositories
 
         public async Task<IEnumerable<Departament>> GetDepartamentsRelations()
         {
-            using UniversityToolDbContext context = _contextFactory.CreateDbContext();
-            IEnumerable<Departament> departaments =
-                await context.Departaments
-                .Include(d => d.Groups)
-                .ThenInclude(g => g.Students)
-                .ToListAsync().ConfigureAwait(false);
+            try
+            {
+                using UniversityToolDbContext context = _contextFactory.CreateDbContext();
+                IEnumerable<Departament> departaments =
+                    await context.Departaments
+                    .Include(d => d.Groups)
+                    .ThenInclude(g => g.Students)
+                    .ToListAsync().ConfigureAwait(false);
 
-            return departaments;
+                return departaments;
+            }
+            catch
+            {
+                throw;
+            }
         }
     }
 }

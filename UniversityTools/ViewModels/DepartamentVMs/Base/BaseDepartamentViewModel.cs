@@ -31,7 +31,8 @@ namespace UniversityTool.ViewModels.DepartamentVMs.Base
 
         }
 
-        public BaseDepartamentViewModel(IMessageBusService messageBus,
+        public BaseDepartamentViewModel(
+            IMessageBusService messageBus,
             T windowService,
             IDepartamentService departamentService) : base(messageBus, windowService)
         {

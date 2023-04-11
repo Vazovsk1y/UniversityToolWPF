@@ -48,12 +48,14 @@
                 <!--#endregion-->
 
                 <!--region Visibility Without Converters-->
-                <c:WorkSpaceControl DataContext="{Binding WorkSpace}">
+                <c:WorkSpaceControl DataContext="{Binding WorkSpace}" 
+                                    d:DataContext="{d:DesignInstance vmcontrols:WorkSpaceViewModel, 
+                    IsDesignTimeCreatable=True}">
                     <c:WorkSpaceControl.Style>
                         <Style TargetType="UserControl">
                             <Style.Triggers>
                                 <DataTrigger 
-                                    Binding="{Binding TreeView.IsAnyItemSelected, FallbackValue=False}" Value="False">
+                                    Binding="{Binding TreeView.IsAnyItemSelected, FallbackValue=True}" Value="False">
                                     <Setter Property="Visibility" Value="Collapsed"/>
                                 </DataTrigger>
                             </Style.Triggers>
@@ -65,7 +67,7 @@
                     <TextBlock.Style>
                         <Style TargetType="TextBlock">
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding TreeView.IsAnyItemSelected, FallbackValue=False}" Value="True">
+                                <DataTrigger Binding="{Binding TreeView.IsAnyItemSelected, FallbackValue=True}" Value="True">
                                     <Setter Property="Visibility" Value="Collapsed"/>
                                 </DataTrigger>
                             </Style.Triggers>

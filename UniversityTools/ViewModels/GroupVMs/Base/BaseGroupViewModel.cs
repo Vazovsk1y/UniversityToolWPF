@@ -27,7 +27,7 @@ namespace UniversityTool.ViewModels.GroupVMs.Base
 
         public Departament SelectedDepartament
         {
-            get => _selectedDepartament ?? new();
+            get => _selectedDepartament ?? new Departament { Id = -1 }; // departament is not selected.
             set => Set(ref _selectedDepartament, value);
         }
 

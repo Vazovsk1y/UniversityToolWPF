@@ -21,7 +21,7 @@ namespace UniversityTool.ViewModels.GroupVMs
 
         #region --Properties--
 
-        public string Message => $"Are you sure that you want to delete {_tree.SelectedGroup.Title}";
+        public string Message => $"Are you sure that you want to delete {_tree.SelectedGroup?.Title}";
 
         #endregion
 

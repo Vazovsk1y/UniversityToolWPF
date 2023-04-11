@@ -7,6 +7,9 @@ using System;
 
 namespace UniversityTool.ViewModels.ControlsVMs
 {
+    /// <summary>
+    /// Singleton class that stores the menu state.
+    /// </summary>
     internal class MenuViewModel : BaseViewModel
     {
         #region --Fields--

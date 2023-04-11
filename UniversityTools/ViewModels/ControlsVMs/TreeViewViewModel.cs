@@ -60,7 +60,7 @@ namespace UniversityTool.ViewModels.ControlsVMs
         public object SelectedItem
         {
             get => _selectedItem;
-            private set
+            set
             {
                 IsAnyItemSelected = value is not null;
 
@@ -247,7 +247,7 @@ namespace UniversityTool.ViewModels.ControlsVMs
             UIOperationTypeCode.Update => ProcessInMainThreadAsync(() => 
             { 
                 FullTree.UpdateDepartament(SelectedDepartament, message.Departament); 
-                SelectedDepartament = message.Departament; 
+                SelectedItem = message.Departament; 
             }),
             UIOperationTypeCode.Move => Task.CompletedTask,
             _ => Task.CompletedTask
@@ -260,7 +260,7 @@ namespace UniversityTool.ViewModels.ControlsVMs
             UIOperationTypeCode.Update => _ = ProcessInMainThreadAsync(() =>
             {
                 FullTree.UpdateGroup(SelectedGroup, message.Group);
-                SelectedGroup = message.Group;
+                SelectedItem = message.Group;
             }),
             UIOperationTypeCode.Move => Task.CompletedTask,
             _ => Task.CompletedTask,
@@ -273,7 +273,7 @@ namespace UniversityTool.ViewModels.ControlsVMs
             UIOperationTypeCode.Update => _ = ProcessInMainThreadAsync(() =>
             {
                 FullTree.UpdateStudent(SelectedStudent, message.Student);
-                SelectedStudent = message.Student;
+                SelectedItem = message.Student;
             }),
             UIOperationTypeCode.Move => Task.CompletedTask,
             _ => Task.CompletedTask,

@@ -84,7 +84,7 @@ namespace UniversityTool
         }
 
         internal static void ConfigureServices(HostBuilderContext host, IServiceCollection services) => services
-            .AddAppServices()
+            .AddWindowServices()
             .AddDataBaseTools(host.Configuration.GetSection("Database"))
             .AddViewModels()
             .AddWindows()

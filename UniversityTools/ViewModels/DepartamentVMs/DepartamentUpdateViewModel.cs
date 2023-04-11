@@ -54,7 +54,7 @@ namespace UniversityTool.ViewModels.DepartamentVMs
             var response = await _departamentService.Update(new Departament
             {
                 Id = _tree.SelectedDepartament.Id,                              // id is required, else new entity will be added not updated.
-                Title = DepartamentTitle
+                Title = DepartamentTitle                                        // updated field
             });
 
             switch (response.StatusCode)

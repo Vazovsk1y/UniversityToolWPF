@@ -9,8 +9,8 @@ namespace UniversityTool.Infastructure.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var result = (bool)value;
-            return result ? Visibility.Collapsed : Visibility.Visible;
+            var isVisible = (bool)value;
+            return isVisible ? Visibility.Collapsed : Visibility.Visible;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

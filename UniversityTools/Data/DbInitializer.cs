@@ -27,15 +27,15 @@ namespace UniversityTool.Data
             {
                 _logger.LogInformation("-----Start migration process------");
                 await _dbContext.Database.MigrateAsync().ConfigureAwait(false);
-                _logger.LogInformation($"------Times used {timer.Elapsed.TotalSeconds}-------");
+                _logger.LogInformation($"------Times spend {timer.Elapsed.TotalSeconds}-------");
             }
             catch(OperationCanceledException ex)
             {
-                _logger.LogInformation($"Exception sourse: {ex.Source}, Exception stacktrace {ex.StackTrace}, Exeption message {ex.Message}");
+                _logger.LogInformation($"Exception sourse: {ex.Source}\n, Exception stacktrace {ex.StackTrace}\n, Exeption message {ex.Message}");
             }
             catch(Exception ex)
             {
-                _logger.LogInformation($"Exception sourse: {ex.Source}, Exception stacktrace {ex.StackTrace}, Exeption message {ex.Message}");
+                _logger.LogInformation($"Exception sourse: {ex.Source}\n, Exception stacktrace {ex.StackTrace}\n, Exeption message {ex.Message}");
             }
         }
     }
