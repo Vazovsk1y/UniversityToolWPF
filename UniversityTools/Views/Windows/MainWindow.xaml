@@ -22,9 +22,14 @@
 
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="{Binding Menu.IsTreeVisible, 
+                    Converter={StaticResource BoolToColumnWidthConverter}, FallbackValue=2*}"/>
+                <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="5*"/>
             </Grid.ColumnDefinitions>
+
+            <GridSplitter Grid.Column="1" ShowsPreview="False" Width="5"
+        HorizontalAlignment="Center" VerticalAlignment="Stretch" />
 
             <Grid Grid.Column="0">
                 <UserControl Visibility="{Binding Menu.IsTreeVisible, Converter={StaticResource InverseBoolToVisibilityConverter}}">
@@ -35,7 +40,7 @@
                 </UserControl>
             </Grid>
 
-            <Grid Grid.Column="1">
+            <Grid Grid.Column="2">
                 <!--#region Visibility With Converters-->
 
                 <!--<c:WorkSpaceControl DataContext="{Binding WorkSpace}"
@@ -52,11 +57,9 @@
                 <!--#endregion-->
 
                 <!--region Visibility Without Converters-->
-                
-                <c:WorkSpaceControl DataContext="{Binding WorkSpace}" 
-                                    d:DataContext="{d:DesignInstance vmcontrols:WorkSpaceViewModel, 
-                    IsDesignTimeCreatable=True}">
-                    <c:WorkSpaceControl.Style>
+
+                <UserControl>
+                    <UserControl.Resources>
                         <Style TargetType="UserControl">
                             <Style.Triggers>
                                 <DataTrigger 
@@ -65,9 +68,15 @@
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>
-                    </c:WorkSpaceControl.Style>
-                </c:WorkSpaceControl>
-
+                    </UserControl.Resources>
+                    <UserControl.Content>
+                        <c:WorkSpaceControl DataContext="{Binding WorkSpace}" 
+                                    d:DataContext="{d:DesignInstance vmcontrols:WorkSpaceViewModel, 
+                    IsDesignTimeCreatable=True}">
+                        </c:WorkSpaceControl>
+                    </UserControl.Content>
+                </UserControl>
+                
                 <TextBlock Margin="250" Text="ВЫБЕРИТЕ ЧТО-НИБУДЬ!" TextAlignment="Center">
                     <TextBlock.Style>
                         <Style TargetType="TextBlock">

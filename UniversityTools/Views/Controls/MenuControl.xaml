@@ -48,7 +48,7 @@
             </MenuItem>
             
             <MenuItem Header="View" Style="{StaticResource menuItem}">
-                <CheckBox IsChecked="{Binding IsTreeVisible}" Content="Дерево"/>
+                <CheckBox IsChecked="{Binding IsTreeVisible}" Content="Скрыть дерево"/>
             </MenuItem>
             <MenuItem Header="Help" Style="{StaticResource menuItem}"/>
         </Menu>

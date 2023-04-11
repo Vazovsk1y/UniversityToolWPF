@@ -3,4 +3,5 @@
                     xmlns:conv="clr-namespace:UniversityTool.Infastructure.Converters">
     <conv:BoolToVisibiltyConverter x:Key="BoolToVisibilityConverter"/>
     <conv:InverseBoolToVisibilityConverter x:Key="InverseBoolToVisibilityConverter"/>
+    <conv:BoolToColumnWidthConverter x:Key="BoolToColumnWidthConverter"/>
 </ResourceDictionary>
