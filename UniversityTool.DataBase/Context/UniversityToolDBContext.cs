@@ -15,6 +15,7 @@ namespace UniversityTool.DataBase.Context
         {
             modelBuilder.Entity<Departament>(d =>
             {
+                d.Property(x => x.DateAdded).HasDefaultValueSql("GETDATE()");
                 d.HasKey(x => x.Id);
                 d.Property(x => x.Title).IsRequired();
 
@@ -26,6 +27,7 @@ namespace UniversityTool.DataBase.Context
 
             modelBuilder.Entity<Group>(g =>
             {
+                g.Property(x => x.DateAdded).HasDefaultValueSql("GETDATE()");
                 g.HasKey(x => x.Id);
                 g.Property(x => x.Title).IsRequired();
 
@@ -37,6 +39,7 @@ namespace UniversityTool.DataBase.Context
 
             modelBuilder.Entity<Student>(s =>
             {
+                s.Property(x => x.DateAdded).HasDefaultValueSql("GETDATE()");
                 s.HasKey(x => x.Id);
                 s.Property(x => x.Name).IsRequired();
                 s.Property(x => x.SecondName).IsRequired();
