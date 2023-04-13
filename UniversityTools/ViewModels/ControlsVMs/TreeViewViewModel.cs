@@ -100,9 +100,9 @@ namespace UniversityTool.ViewModels.ControlsVMs
             }
         }
 
-        public bool IsGroupSelected 
-        { 
-            get => _isGroupSelected; 
+        public bool IsGroupSelected
+        {
+            get => _isGroupSelected;
             set => Set(ref _isGroupSelected, value);
         }
 
@@ -167,12 +167,12 @@ namespace UniversityTool.ViewModels.ControlsVMs
                 throw new InvalidOperationException("The default constructor of this view model type is only for design time");
 
             var groups = Enumerable.Range(0, 5).Select(g => new Group { Title = $"Mama Mia{g}" }).ToList();
-            var departaments = Enumerable.Range(1, 10).Select(d => new Departament { Title = $"Siu {d}",Groups = groups }).ToList();
+            var departaments = Enumerable.Range(1, 10).Select(d => new Departament { Title = $"Siu {d}", Groups = groups }).ToList();
             FullTree = new ObservableCollection<Departament>(departaments);
         }
 
         public TreeViewViewModel(
-            IDepartamentTreeService treeService, 
+            IDepartamentTreeService treeService,
             IMessageBusService messageBusService)
         {
             _messageBus = messageBusService;
@@ -191,7 +191,11 @@ namespace UniversityTool.ViewModels.ControlsVMs
 
         public ICommand TreeViewItemSelectionChangedCommand => new RelayCommand(OnTreeViewItemSelectionChanged);
 
-        private void OnTreeViewItemSelectionChanged(object selectedItem) => SelectedItem = selectedItem;
+        private void OnTreeViewItemSelectionChanged(object selectedItem)
+        {
+            _messageBus.Send(new TabsPanelMessage(selectedItem, UIOperationTypeCode.Add));
+            SelectedItem = selectedItem;
+        }
 
         #endregion
 
@@ -246,7 +250,7 @@ namespace UniversityTool.ViewModels.ControlsVMs
             }),
             UIOperationTypeCode.Update => ProcessInMainThreadAsync(() => 
             { 
-                FullTree.UpdateDepartament(SelectedDepartament, message.Departament); 
+                FullTree.UpdateDepartament(SelectedDepartament, message.Departament);
                 SelectedItem = message.Departament; 
             }),
             UIOperationTypeCode.Move => Task.CompletedTask,

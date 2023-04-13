@@ -21,6 +21,8 @@ namespace UniversityTool.ViewModels
 
         public WorkSpaceViewModel WorkSpace { get; }
 
+        public TabsPanelViewModel TabsPanel { get; }
+
         #endregion
 
         #region --Constructors--
@@ -35,11 +37,13 @@ namespace UniversityTool.ViewModels
         public MainWindowViewModel(
             TreeViewViewModel treeViewViewModel, 
             MenuViewModel menuViewModel,
-            WorkSpaceViewModel workSpaceModel)
+            WorkSpaceViewModel workSpaceModel,
+            TabsPanelViewModel tabsPanelViewModel)
         {
             Menu = menuViewModel;
             TreeView = treeViewViewModel;
             WorkSpace = workSpaceModel;
+            TabsPanel = tabsPanelViewModel;
             WindowTitle = "UniversityTool";
         }
 

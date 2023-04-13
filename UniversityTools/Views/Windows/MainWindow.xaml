@@ -14,13 +14,14 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="20*"/>
+            <RowDefinition Height="0,1*"/>
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0">
             <c:MenuControl DataContext="{Binding Menu}"/>
         </Grid>
 
-        <Grid Grid.Row="2">
+        <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="{Binding Menu.IsTreeVisible, 
                     Converter={StaticResource BoolToColumnWidthConverter}, FallbackValue=2*}"/>
@@ -91,6 +92,10 @@
                 
                 <!--#endregion-->
             </Grid>
+        </Grid>
+
+        <Grid Grid.Row="2">
+            <c:TabsPanelControl DataContext="{Binding TabsPanel}"/>
         </Grid>
     </Grid>
 </Window>

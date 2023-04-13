@@ -13,6 +13,7 @@ namespace UniversityTool.Infastructure.Registrators
             .AddSingleton<MainWindowViewModel>()
             .AddSingleton<TreeViewViewModel>()
             .AddSingleton<MenuViewModel>()
+            .AddSingleton<TabsPanelViewModel>()
             .AddTransient<DepartamentAddViewModel>()
             .AddTransient<GroupAddViewModel>()
             .AddTransient<StudentAddViewModel>()

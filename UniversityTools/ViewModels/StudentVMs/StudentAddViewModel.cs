@@ -47,6 +47,7 @@ namespace UniversityTool.ViewModels.StudentVMs
             IStudentAddWindowService studentAddWindowService) : base(messageBus, studentAddWindowService, groupService, studentService)
         {
             _ = InitializeGroupsAsync();
+            WindowTitle = "Student Add";
         }
 
         #endregion

@@ -21,21 +21,30 @@
             <TextBox Margin="10" Text="{Binding DepartamentFilterText, UpdateSourceTrigger=PropertyChanged}"/>
             <TreeView x:Name="mainTree"
                    ItemsSource="{Binding FiltredFullTreeView, UpdateSourceTrigger=PropertyChanged}"
+                      VirtualizingStackPanel.VirtualizationMode="Recycling"
+                      VirtualizingPanel.IsVirtualizing="True"
                   BorderThickness="0">
                 <TreeView.Resources>
                     <Style TargetType="{x:Type TreeViewItem}" 
-                           BasedOn="{StaticResource baseTreeViewItemStyle}"/>
+                           BasedOn="{StaticResource baseTreeViewItemStyle}">
+                    </Style>
                 </TreeView.Resources>
                 <TreeView.ItemContainerStyle>
                     <Style TargetType="{x:Type TreeViewItem}" 
-                           BasedOn="{StaticResource baseTreeViewItemStyle}"/>
+                           BasedOn="{StaticResource baseTreeViewItemStyle}">
+                    </Style>
                 </TreeView.ItemContainerStyle>
                 <TreeView.ItemTemplate>
                     <HierarchicalDataTemplate 
                             DataType="{x:Type m:Departament}"
                             ItemsSource="{Binding Groups, UpdateSourceTrigger=PropertyChanged}">
-                        <TextBlock Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}"
-                                       Style="{StaticResource baseText}"/>
+                        <TextBlock Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}">
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock" BasedOn="{StaticResource baseText}">
+                                    
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
                         <HierarchicalDataTemplate.ItemTemplate>
                             <HierarchicalDataTemplate 
                                     DataType="{x:Type m:Group}"
@@ -55,9 +64,9 @@
                 </TreeView.ItemTemplate>
 
                 <i:Interaction.Triggers>
-                    <i:EventTrigger EventName = "SelectedItemChanged" >
+                    <i:EventTrigger EventName = "SelectedItemChanged">
                         <i:InvokeCommandAction Command = "{Binding TreeViewItemSelectionChangedCommand, UpdateSourceTrigger=PropertyChanged}"
-                                        CommandParameter="{Binding ElementName=mainTree, Path=SelectedItem, UpdateSourceTrigger=PropertyChanged}"/>
+                                        CommandParameter="{Binding ElementName=mainTree, Path=SelectedItem}"/>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </TreeView>
