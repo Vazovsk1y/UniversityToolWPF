@@ -9,12 +9,27 @@
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance vm:TreeViewViewModel,IsDesignTimeCreatable=True}"
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <Style x:Key="baseTreeViewItemStyle" TargetType="{x:Type TreeViewItem}">
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+        </Style>
+    </UserControl.Resources>
+    
     <Grid>
         <StackPanel>
             <TextBox Margin="10" Text="{Binding DepartamentFilterText, UpdateSourceTrigger=PropertyChanged}"/>
             <TreeView x:Name="mainTree"
                    ItemsSource="{Binding FiltredFullTreeView, UpdateSourceTrigger=PropertyChanged}"
                   BorderThickness="0">
+                <TreeView.Resources>
+                    <Style TargetType="{x:Type TreeViewItem}" 
+                           BasedOn="{StaticResource baseTreeViewItemStyle}"/>
+                </TreeView.Resources>
+                <TreeView.ItemContainerStyle>
+                    <Style TargetType="{x:Type TreeViewItem}" 
+                           BasedOn="{StaticResource baseTreeViewItemStyle}"/>
+                </TreeView.ItemContainerStyle>
                 <TreeView.ItemTemplate>
                     <HierarchicalDataTemplate 
                             DataType="{x:Type m:Departament}"
@@ -47,6 +62,5 @@
                 </i:Interaction.Triggers>
             </TreeView>
         </StackPanel>
-        
     </Grid>
 </UserControl>
