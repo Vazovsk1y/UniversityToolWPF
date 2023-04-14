@@ -6,6 +6,7 @@
              xmlns:vm="clr-namespace:UniversityTool.ViewModels.ControlsVMs"
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:m="clr-namespace:UniversityTool.Domain.Models;assembly=UniversityTool.Domain"
+             xmlns:b="clr-namespace:Microsoft.Xaml.Behaviors;assembly=Microsoft.Xaml.Behaviors"
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance vm:TreeViewViewModel,IsDesignTimeCreatable=True}"
              d:DesignHeight="450" d:DesignWidth="800">
@@ -21,8 +22,7 @@
             <TextBox Margin="10" Text="{Binding DepartamentFilterText, UpdateSourceTrigger=PropertyChanged}"/>
             <TreeView x:Name="mainTree"
                    ItemsSource="{Binding FiltredFullTreeView, UpdateSourceTrigger=PropertyChanged}"
-                      VirtualizingStackPanel.VirtualizationMode="Recycling"
-                      VirtualizingPanel.IsVirtualizing="True"
+                      VirtualizingStackPanel.VirtualizationMode ="Recycling"
                   BorderThickness="0">
                 <TreeView.Resources>
                     <Style TargetType="{x:Type TreeViewItem}" 
@@ -41,21 +41,59 @@
                         <TextBlock Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}">
                             <TextBlock.Style>
                                 <Style TargetType="TextBlock" BasedOn="{StaticResource baseText}">
-                                    
+
                                 </Style>
                             </TextBlock.Style>
+                            
+                            <!--#region Mouse(odinary)LeftButtonDown event -->
+                            
+                            <i:Interaction.Triggers>
+                                <b:EventTrigger EventName="MouseLeftButtonDown">
+                                    <i:InvokeCommandAction Command="{Binding DataContext.TreeViewItemSelectionChangedCommand, RelativeSource={RelativeSource AncestorType={x:Type TreeView}}}"
+                                         CommandParameter="{Binding}"/>
+                                </b:EventTrigger>
+                            </i:Interaction.Triggers>
+                            
+                            <!--#endregion-->
+
                         </TextBlock>
                         <HierarchicalDataTemplate.ItemTemplate>
                             <HierarchicalDataTemplate 
                                     DataType="{x:Type m:Group}"
                                     ItemsSource="{Binding Students, UpdateSourceTrigger=PropertyChanged}">
                                 <TextBlock Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}"
-                                               Style="{StaticResource baseText}"/>
+                                               Style="{StaticResource baseText}">
+                                    
+                                    <!--#region Mouse(odinary)LeftButtonDown event -->
+                                    
+                                    <i:Interaction.Triggers>
+                                        <b:EventTrigger EventName="MouseLeftButtonDown">
+                                            <i:InvokeCommandAction Command="{Binding DataContext.TreeViewItemSelectionChangedCommand, RelativeSource={RelativeSource AncestorType={x:Type TreeView}}}"
+                                                 CommandParameter="{Binding}"/>
+                                        </b:EventTrigger>
+                                    </i:Interaction.Triggers>
+                            
+                                    <!--#endregion-->
+
+                                </TextBlock>
                                 <HierarchicalDataTemplate.ItemTemplate>
                                     <DataTemplate 
                                             DataType="{x:Type m:Student}">
                                         <TextBlock Text="{Binding FullName, UpdateSourceTrigger=PropertyChanged}"
-                                                       Style="{StaticResource baseText}"/>
+                                                       Style="{StaticResource baseText}">
+                                            
+                                            <!--#region Mouse(odinary)LeftButtonDown event -->
+                            
+                                            <i:Interaction.Triggers>
+                                                <b:EventTrigger EventName="MouseLeftButtonDown">
+                                                    <i:InvokeCommandAction Command="{Binding DataContext.TreeViewItemSelectionChangedCommand, RelativeSource={RelativeSource AncestorType={x:Type TreeView}}}"
+                                                         CommandParameter="{Binding}"/>
+                                                </b:EventTrigger>
+                                            </i:Interaction.Triggers>
+                            
+                                            <!--#endregion-->
+
+                                        </TextBlock>
                                     </DataTemplate>
                                 </HierarchicalDataTemplate.ItemTemplate>
                             </HierarchicalDataTemplate>
@@ -64,10 +102,25 @@
                 </TreeView.ItemTemplate>
 
                 <i:Interaction.Triggers>
-                    <i:EventTrigger EventName = "SelectedItemChanged">
+                    
+                    <!--#region SelectedItemChanged event -->
+                    
+                    <!--<i:EventTrigger EventName = "SelectedItemChanged">
                         <i:InvokeCommandAction Command = "{Binding TreeViewItemSelectionChangedCommand, UpdateSourceTrigger=PropertyChanged}"
                                         CommandParameter="{Binding ElementName=mainTree, Path=SelectedItem}"/>
-                    </i:EventTrigger>
+                    </i:EventTrigger>-->
+                    
+                    <!--#endregion-->
+                    
+                    <!--#region MouseDoubleClick event-->
+                    
+                    <!--<i:EventTrigger EventName="MouseDoubleClick">
+                        <i:InvokeCommandAction Command="{Binding TreeViewItemSelectionChangedCommand}"
+                               CommandParameter="{Binding ElementName=mainTree, Path=SelectedItem}" />
+                    </i:EventTrigger>-->
+                    
+                    <!--#endregion-->
+                    
                 </i:Interaction.Triggers>
             </TreeView>
         </StackPanel>
