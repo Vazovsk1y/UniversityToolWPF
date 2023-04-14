@@ -11,7 +11,6 @@ using UniversityTool.Domain.Services.DataServices.Base;
 using UniversityTool.Domain.Services.DataServices;
 using UniversityTool.Domain.Codes;
 using UniversityTool.Infastructure.Extensions;
-using System.Windows;
 using System.Windows.Data;
 using System.ComponentModel;
 using System.Linq;
@@ -172,11 +171,11 @@ namespace UniversityTool.ViewModels.ControlsVMs
         }
 
         public TreeViewViewModel(
-            IDepartamentTreeService treeService,
+            IDepartamentTreeService departamentTreeService,
             IMessageBusService messageBusService)
         {
             _messageBus = messageBusService;
-            _departamentTreeService = treeService;
+            _departamentTreeService = departamentTreeService;
             _subscriptions.Add(_messageBus.RegisterHandler<DepartamentMessage>(OnReceiveMessage));
             _subscriptions.Add(_messageBus.RegisterHandler<GroupMessage>(OnReceiveMessage));
             _subscriptions.Add(_messageBus.RegisterHandler<StudentMessage>(OnReceiveMessage));
@@ -189,13 +188,11 @@ namespace UniversityTool.ViewModels.ControlsVMs
 
         #region --Commands--
 
-        public ICommand TreeViewItemSelectionChangedCommand => new RelayCommand(OnTreeViewItemSelectionChanged);
-
-        private void OnTreeViewItemSelectionChanged(object selectedItem)
+        public ICommand TreeViewItemSelectionChangedCommand => new RelayCommand((selectedItem) =>
         {
             _messageBus.Send(new TabsPanelMessage(selectedItem, UIOperationTypeCode.Add));
             SelectedItem = selectedItem;
-        }
+        });
 
         #endregion
 
@@ -242,6 +239,7 @@ namespace UniversityTool.ViewModels.ControlsVMs
             UIOperationTypeCode.Add => ProcessInMainThreadAsync(() => FullTree.AddDepapartament(message.Departament)),
             UIOperationTypeCode.Delete => ProcessInMainThreadAsync(() =>
             {
+                _messageBus.Send(new TabsPanelMessage(SelectedDepartament, UIOperationTypeCode.Delete));
                 FullTree.DeleteDepartament(SelectedDepartament);
                 if (FullTree.Count is 0)
                 {
@@ -260,7 +258,11 @@ namespace UniversityTool.ViewModels.ControlsVMs
         private Task MessageHandler(GroupMessage message) => message.OperationType switch
         {
             UIOperationTypeCode.Add => _ = ProcessInMainThreadAsync(() => FullTree.AddGroup(message.Group)),
-            UIOperationTypeCode.Delete => _ = ProcessInMainThreadAsync(() => FullTree.DeleteGroup(SelectedGroup)),
+            UIOperationTypeCode.Delete => _ = ProcessInMainThreadAsync(() => 
+            {
+                _messageBus.Send(new TabsPanelMessage(SelectedGroup, UIOperationTypeCode.Delete));
+                FullTree.DeleteGroup(SelectedGroup); 
+            }),
             UIOperationTypeCode.Update => _ = ProcessInMainThreadAsync(() =>
             {
                 FullTree.UpdateGroup(SelectedGroup, message.Group);
@@ -273,7 +275,11 @@ namespace UniversityTool.ViewModels.ControlsVMs
         private Task MessageHandler(StudentMessage message) => message.OperationType switch
         {
             UIOperationTypeCode.Add => _ = ProcessInMainThreadAsync(() => FullTree.AddStudent(message.Student)),
-            UIOperationTypeCode.Delete => _ = ProcessInMainThreadAsync(() => FullTree.DeleteStudent(SelectedStudent)),
+            UIOperationTypeCode.Delete => _ = ProcessInMainThreadAsync(() =>
+            {
+                _messageBus.Send(new TabsPanelMessage(SelectedStudent, UIOperationTypeCode.Delete));
+                FullTree.DeleteStudent(SelectedStudent);
+            }),
             UIOperationTypeCode.Update => _ = ProcessInMainThreadAsync(() =>
             {
                 FullTree.UpdateStudent(SelectedStudent, message.Student);

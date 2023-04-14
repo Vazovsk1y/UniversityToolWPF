@@ -64,14 +64,23 @@ namespace UniversityTool.ViewModels.ControlsVMs
                     {
                         _ = ProcessInMainThreadAsync(() =>
                         {
-                            if (message.Item is not null && !Tabs.Contains(message.Item))
+                            if (message.Tab is not null && !Tabs.Contains(message.Tab))
                             {
-                                Tabs.Add(message.Item);
+                                Tabs.Add(message.Tab);
                             }
                         });
                     }
                     break;
                 case UIOperationTypeCode.Delete:
+                    {
+                        _ = ProcessInMainThreadAsync(() =>
+                        {
+                            if (Tabs.Contains(message.Tab) && message.Tab is not null)
+                            {
+                                Tabs.Remove(message.Tab);
+                            }
+                        });
+                    }
                     break;
                 case UIOperationTypeCode.Update:
                     break;
