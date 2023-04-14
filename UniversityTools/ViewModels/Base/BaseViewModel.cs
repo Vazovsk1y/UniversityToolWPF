@@ -22,6 +22,6 @@ namespace UniversityTool.ViewModels.Base
         }
 
         protected virtual async Task ProcessInMainThreadAsync(Action action) =>
-           await Application.Current.Dispatcher.InvokeAsync(action ?? throw new ArgumentNullException(nameof(action)));
+           await Application.Current.Dispatcher.InvokeAsync(action ?? throw new ArgumentNullException("The transmitted delegate was null"));
     }
 }

@@ -201,6 +201,14 @@ namespace UniversityTool.ViewModels.ControlsVMs
 
         #region --Methods--
 
+        public void Dispose()
+        {
+            foreach(IDisposable subscription in _subscriptions)
+            {
+                subscription.Dispose();
+            }
+        }
+
         private void OnDepartamentTreeViewFilter(object sender, FilterEventArgs e)
         {
             var filterText = DepartamentFilterText;
@@ -211,14 +219,6 @@ namespace UniversityTool.ViewModels.ControlsVMs
             {
                 if (departament.Title.Contains(filterText, StringComparison.OrdinalIgnoreCase)) return;
                 e.Accepted = false;
-            }
-        }
-
-        public void Dispose()
-        {
-            foreach(IDisposable subscription in _subscriptions)
-            {
-                subscription.Dispose();
             }
         }
 

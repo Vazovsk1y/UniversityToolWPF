@@ -42,7 +42,13 @@ namespace UniversityTool.ViewModels.ControlsVMs
 
         #region --Commands--
 
-
+        public ICommand CloseTabCommand => new RelayCommand((tab) =>
+        {
+            if (Tabs.Contains(tab))
+            {
+                Tabs.Remove(tab);
+            }
+        });
 
         #endregion
 
