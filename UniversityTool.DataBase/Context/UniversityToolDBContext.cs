@@ -15,8 +15,8 @@ namespace UniversityTool.DataBase.Context
         {
             modelBuilder.Entity<Departament>(d =>
             {
-                d.Property(x => x.DateAdded).HasDefaultValueSql("GETDATE()");
-                d.HasKey(x => x.Id);
+                d.Property(x => x.DateAdded).HasDefaultValueSql("GETDATE()").IsRequired(true);
+                d.HasKey(x => x.Id).IsClustered(true);
                 d.Property(x => x.Title).IsRequired();
 
                 d.HasMany(x => x.Groups)
@@ -27,8 +27,8 @@ namespace UniversityTool.DataBase.Context
 
             modelBuilder.Entity<Group>(g =>
             {
-                g.Property(x => x.DateAdded).HasDefaultValueSql("GETDATE()");
-                g.HasKey(x => x.Id);
+                g.Property(x => x.DateAdded).HasDefaultValueSql("GETDATE()").IsRequired(true);
+                g.HasKey(x => x.Id).IsClustered(true);
                 g.Property(x => x.Title).IsRequired();
 
                 g.HasMany(x => x.Students)
@@ -39,8 +39,8 @@ namespace UniversityTool.DataBase.Context
 
             modelBuilder.Entity<Student>(s =>
             {
-                s.Property(x => x.DateAdded).HasDefaultValueSql("GETDATE()");
-                s.HasKey(x => x.Id);
+                s.Property(x => x.DateAdded).HasDefaultValueSql("GETDATE()").IsRequired(true);
+                s.HasKey(x => x.Id).IsClustered(true);
                 s.Property(x => x.Name).IsRequired();
                 s.Property(x => x.SecondName).IsRequired();
                 s.Property(x => x.ThirdName).IsRequired();

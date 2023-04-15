@@ -12,15 +12,15 @@ using UniversityTool.DataBase.Context;
 namespace UniversityTool.DataBase.Migrations
 {
     [DbContext(typeof(UniversityToolDbContext))]
-    [Migration("20230412142911_DateTimeAddedProperty")]
-    partial class DateTimeAddedProperty
+    [Migration("20230415163733_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.4")
+                .HasAnnotation("ProductVersion", "7.0.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -47,6 +47,8 @@ namespace UniversityTool.DataBase.Migrations
 
                     b.HasKey("Id")
                         .HasName("pk_departaments");
+
+                    SqlServerKeyBuilderExtensions.IsClustered(b.HasKey("Id"));
 
                     b.ToTable("departaments", (string)null);
                 });
@@ -77,6 +79,8 @@ namespace UniversityTool.DataBase.Migrations
 
                     b.HasKey("Id")
                         .HasName("pk_groups");
+
+                    SqlServerKeyBuilderExtensions.IsClustered(b.HasKey("Id"));
 
                     b.HasIndex("DepartamentId")
                         .HasDatabaseName("ix_groups_departament_id");
@@ -120,6 +124,8 @@ namespace UniversityTool.DataBase.Migrations
 
                     b.HasKey("Id")
                         .HasName("pk_students");
+
+                    SqlServerKeyBuilderExtensions.IsClustered(b.HasKey("Id"));
 
                     b.HasIndex("GroupId")
                         .HasDatabaseName("ix_students_group_id");

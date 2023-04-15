@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -16,11 +17,13 @@ namespace UniversityTool.DataBase.Migrations
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    title = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    date_added = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()")
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("pk_departaments", x => x.id);
+                    table.PrimaryKey("pk_departaments", x => x.id)
+                        .Annotation("SqlServer:Clustered", true);
                 });
 
             migrationBuilder.CreateTable(
@@ -30,11 +33,13 @@ namespace UniversityTool.DataBase.Migrations
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     departament_id = table.Column<int>(type: "int", nullable: false),
-                    title = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    date_added = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()")
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("pk_groups", x => x.id);
+                    table.PrimaryKey("pk_groups", x => x.id)
+                        .Annotation("SqlServer:Clustered", true);
                     table.ForeignKey(
                         name: "fk_groups_departaments_departament_id",
                         column: x => x.departament_id,
@@ -52,11 +57,13 @@ namespace UniversityTool.DataBase.Migrations
                     group_id = table.Column<int>(type: "int", nullable: false),
                     name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     second_name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    third_name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    third_name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    date_added = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()")
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("pk_students", x => x.id);
+                    table.PrimaryKey("pk_students", x => x.id)
+                        .Annotation("SqlServer:Clustered", true);
                     table.ForeignKey(
                         name: "fk_students_groups_group_id",
                         column: x => x.group_id,
