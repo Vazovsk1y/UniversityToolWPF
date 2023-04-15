@@ -58,10 +58,11 @@ namespace UniversityTool.ViewModels.StudentVMs
             {
                 Id = _tree.SelectedStudent.Id,
                 GroupId = _tree.SelectedStudent.GroupId,
+                DateAdded = _tree.SelectedStudent.DateAdded,
                 Name = StudentName,
                 SecondName = StudentSurname,
-                ThirdName = StudentThirdName
-            });
+                ThirdName = StudentThirdName,
+            }).ConfigureAwait(false);
 
             switch (response.StatusCode)
             {

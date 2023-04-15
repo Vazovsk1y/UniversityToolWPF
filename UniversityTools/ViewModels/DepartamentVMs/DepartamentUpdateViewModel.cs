@@ -51,11 +51,14 @@ namespace UniversityTool.ViewModels.DepartamentVMs
 
         protected override async void OnAccepting(object action)
         {
+            string updatedTitle = DepartamentTitle;
             var response = await _departamentService.Update(new Departament
             {
-                Id = _tree.SelectedDepartament.Id,                              // id is required, else new entity will be added not updated.
-                Title = DepartamentTitle                                        // updated field
-            });
+                Title = updatedTitle,                                        
+                Id = _tree.SelectedDepartament.Id,                              
+                DateAdded = _tree.SelectedDepartament.DateAdded,
+                Groups = _tree.SelectedDepartament.Groups
+            }).ConfigureAwait(false);
 
             switch (response.StatusCode)
             {

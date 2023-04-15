@@ -3,5 +3,5 @@ using UniversityTool.Domain.Messages.Base;
 
 namespace UniversityTool.Domain.Messages
 {
-    public record TabsPanelMessage(object Tab, UIOperationTypeCode TypeCode) : BaseMessage(TypeCode);
+    public record TabsPanelMessage(object Item, UIOperationTypeCode TypeCode) : BaseMessage(TypeCode);
 }

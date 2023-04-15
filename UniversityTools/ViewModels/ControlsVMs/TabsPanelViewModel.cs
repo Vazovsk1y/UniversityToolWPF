@@ -3,6 +3,8 @@ using System.Collections.ObjectModel;
 using System.Windows.Input;
 using UniversityTool.Domain.Codes;
 using UniversityTool.Domain.Messages;
+using UniversityTool.Domain.Models;
+using UniversityTool.Domain.Models.Base;
 using UniversityTool.Domain.Services.DataServices.Base;
 using UniversityTool.Infastructure.Commands;
 using UniversityTool.ViewModels.Base;
@@ -13,7 +15,7 @@ namespace UniversityTool.ViewModels.ControlsVMs
     {
         #region --Fields--
 
-        private readonly ObservableCollection<object> _tabs = new();
+        private readonly ObservableCollection<BaseModel> _tabs = new();
         private readonly IDisposable _subscription;
         private readonly IMessageBusService _messageBus;
 
@@ -21,13 +23,23 @@ namespace UniversityTool.ViewModels.ControlsVMs
 
         #region --Properties--
 
-        public ObservableCollection<object> Tabs => _tabs;
+        public ObservableCollection<BaseModel> Tabs => _tabs;
 
         public TreeViewViewModel Tree { get; }
 
         #endregion
 
         #region --Constructors--
+
+        public TabsPanelViewModel()
+        {
+            if (!App.IsDesignMode)
+                throw new InvalidOperationException("The default constructor of this view model type is only for design time");
+
+            Tabs.Add(new Departament { Title = "Departament" });
+            Tabs.Add(new Group { Title = "Group" });
+            Tabs.Add(new Student { Name = "Student", SecondName = "Super", ThirdName = "Gut" });
+        }
 
         public TabsPanelViewModel(
             IMessageBusService messageBus, 
@@ -42,9 +54,9 @@ namespace UniversityTool.ViewModels.ControlsVMs
 
         #region --Commands--
 
-        public ICommand CloseTabCommand => new RelayCommand((tab) =>
+        public ICommand CloseTabCommand => new RelayCommand((item) =>
         {
-            if (Tabs.Contains(tab))
+            if (item is BaseModel tab && Tabs.Contains(tab))
             {
                 Tabs.Remove(tab);
             }
@@ -58,34 +70,37 @@ namespace UniversityTool.ViewModels.ControlsVMs
 
         private void OnReceiveMessage(TabsPanelMessage message)
         {
+            if (message.Item is not BaseModel tab)
+                return;
+
             switch (message.OperationType)
             {
                 case UIOperationTypeCode.Add:
                     {
                         _ = ProcessInMainThreadAsync(() =>
                         {
-                            if (message.Tab is not null && !Tabs.Contains(message.Tab))
+                            if (!Tabs.Contains(tab))
                             {
-                                Tabs.Add(message.Tab);
+                                Tabs.Add(tab);
                             }
                         });
                     }
-                    break;
+                    return;
                 case UIOperationTypeCode.Delete:
                     {
                         _ = ProcessInMainThreadAsync(() =>
                         {
-                            if (Tabs.Contains(message.Tab) && message.Tab is not null)
+                            if (Tabs.Contains(tab))
                             {
-                                Tabs.Remove(message.Tab);
+                                Tabs.Remove(tab);
                             }
                         });
                     }
-                    break;
+                    return;
                 case UIOperationTypeCode.Update:
-                    break;
+                    return;
                 case UIOperationTypeCode.Move:
-                    break;
+                    return;
             }
         }
 

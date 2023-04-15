@@ -52,11 +52,14 @@ namespace UniversityTool.ViewModels.GroupVMs
 
         protected override async void OnAccepting(object action)
         {
+            string updatedTitle = GroupName;
             var response = await _groupService.Update(new Group
             {
+                Title = updatedTitle,
                 Id = _tree.SelectedGroup.Id,
                 DepartamentId = _tree.SelectedGroup.DepartamentId,
-                Title = GroupName,
+                Students = _tree.SelectedGroup.Students,
+                DateAdded = _tree.SelectedGroup.DateAdded,
             }).ConfigureAwait(false);
 
             switch (response.StatusCode)
