@@ -82,7 +82,12 @@ namespace UniversityTool.DataBase.Repositories.Base
             try
             {
                 await using UniversityToolDbContext context = _contextFactory.CreateDbContext();
-                context.Set<T>().Update(entity);
+                var updatedEntity = await Task.Run(() => context.Set<T>().Update(entity));
+
+                if (updatedEntity?.State != EntityState.Modified)
+                {
+                    throw new InvalidOperationException("The entity was added, but not modified!\nThe passed entity was without id or wasn't in DB");
+                }
                 await context.SaveChangesAsync(token);
                 return entity;
             }
