@@ -56,7 +56,8 @@ namespace UniversityTool.DataBase.Repositories.Base
             try
             {
                 await using UniversityToolDbContext context = _contextFactory.CreateDbContext();
-                return await context.Set<T>().FirstOrDefaultAsync(e => e.Id == id, token).ConfigureAwait(false);
+                return await context.Set<T>().FirstOrDefaultAsync(e => e.Id == id, token).ConfigureAwait(false) ?? 
+                    throw new InvalidDataException("Entity with that id is not exist!");
             }
             catch
             {

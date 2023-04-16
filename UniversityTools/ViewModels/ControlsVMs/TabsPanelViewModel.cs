@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows.Input;
 using UniversityTool.Domain.Codes;
 using UniversityTool.Domain.Messages;
@@ -98,6 +99,18 @@ namespace UniversityTool.ViewModels.ControlsVMs
                     }
                     return;
                 case UIOperationTypeCode.Update:
+                    {
+                        _ = ProcessInMainThreadAsync(() =>
+                        {
+                            var tabToUpdate = Tabs.FirstOrDefault(t => t.Id == tab.Id && t.GetType() == tab.GetType());
+                            if (tabToUpdate is not null)
+                            {
+                                int index = Tabs.IndexOf(tabToUpdate);
+                                Tabs[index] = tab;
+                                Tree.SelectedItem = tab;
+                            }
+                        });
+                    }
                     return;
                 case UIOperationTypeCode.Move:
                     return;
