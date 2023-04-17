@@ -25,12 +25,8 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="{Binding Menu.IsTreeVisible, 
                     Converter={StaticResource BoolToColumnWidthConverter}, FallbackValue=2*}"/>
-                <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="5*"/>
             </Grid.ColumnDefinitions>
-
-            <GridSplitter Grid.Column="1" ShowsPreview="False" Width="5"
-        HorizontalAlignment="Center" VerticalAlignment="Stretch" />
 
             <Grid Grid.Column="0">
                 <UserControl Visibility="{Binding Menu.IsTreeVisible, Converter={StaticResource InverseBoolToVisibilityConverter}}">
