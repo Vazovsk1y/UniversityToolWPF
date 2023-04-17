@@ -90,7 +90,7 @@ namespace UniversityTool
             .AddWindows()
             ;
 
-        private static void OnDispatcherUnhandledExceptinon(object sender, DispatcherUnhandledExceptionEventArgs e)
+        public static void OnDispatcherUnhandledExceptinon(object sender, DispatcherUnhandledExceptionEventArgs e)
         {
             MessageBox.Show($"{e.Exception.Message}\n{e.Exception.StackTrace}");
         }

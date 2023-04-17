@@ -9,6 +9,7 @@ namespace UniversityTool
         internal static void Main(string[] args)
         {
             App app = new();
+            app.DispatcherUnhandledException += App.OnDispatcherUnhandledExceptinon;
             app.InitializeComponent();
             app.Run();
         }
