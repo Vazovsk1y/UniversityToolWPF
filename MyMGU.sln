@@ -9,8 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UniversityTool.Domain", "Un
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UniversityTool.DataBase", "UniversityTool.DataBase\UniversityTool.DataBase.csproj", "{703D6DF1-1689-4DBA-BADA-2FD764FEA973}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BenchmarksApp", "BenchmarksApp\BenchmarksApp.csproj", "{1E0DFE06-2B2C-4A31-AA94-401A114617CD}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,10 +27,6 @@ Global
 		{703D6DF1-1689-4DBA-BADA-2FD764FEA973}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{703D6DF1-1689-4DBA-BADA-2FD764FEA973}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{703D6DF1-1689-4DBA-BADA-2FD764FEA973}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1E0DFE06-2B2C-4A31-AA94-401A114617CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1E0DFE06-2B2C-4A31-AA94-401A114617CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1E0DFE06-2B2C-4A31-AA94-401A114617CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1E0DFE06-2B2C-4A31-AA94-401A114617CD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
