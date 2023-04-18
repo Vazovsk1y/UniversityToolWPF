@@ -24,6 +24,7 @@
                                         <DataGridTextColumn Header="Название группы" Binding="{Binding Title}"/>
                                         <DataGridTextColumn Header="Кол-во студентов" Binding="{Binding Students.Count}"/>
                                         <DataGridTextColumn Header="Дата добавления" Binding="{Binding DateAdded, StringFormat=dd.MM.yyyy}"/>
+                                        <DataGridTextColumn Header="Дата обновления" Binding="{Binding DateUpdated}"/>
                                     </DataGrid.Columns>
                                 </DataGrid>
                             </GroupBox>
@@ -37,6 +38,7 @@
                                         <DataGridTextColumn Header="Фамилия" Binding="{Binding SecondName}"/>
                                         <DataGridTextColumn Header="Отчество" Binding="{Binding ThirdName}"/>
                                         <DataGridTextColumn Header="Дата добавления" Binding="{Binding DateAdded, StringFormat=dd.MM.yyyy}"/>
+                                        <DataGridTextColumn Header="Дата обновления" Binding="{Binding DateUpdated}"/>
                                     </DataGrid.Columns>
                                 </DataGrid>
                             </GroupBox>
