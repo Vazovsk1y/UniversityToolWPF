@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using UniversityTool.Domain.Models;
+using UniversityTool.Domain.Models.Base;
 
 namespace UniversityTool.DataBase.Context
 {
@@ -15,6 +16,7 @@ namespace UniversityTool.DataBase.Context
         {
             modelBuilder.Entity<Departament>(d =>
             {
+                d.Property(x => x.DateAdded).HasDefaultValueSql("GETDATE()").IsRequired();
                 d.Property(x => x.DateAdded).HasDefaultValueSql("GETDATE()").IsRequired(true);
                 d.HasKey(x => x.Id).IsClustered(true);
                 d.Property(x => x.Title).IsRequired();
@@ -27,6 +29,7 @@ namespace UniversityTool.DataBase.Context
 
             modelBuilder.Entity<Group>(g =>
             {
+                g.Property(x => x.DateAdded).HasDefaultValueSql("GETDATE()").IsRequired();
                 g.Property(x => x.DateAdded).HasDefaultValueSql("GETDATE()").IsRequired(true);
                 g.HasKey(x => x.Id).IsClustered(true);
                 g.Property(x => x.Title).IsRequired();
@@ -39,6 +42,7 @@ namespace UniversityTool.DataBase.Context
 
             modelBuilder.Entity<Student>(s =>
             {
+                s.Property(x => x.DateAdded).HasDefaultValueSql("GETDATE()").IsRequired();
                 s.Property(x => x.DateAdded).HasDefaultValueSql("GETDATE()").IsRequired(true);
                 s.HasKey(x => x.Id).IsClustered(true);
                 s.Property(x => x.Name).IsRequired();
@@ -50,6 +54,43 @@ namespace UniversityTool.DataBase.Context
                     .HasForeignKey(x => x.GroupId)
                     .OnDelete(DeleteBehavior.Cascade);
             });
+        }
+
+        public override int SaveChanges()
+        {
+            ModifyDateUpdated();
+            return base.SaveChanges();
+        }
+
+        public override int SaveChanges(bool acceptAllChangesOnSuccess)
+        {
+            ModifyDateUpdated();
+            return base.SaveChanges(acceptAllChangesOnSuccess);
+        }
+
+        public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
+        {
+            ModifyDateUpdated();
+            return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
+        }
+
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            ModifyDateUpdated();
+            return base.SaveChangesAsync(cancellationToken);
+        }
+
+        private void ModifyDateUpdated()
+        {
+            var updatedEntities = ChangeTracker.Entries().Where(e => e.State is EntityState.Modified);
+
+            foreach(var entry in updatedEntities)
+            {
+                if (entry.Entity is BaseModel model)
+                {
+                    model.DateUpdated = DateTime.UtcNow;
+                }
+            }
         }
     }
 }

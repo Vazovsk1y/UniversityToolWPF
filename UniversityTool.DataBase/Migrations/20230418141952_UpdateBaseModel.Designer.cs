@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UniversityTool.DataBase.Context;
 
@@ -11,9 +12,11 @@ using UniversityTool.DataBase.Context;
 namespace UniversityTool.DataBase.Migrations
 {
     [DbContext(typeof(UniversityToolDbContext))]
-    partial class UniversityToolDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230418141952_UpdateBaseModel")]
+    partial class UpdateBaseModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
