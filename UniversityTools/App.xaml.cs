@@ -15,6 +15,10 @@ namespace UniversityTool
     /// </summary>
     public partial class App : Application
     {
+        //TODO new models property.
+        //TODO GUI.
+        //TODO Unit tests.
+
         #region --Fields--
 
         private static IHost? _host;
