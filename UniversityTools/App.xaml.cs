@@ -16,8 +16,12 @@ namespace UniversityTool
     public partial class App : Application
     {
         //TODO new models property.
-        //TODO GUI.
         //TODO Unit tests.
+
+        //TODO Dialog windows design.
+        //TODO Menu design.
+        //TODO Tree design.
+        //TODO Refactoring events for xaml code.
 
         #region --Fields--
 
@@ -97,6 +101,7 @@ namespace UniversityTool
         public static void OnDispatcherUnhandledExceptinon(object sender, DispatcherUnhandledExceptionEventArgs e)
         {
             MessageBox.Show($"{e.Exception.Message}\n{e.Exception.StackTrace}");
+            e.Handled = true;
         }
 
         #endregion
