@@ -2,10 +2,14 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     
     <Style TargetType="TextBlock" x:Key="baseText">
-        <Setter Property="FontFamily" Value="Century Gothic"/>
-        <Setter Property="FontSize" Value="20"/>
+        <Setter Property="FontFamily" Value="Fonts/Montserrat-VariableFont_wght.ttf #Montserrat"/>
+        <Setter Property="FontSize" Value="{StaticResource middle}"/>
+        <Setter Property="FontWeight" Value="Medium"/>
         <Setter Property="Foreground" Value="Black"/>
-        <Setter Property="FontWeight" Value="Bold"/>
     </Style>
-    
+
+
+    <Style TargetType="TextBlock" x:Key="dialogWindowTitleText" BasedOn="{StaticResource baseText}">
+        <Setter Property="FontSize" Value="{StaticResource afterMiddle}"/>
+    </Style>
 </ResourceDictionary>
