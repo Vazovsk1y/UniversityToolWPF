@@ -7,7 +7,9 @@
         xmlns:viewmodels="clr-namespace:UniversityTool.ViewModels.StudentVMs" 
         d:DataContext="{d:DesignInstance Type=viewmodels:StudentAddViewModel, IsDesignTimeCreatable=True}"
         mc:Ignorable="d"
-        Title="{Binding WindowTitle}" Height="400" Width="400">
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        Title="{Binding WindowTitle}" Height="450" Width="400">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -15,48 +17,101 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
+        <StackPanel Grid.Row="0">
+            <TextBlock Text="Новий студент" 
+                       Style="{StaticResource dialogWindowTitleText}"
+                       HorizontalAlignment="Center"
+                       Margin="15"
+                           />
+            <Rectangle Height="3" Fill="Black" Margin="30,0,30,0">
+                <Rectangle.RadiusX>2</Rectangle.RadiusX>
+                <Rectangle.RadiusY>2</Rectangle.RadiusY>
+            </Rectangle>
+        </StackPanel>
 
-        <GroupBox Grid.Row="4">
-            <DockPanel>
-                <UniformGrid DockPanel.Dock="Bottom" Rows="1" >
-                    <Button Margin ="20" Content="Ок" Command="{Binding AcceptCommand}"/>
-                    <Button Margin ="20" Content="Отмена" Command="{Binding CancelCommand}"/>
-                </UniformGrid>
-            </DockPanel>
-        </GroupBox>
+        <StackPanel Grid.Row="1">
+            <TextBlock Text="Виберіть групу:"
+                       Margin="30,0,0,0"
+                       Style="{StaticResource baseText}"/>
+            <ComboBox Style="{StaticResource dialogComboBox}" Margin="30,5,30,0"
+                ItemsSource="{Binding Groups}" 
+                  SelectedItem="{Binding SelectedGroup}"
+                  VerticalAlignment="Top"
+                      Height="35">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate DataType="m:Departament">
+                        <TextBlock Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}"
+                                   Style="{StaticResource baseText}"/>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+        </StackPanel>
 
-        <StackPanel Grid.Row="1" Margin="10">
-            <TextBlock Text="Имя студента:"/>
-            <TextBox FontFamily="Century Gothic"
-                     FontSize="20"
-                     TextAlignment="Center"
+        <StackPanel Grid.Row="2">
+            <TextBlock Text="Ім'я:"
+                       Margin="30,0,0,0"
+                       Style="{StaticResource baseText}"/>
+            <TextBox Style="{StaticResource dialogWindowTextBox}"
                      Text="{Binding StudentName, UpdateSourceTrigger=PropertyChanged}"
-                     />
+                     Margin="30, 5, 30 ,0"
+                     Height="35" 
+                     Background="#e5e5e5"/>
         </StackPanel>
-        
-        <StackPanel Grid.Row="2" Margin="10">
-            <TextBlock Text="Фамилия: "/>
-            <TextBox FontFamily="Century Gothic"
-                     FontSize="20"
-                     TextAlignment="Center"
+
+        <StackPanel Grid.Row="3">
+            <TextBlock Text="Прізвище:"
+                       Margin="30,0,0,0"
+                       Style="{StaticResource baseText}"/>
+            <TextBox Style="{StaticResource dialogWindowTextBox}"
                      Text="{Binding StudentSurname, UpdateSourceTrigger=PropertyChanged}"
-                     />
+                     Margin="30, 5, 30 ,0"
+                     Height="35" 
+                     Background="#e5e5e5"/>
         </StackPanel>
 
-        <StackPanel Grid.Row="3" Margin="10">
-            <TextBlock Text="Отчество: "/>
-            <TextBox FontFamily="Century Gothic"
-                     FontSize="20"
-                     TextAlignment="Center"
+        <StackPanel Grid.Row="4">
+            <TextBlock Text="По-батькові:"
+                       Margin="30,0,0,0"
+                       Style="{StaticResource baseText}"/>
+            <TextBox Style="{StaticResource dialogWindowTextBox}"
                      Text="{Binding StudentThirdName, UpdateSourceTrigger=PropertyChanged}"
-                     />
+                     Margin="30, 5, 30 ,0"
+                     Height="35" 
+                     Background="#e5e5e5"/>
         </StackPanel>
 
-        <ComboBox ItemsSource="{Binding Groups}" 
-                  DisplayMemberPath="Title"
-                  SelectedItem="{Binding SelectedGroup}"/>
+        <Grid Grid.Row="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
 
+            <Button  Grid.Column="0"
+                        Margin="30,20,60,10" 
+                     Style="{StaticResource acceptButtonStyle}"
+                            Command="{Binding AcceptCommand}">
+                <Button.Background>
+                    <LinearGradientBrush EndPoint="1,1" StartPoint="0,0">
+                        <GradientStop Color="#77000000" Offset="0.0"/>
+                        <GradientStop Color="#000000" Offset="1.0"/>
+                    </LinearGradientBrush>
+                </Button.Background>
+                <TextBlock Text="Готово" Style="{StaticResource baseText}" Foreground="White"/>
+            </Button>
+            <Button  Grid.Column="1"
+                        Margin="60,20,30,10"
+                        BorderThickness="2.5"
+                        Background="Transparent"
+                        BorderBrush="#000000"
+                        Style="{StaticResource сancelButtonStyle}"
+                            Command="{Binding CancelCommand}">
+
+                <TextBlock Text="Відміна" Style="{StaticResource baseText}"/>
+            </Button>
+        </Grid>
+        
     </Grid>
 </Window>
