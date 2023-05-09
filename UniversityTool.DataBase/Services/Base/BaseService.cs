@@ -32,7 +32,7 @@ namespace UniversityTool.DataBase.Services.Base
             _responseFactory = responceFactory;
         }
 
-        public async virtual Task<ISingleDataResponse<T>> Add(T entityToAdd)
+        public async virtual Task<IDataResponse<T>> Add(T entityToAdd)
         {
             try
             {
@@ -60,7 +60,7 @@ namespace UniversityTool.DataBase.Services.Base
             return _responseFactory.CreateResponce(Resources.AddingSuccessMessage, OperationResultStatusCode.Success, Item);
         }
 
-        public async virtual Task<ICollectionDataResponse<T>> GetAll()
+        public async virtual Task<IDataResponse<IEnumerable<T>>> GetAll()
         {
             try
             {
@@ -88,7 +88,7 @@ namespace UniversityTool.DataBase.Services.Base
             return _responseFactory.CreateResponce(Resources.AddingSuccessMessage, OperationResultStatusCode.Success, Items);
         }
 
-        public async Task<ISingleDataResponse<T>> Update(T entity)
+        public async Task<IDataResponse<T>> Update(T entity)
         {
             try
             {
@@ -116,7 +116,7 @@ namespace UniversityTool.DataBase.Services.Base
             return _responseFactory.CreateResponce(Resources.UpdateSuccessMessage, OperationResultStatusCode.Success, Item);
         }
 
-        public async Task<ISingleDataResponse<T>> Delete(T entity)
+        public async Task<IDataResponse<T>> Delete(T entity)
         {
             try
             {

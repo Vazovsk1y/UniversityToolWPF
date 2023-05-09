@@ -2,7 +2,7 @@
 
 namespace UniversityTool.Domain.Responses
 {
-    public interface ISingleDataResponse<T> : IBaseResponse<T>
+    public interface IDataResponse<T> : IBaseResponse<T>
     {
         T Data { get; set; }
     }

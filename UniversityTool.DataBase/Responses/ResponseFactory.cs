@@ -6,16 +6,16 @@ namespace UniversityTool.DataBase.Responses
 {
     internal class ResponseFactory<T> : IResponseFactory<T> where T : BaseModel
     {
-        public ICollectionDataResponse<T> CreateResponce(string description, OperationResultStatusCode statusCode, IEnumerable<T>? Data) =>
-            new CollectionDataResponse<T>
+        public IDataResponse<IEnumerable<T>> CreateResponce(string description, OperationResultStatusCode statusCode, IEnumerable<T>? Data) =>
+            new DataResponse<IEnumerable<T>>
             {
                 Description = description,
                 StatusCode = statusCode,
                 Data = Data
             };
 
-        public ISingleDataResponse<T> CreateResponce(string description, OperationResultStatusCode statusCode, T? Data) =>
-            new SingleDataResponse<T>
+        public IDataResponse<T> CreateResponce(string description, OperationResultStatusCode statusCode, T? Data) =>
+            new DataResponse<T>
             {
                 Description = description,
                 StatusCode = statusCode,

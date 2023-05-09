@@ -5,6 +5,6 @@ namespace UniversityTool.Domain.Services.DataServices
 {
     public interface IDepartamentTreeService
     {
-        public Task<ICollectionDataResponse<Departament>> GetFullDepartamentsTree();
+        public Task<IDataResponse<IEnumerable<Departament>>> GetFullDepartamentsTree();
     }
 }

@@ -3,8 +3,8 @@ using UniversityTool.Domain.Responses;
 
 namespace UniversityTool.DataBase.Responses
 {
-    internal class CollectionDataResponse<T> : BaseResponse<T>, ICollectionDataResponse<T>
+    internal class DataResponse<T> : BaseResponse<T>, IDataResponse<T>
     {
-        public IEnumerable<T> Data { get; set; }
+        public T Data { get; set; }
     }
 }

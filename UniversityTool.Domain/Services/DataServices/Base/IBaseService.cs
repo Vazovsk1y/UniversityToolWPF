@@ -5,12 +5,12 @@ namespace UniversityTool.Domain.Services.DataServices.Base
 {
     public interface IBaseService<T> where T : BaseModel
     {
-        Task<ISingleDataResponse<T>> Add(T entity);
+        Task<IDataResponse<T>> Add(T entity);
 
-        Task<ISingleDataResponse<T>> Update(T entity);
+        Task<IDataResponse<T>> Update(T entity);
 
-        Task<ISingleDataResponse<T>> Delete(T entity);
+        Task<IDataResponse<T>> Delete(T entity);
 
-        Task<ICollectionDataResponse<T>> GetAll();
+        Task<IDataResponse<IEnumerable<T>>> GetAll();
     }
 }

@@ -18,7 +18,7 @@ namespace UniversityTool.DataBase.Services
             _departamentTreeRepository = repository;
         }
 
-        public async Task<ICollectionDataResponse<Departament>> GetFullDepartamentsTree()
+        public async Task<IDataResponse<IEnumerable<Departament>>> GetFullDepartamentsTree()
         {
             try
             {
