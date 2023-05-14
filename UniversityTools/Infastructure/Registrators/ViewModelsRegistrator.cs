@@ -14,6 +14,7 @@ namespace UniversityTool.Infastructure.Registrators
             .AddSingleton<TreeViewViewModel>()
             .AddSingleton<MenuViewModel>()
             .AddSingleton<TabsPanelViewModel>()
+            .AddSingleton<WorkSpaceViewModel>()
             .AddTransient<DepartamentAddViewModel>()
             .AddTransient<GroupAddViewModel>()
             .AddTransient<StudentAddViewModel>()
@@ -23,7 +24,6 @@ namespace UniversityTool.Infastructure.Registrators
             .AddTransient<DepartamentDeleteViewModel>()
             .AddTransient<GroupDeleteViewModel>()
             .AddTransient<StudentDeleteViewModel>()
-            .AddTransient<WorkSpaceViewModel>()
             ;
     }
 }

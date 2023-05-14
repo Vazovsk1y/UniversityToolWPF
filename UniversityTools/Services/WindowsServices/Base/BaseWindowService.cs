@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Diagnostics;
 using System.Windows;
 using UniversityTool.Domain.Services.Base;
 
@@ -25,12 +26,23 @@ namespace UniversityTool.Services.WindowsServices.Base
         {
             if (Window is { } window)
             {
+#if DEBUG
+                Debug.WriteLine($"{GetHashCode()} WINDOW SERVICE");
+                Debug.WriteLine($"{window.GetHashCode()} WINDOW with type {typeof(T)} CLOSING by METHOD.");
+#endif
                 window.Close();
                 return;
             }
 
-            window = ServiceProvider.GetRequiredService<T>();
-            window.Closed += (_, _) => Window = null;
+            //throw new InvalidOperationException($"{typeof(T)} Window wasn't opened");
+            var scope = ServiceProvider.CreateScope();
+            window = scope.ServiceProvider.GetRequiredService<T>();
+
+            window.Closed += (_, _) =>
+            {
+                Window = null;
+                scope.Dispose();
+            };
 
             Window = window;
             window.Close();
@@ -44,8 +56,21 @@ namespace UniversityTool.Services.WindowsServices.Base
                 return;
             }
 
-            window = ServiceProvider.GetRequiredService<T>();
-            window.Closed += (_, _) => Window = null;
+            var scope = ServiceProvider.CreateScope();
+            window = scope.ServiceProvider.GetRequiredService<T>();
+#if DEBUG
+            Debug.WriteLine($"{GetHashCode()} WINDOW SERVICE");
+            Debug.WriteLine($"{window.GetHashCode()} WINDOW with type {typeof(T)} OPENING.");
+#endif
+            window.Closed += (_, _) =>
+            {
+#if DEBUG
+                Debug.WriteLine($"{GetHashCode()} WINDOW SERVICE");
+                Debug.WriteLine($"{window.GetHashCode()} WINDOW with type {typeof(T)} CLOSING by PRESSING X.");
+#endif
+                Window = null;
+                scope.Dispose();
+            };
 
             Window = window;
             window.ShowDialog();

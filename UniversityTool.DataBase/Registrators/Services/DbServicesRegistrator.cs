@@ -9,11 +9,11 @@ namespace UniversityTool.DataBase.Registrators.Services
     public static class DbServicesRegistrator
     {
         public static IServiceCollection AddDbServices(this IServiceCollection services) => services
-            .AddTransient<IDepartamentService, DepartamentService>()
-            .AddTransient<IGroupService, GroupService>()
-            .AddTransient<IStudentService, StudentService>()
-            .AddTransient(typeof(IResponseFactory<>), typeof(ResponseFactory<>))
-            .AddTransient<IDepartamentTreeService, DepartamentTreeService>()
+            .AddScoped<IDepartamentService, DepartamentService>()
+            .AddScoped<IGroupService, GroupService>()
+            .AddScoped<IStudentService, StudentService>()
+            .AddScoped(typeof(IResponseFactory<>), typeof(ResponseFactory<>))
+            .AddScoped<IDepartamentTreeService, DepartamentTreeService>()
             ;
     }
 }

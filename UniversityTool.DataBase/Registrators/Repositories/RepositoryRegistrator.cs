@@ -9,8 +9,8 @@ namespace UniversityTool.DataBase.Registrators.Repositories
     public static class RepositoryRegistrator
     {
         public static IServiceCollection AddDbRepositories(this IServiceCollection services) => services
-            .AddTransient(typeof(IBaseRepository<>), typeof(BaseRepository<>))
-            .AddTransient<IDepartamentTreeRepository, DepartamentTreeRepository>()
+            .AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>))
+            .AddScoped<IDepartamentTreeRepository, DepartamentTreeRepository>()
             ;
     }
 }

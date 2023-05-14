@@ -11,13 +11,11 @@ namespace UniversityTool.Infastructure.Registrators
     internal static class WindowsRegistrator
     {
         public static IServiceCollection AddWindows(this IServiceCollection services) => services
-            .AddScoped(
+            .AddSingleton(
                 s =>
                 {
-                    var scope = s.CreateScope();
-                    var viewModel = scope.ServiceProvider.GetRequiredService<MainWindowViewModel>();
+                    var viewModel = s.GetRequiredService<MainWindowViewModel>();
                     var window = new MainWindow { DataContext = viewModel };
-                    window.Closed += (_, _) => scope.Dispose();
 
                     return window;
                 })
